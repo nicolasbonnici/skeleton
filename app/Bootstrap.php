@@ -206,12 +206,16 @@ class Bootstrap {
      * Init log file
      */
     private function initLogs() {
-        $sLogFile = LOG_PATH . '/' . DEFAULT_MODULE . '/errors.log';
+        $sLogFile = LOG_PATH . DEFAULT_MODULE . '/errors.log';
         if (!is_file($sLogFile)) {
-            
+        	
+        	if (!is_dir(LOG_PATH)) {
+        		mkdir(LOG_PATH);
+        	}
+        	
             // Reconstruire le chemin aussi
-            if (!is_dir(substr($sLogFile, 0, strlen($sLogFile) - strlen('errors.log')))) {
-                mkdir(substr($sLogFile, 0, strlen($sLogFile) - strlen('errors.log')));
+            if (!is_dir(substr($sLogFile, 0, strlen($sLogFile) - strlen('/errors.log')))) {
+                mkdir(substr($sLogFile, 0, strlen($sLogFile) - strlen('/errors.log')));
             }
             
             fopen($sLogFile, 'w+');        
