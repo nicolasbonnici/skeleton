@@ -1,0 +1,17 @@
+body {
+  background: url(../img/bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.item.twitter {
+	background: #404040;
+	color: #fff;
+	border: none; 
+}
+.item.twitter a {
+	font-weight: bold;
+	color: #48acde;
+}
