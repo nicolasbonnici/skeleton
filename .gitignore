@@ -1,0 +1,6 @@
+# Eclipse
+.settings/
+.buildpath
+.project
+# Fichiers temporaires
+tmp/
