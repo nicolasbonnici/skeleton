@@ -7,8 +7,6 @@ namespace app\Entities\Collection;
  *
  * @author infradmin
  */
-class PermissionCollection extends \Library\Core\EntitiesCollection {
-
-}
+class PermissionCollection extends \Library\Core\EntitiesCollection {}
 
 ?>

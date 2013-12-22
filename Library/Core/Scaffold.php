@@ -12,8 +12,7 @@ class Scaffold   {
 	public static function generateEntity($sTableName, $iCacheDuration = 120) {
 		if (!empty($sTableName)) {
 			$sEntityName = self::formatEntityName($sTableName);
-			return '
-<?php
+			return '<?php
 
 namespace app\Entities;
 
@@ -37,8 +36,7 @@ class ' . $sEntityName . ' extends \Library\Core\Entity {
     
     protected $aLinkedEntities = array();
     
-}
-			
+}			
 			';
 		}
 		
@@ -55,7 +53,7 @@ class ' . $sEntityName . ' extends \Library\Core\Entity {
 	public static function formatEntityName($sTableName)
 	{
 		assert('strlen($sTableName) > 0');
-		return ucfirst(substr($sTableName, 0, strlen($sTableName) - 1));
+		return ucfirst($sTableName);
 	}
 	
 }

@@ -12,7 +12,7 @@ namespace app\Entities;
 class Block extends \Library\Core\Entity {
 
     const ENTITY = 'Block';
-    const TABLE_NAME = 'blocks';
+    const TABLE_NAME = 'block';
     const PRIMARY_KEY = 'idblock';
 
     /**
@@ -26,7 +26,7 @@ class Block extends \Library\Core\Entity {
             'loadByDefault' => false,
             'relationship' => 'oneToOne', // @see oneToOne|manyToOne|manyToMany
     		'entity' => 'BlockType',
-    		'mappedByField' => 'blockTypes_idblockType'
+    		'mappedByField' => 'blockType_idblockType'
         )
     );
     

@@ -10,7 +10,7 @@ namespace app\Entities;
 class User extends \Library\Core\Entity {
 
     const ENTITY = 'User';
-    const TABLE_NAME = 'users';
+    const TABLE_NAME = 'user';
     const PRIMARY_KEY = 'iduser';
 
     /**
@@ -24,7 +24,7 @@ class User extends \Library\Core\Entity {
             'loadByDefault' => false,
             'relationship' => 'oneToOne', // @see oneToOne|manyToOne|manyToMany
     		'entity' => 'Role',
-    		'mappedByField' => 'roles_idrole'
+    		'mappedByField' => 'role_idrole'
         )
     );
     

@@ -7,9 +7,6 @@ namespace app\Entities\Collection;
  *
  * @author infradmin
  */
-class BlockCollection extends \Library\Core\EntitiesCollection {
-
-    
-}
+class BlockCollection extends \Library\Core\EntitiesCollection {}
 
 ?>

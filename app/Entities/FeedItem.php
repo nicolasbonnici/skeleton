@@ -10,7 +10,7 @@ namespace app\Entities;
 class FeedItem extends \Library\Core\Entity {
 
     const ENTITY = 'FeedItem';
-    const TABLE_NAME = 'feedItems';
+    const TABLE_NAME = 'feedItem';
     const PRIMARY_KEY = 'idfeedItem';
 
     /**
@@ -24,7 +24,7 @@ class FeedItem extends \Library\Core\Entity {
             'loadByDefault' => false,
             'relationship' => 'oneToOne', // @see oneToOne|manyToOne|manyToMany
     		'entity' => 'Feed',
-    		'mappedByField' => 'feeds_idfeed'
+    		'mappedByField' => 'feed_idfeed'
         )
     );
     

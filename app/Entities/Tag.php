@@ -13,7 +13,7 @@
 class Tag {
     
     const ENTITY = 'Tag';
-    const TABLE_NAME = 'tags';
+    const TABLE_NAME = 'tag';
     const PRIMARY_KEY = 'idtag';
 
     /**

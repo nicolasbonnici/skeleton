@@ -10,7 +10,7 @@ namespace app\Entities;
 class BlockType extends \Library\Core\Entity {
 
     const ENTITY = 'BlockType';
-    const TABLE_NAME = 'blockTypes';
+    const TABLE_NAME = 'blockType';
     const PRIMARY_KEY = 'idblockType';
 
     /**

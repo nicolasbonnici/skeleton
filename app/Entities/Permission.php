@@ -12,7 +12,7 @@ namespace app\Entities;
 class Permission extends \Library\Core\Entity {
 
     const ENTITY = 'Permission';
-    const TABLE_NAME = 'permissions';
+    const TABLE_NAME = 'permission';
     const PRIMARY_KEY = 'idpermission';
 
     /**
@@ -26,13 +26,13 @@ class Permission extends \Library\Core\Entity {
             'loadByDefault' => false,
             'relationship' => 'oneToOne', // @see oneToOne|manyToOne|manyToMany
     		'entity' => 'Role',
-    		'mappedByField' => 'roles_idrole'
+    		'mappedByField' => 'role_idrole'
         ),
         'ressource' => array(
             'loadByDefault' => false,
             'relationship' => 'oneToOne', // @see oneToOne|manyToOne|manyToMany
     		'entity' => 'Ressource',
-    		'mappedByField' => 'ressources_idressource'
+    		'mappedByField' => 'ressource_idressource'
         )
     );
     

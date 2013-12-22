@@ -10,7 +10,7 @@ namespace app\Entities;
 class Post extends \Library\Core\Entity {
 
     const ENTITY = 'Post';
-    const TABLE_NAME = 'posts';
+    const TABLE_NAME = 'post';
     const PRIMARY_KEY = 'idpost';
 
     /**
@@ -24,7 +24,7 @@ class Post extends \Library\Core\Entity {
             'loadByDefault' => false,
             'relationship' => 'oneToOne', // @see oneToOne|manyToOne|manyToMany
     		'entity' => 'Category',
-    		'mappedByField' => 'categories_idcategory'
+    		'mappedByField' => 'category_idcategory'
         )
     );    
 }

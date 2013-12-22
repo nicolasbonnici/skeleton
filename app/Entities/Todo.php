@@ -10,7 +10,7 @@ namespace app\Entities;
 class Todo extends \Library\Core\Entity {
 
     const ENTITY = 'Todo';
-    const TABLE_NAME = 'todos';
+    const TABLE_NAME = 'todo';
     const PRIMARY_KEY = 'idtodo';
 
     /**

@@ -99,10 +99,12 @@ abstract class Entity extends Database  {
     /**
      * Restrict scope to database schema and manage dependances
      * 
+     * @todo performance loose
+     * 
      * @param type $sName
      * @return object
      * @throws CoreException
-     */
+
     public function __get($sName)
     {
         if (
@@ -121,7 +123,8 @@ abstract class Entity extends Database  {
 
         return $this->$sName;
     }    
-
+     */
+    
     /**
      * Load object with provided data
      * Data must be an array of key/value, key being table fields names

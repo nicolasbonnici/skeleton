@@ -7,9 +7,6 @@ namespace app\Entities\Collection;
  *
  * @author infradmin
  */
-class FeedItemCollection extends \Library\Core\EntitiesCollection {
-
-        
-}
+class FeedItemCollection extends \Library\Core\EntitiesCollection {}
 
 ?>

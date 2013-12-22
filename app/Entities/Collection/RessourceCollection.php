@@ -7,9 +7,6 @@ namespace app\Entities\Collection;
  *
  * @author infradmin
  */
-class RessourceCollection extends \Library\Core\EntitiesCollection {
-
-        
-}
+class RessourceCollection extends \Library\Core\EntitiesCollection {}
 
 ?>

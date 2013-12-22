@@ -42,7 +42,7 @@ class FeedsController extends \Library\Core\Controller {
     	if ($bSaveNewActivities) {
     		$aDbElements = array();
 	    	$oDatabaseLastFeedItems = new \app\Entities\Collection\FeedItemCollection();
-	    	$oDatabaseLastFeedItems->loadByParameters(array('feeds_idfeed' => 1, 'status' => 'publish'), array('created'=>'DESC'), array(0,50));
+	    	$oDatabaseLastFeedItems->loadByParameters(array('feed_idfeed' => 1, 'status' => 'publish'), array('created'=>'DESC'), array(0,50));
 	    	// Indexer les items dans un array pour mapper plus vite
 	    	foreach ($oDatabaseLastFeedItems as $oDbFeedItem) {
 	    		if (isset($oDbFeedItem->created, $oDbFeedItem->title)) {
@@ -84,7 +84,7 @@ class FeedsController extends \Library\Core\Controller {
 	    		break;
 	    	}
 	    	$oFeedItem->permalink = $sPermalink;
-	    	$oFeedItem->feeds_idfeed = 1;
+	    	$oFeedItem->feed_idfeed = 1;
     			    	
 	    	if ($bSaveNewActivities) {
 				$oAddedFeedActivities = new \Library\Core\Collection();			    	

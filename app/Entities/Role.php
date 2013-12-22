@@ -10,7 +10,7 @@ namespace app\Entities;
 class Role extends \Library\Core\Entity {
 
     const ENTITY = 'Role';
-    const TABLE_NAME = 'roles';
+    const TABLE_NAME = 'role';
     const PRIMARY_KEY = 'idrole';
 
     /**

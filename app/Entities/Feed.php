@@ -10,7 +10,7 @@ namespace app\Entities;
 class Feed extends \Library\Core\Entity {
 
     const ENTITY = 'Feed';
-    const TABLE_NAME = 'feeds';
+    const TABLE_NAME = 'feed';
     const PRIMARY_KEY = 'idfeed';
 
     /**

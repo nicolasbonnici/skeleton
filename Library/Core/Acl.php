@@ -132,7 +132,7 @@ abstract class Acl   {
 		$this->oRole = new \app\Entities\Role();
     	try {
 	    	$this->oRole->loadByParameters(array(
-	    		'idrole' => $this->oUser->roles_idrole
+	    		'idrole' => $this->oUser->role_idrole
 	    	));    		
     	} catch (CoreEntityException $oException) {
     		throw new CoreAclException('Error: No role found for user');    		
@@ -152,7 +152,7 @@ abstract class Acl   {
 		$this->oPermissions = new \app\Entities\Collection\PermissionCollection();
     	try {
 			$this->oPermissions->loadByParameters(array(
-		    	'roles_idrole' => $this->oRole->idrole
+		    	'role_idrole' => $this->oRole->idrole
 		    ));
     	} catch (CoreEntityException $oException) {}
     	return ($this->oPermissions->count() > 0) ? TRUE : FALSE;

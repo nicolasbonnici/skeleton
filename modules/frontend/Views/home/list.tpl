@@ -2,13 +2,13 @@
 	{% for oItem in oItems %}
 	
 		{% set sItemType = '' %}
-		{% if oItem.feeds_idfeed == 1 %}
+		{% if oItem.feed_idfeed == 1 %}
 			{% set sItemType = 'twitter' %}
 		{% endif %}
-		{% if oItem.feeds_idfeed == 2 %}
+		{% if oItem.feed_idfeed == 2 %}
 			{% set sItemType = 'google' %}
 		{% endif %}
-		{% if oItem.feeds_idfeed == 3 %}
+		{% if oItem.feed_idfeed == 3 %}
 			{% set sItemType = 'google+' %}
 		{% endif %}	
 	

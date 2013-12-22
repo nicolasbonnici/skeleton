@@ -10,7 +10,7 @@ namespace app\Entities;
 class Ressource extends \Library\Core\Entity {
 
 	const ENTITY = 'Ressource';
-    const TABLE_NAME = 'ressources';
+    const TABLE_NAME = 'ressource';
     const PRIMARY_KEY = 'idressource';
 
     /**
