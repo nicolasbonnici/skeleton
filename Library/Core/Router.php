@@ -10,14 +10,15 @@ namespace Library\Core;
 class Router {
 
     static protected $instance;
-    static protected $lang;
-    static protected $module;
-    static protected $controller;
-    static protected $action;
-    static protected $params;
+    static protected $sLang;
+    static protected $sModule;
+    static protected $sController;
+    static protected $sAction;
+    static protected $aParams;
     static protected $sUrl;
     static protected $aRequest;
-    // @todo move
+    
+    // @todo just for test purposes
     static protected $aRules = array(
             '/login/:module/:[module]/:controller/:[controller]/:action/:[action]/' => array(
                 'module'    => 'frontend',
@@ -69,10 +70,10 @@ class Router {
 
         self::$aRequest = self::cleanArray(explode('/', self::$sUrl));        // @todo move function cleanArray to toolbox
         
-        self::$lang = DEFAULT_LANG;
-        self::$module = DEFAULT_MODULE;
-        self::$controller = DEFAULT_CONTROLLER;
-        self::$action = DEFAULT_ACTION;
+        self::$sLang = DEFAULT_LANG;
+        self::$sModule = DEFAULT_MODULE;
+        self::$sController = DEFAULT_CONTROLLER;
+        self::$sAction = DEFAULT_ACTION;
         
         if (is_array(self::$aRequest) && count(self::$aRequest) > 0) {
             
@@ -82,15 +83,15 @@ class Router {
         }
 		
 		foreach($_FILES as $key=>$value) {
-            self::$params[$key] = $value;
+            self::$aParams[$key] = $value;
         }
 
         foreach($_POST as $key=>$value) {
-            self::$params[$key] = $value;
+            self::$aParams[$key] = $value;
         }		
 
         foreach($_GET as $key=>$value) {
-            self::$params[$key] = $value;
+            self::$aParams[$key] = $value;
         }		
 
         return;
@@ -114,9 +115,9 @@ class Router {
                 
                 $bRouted = false;  
                 
-                self::$module = self::$aRules[$sUrl]['module'];
-                self::$controller = self::$aRules[$sUrl]['controller'];
-                self::$action = self::$aRules[$sUrl]['action'];   
+                self::$sModule = self::$aRules[$sUrl]['module'];
+                self::$sController = self::$aRules[$sUrl]['controller'];
+                self::$sAction = self::$aRules[$sUrl]['action'];   
                 if (
                 	($aParams = array_slice(self::$aRequest, count(self::cleanArray(explode('/', $aUrl[0]))))) 
                 	&& count($aParams) > 0
@@ -134,15 +135,15 @@ class Router {
             if (($iRequestCount = count(self::$aRequest)) > 0) {
                 // @todo optimiser ce traitement 
                 if (isset(self::$aRequest[0])) {
-                    self::$module = self::$aRequest[0];                
+                    self::$sModule = self::$aRequest[0];                
                 } 
                 
                 if (isset(self::$aRequest[1])) {
-                    self::$controller = self::$aRequest[1];                    
+                    self::$sController = self::$aRequest[1];                    
                 } 
                 
                 if(isset(self::$aRequest[2])) {
-                    self::$action = self::$aRequest[2];
+                    self::$sAction = self::$aRequest[2];
                 }
 
                 self::setParams(array_slice(self::$aRequest, 3));        
@@ -153,7 +154,7 @@ class Router {
         return;
     }
 
-        // @todo migrer une classe toolbox en methode static
+    // @todo c'est deguelasse y'a array_values pour faire ce genre de traitement
     private static function cleanArray(array $aArray = array()) {
         if (count($aArray) > 0) {
             foreach ($aArray as $key=>$sValue) {
@@ -175,11 +176,11 @@ class Router {
         if ((!empty($items)) && (count($items) % 2 == 0)) {
             for ($i = 0; $i < count($items); $i++) {
                 if ($i % 2 == 0) {
-                    self::$params[$items[$i]] = $items[$i + 1];
+                    self::$aParams[$items[$i]] = $items[$i + 1];
                 }
             }
         }
-        return self::$params;
+        return self::$aParams;
     }
 
     /**
@@ -219,27 +220,27 @@ class Router {
     }
     
     public static function getModule() {
-        return self::$module;
+        return self::$sModule;
     }
 
     public static function getController() {
-        return self::$controller;
+        return self::$sController;
     }
 
     public static function getAction() {
-        return self::$action;
+        return self::$sAction;
     }
 
     public static function getParams() {
-        return self::$params;
+        return self::$aParams;
     }
 
     public static function getParam($id) {
-        return self::$params[$id];
+        return self::$aParams[$id];
     }
     
     public static function getLang() {
-        return self::$lang;
+        return self::$sLang;
     }
 
 }

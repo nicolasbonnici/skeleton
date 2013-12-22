@@ -206,6 +206,7 @@ class Bootstrap {
      * Init log file
      */
     private function initLogs() {
+
         $sLogFile = LOG_PATH . DEFAULT_MODULE . '/errors.log';
         if (!is_file($sLogFile)) {
         	
@@ -233,6 +234,7 @@ class Bootstrap {
         define('ROOT_PATH', __DIR__ . '/../');
         define('APP_PATH', __DIR__ . '/../app/');
         define('LIBRARY_PATH', __DIR__ . '/../Library/');
+        define('TMP_PATH', __DIR__ . '/../tmp/');
         define('CACHE_PATH', __DIR__ . '/../tmp/cache/');
         define('LOG_PATH', __DIR__ . '/../tmp/logs/');
         define('MODULES_PATH', __DIR__ . '/../modules/');
