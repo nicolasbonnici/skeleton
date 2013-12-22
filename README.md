@@ -8,7 +8,6 @@ Ultra lightweight full stack framework wrote in PHP5 (5.4)
 - Flexible ACL managment
 - Namespaces
 - MVC pattern, modules enabled with a common couch under each layer
-- 
 - Lightweight render engine (Haanga), this framework can render pages that fetch a hundred objects under 0.002 secs 
 
 Installation
