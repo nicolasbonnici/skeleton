@@ -1,14 +1,18 @@
 sociableCore
 ============
 
-Ultra lightweight full stack framework wrote in PHP5 (5.4)
+Ultra lightweight flexible full stack framework wrote in PHP5 (5.4)
 
-- Connect to any relational SGBD structure and scaffold your business logic (on the fly ORM)
-- Autocast every SGBD file types and auto validate data integrity of your objects attributes on CRUD actions
+- Connect to any relational SGBD structure and scaffold your business logic objects from it (on the fly ORM)
+- Autocast every SGBD data types and auto validate data integrity of your objects attributes on CRUD actions
 - Flexible ACL managment
 - Namespaces
-- MVC pattern, modules enabled with a common couch under each layer
+- MVC pattern, modules enabled with a common couch to each layers
 - Lightweight render engine (Haanga), this framework can render pages that fetch a hundred objects under 0.002 secs 
+
+Dependancy
+
+Memcached with php5 bindings and a SGBD like MySQL (InnoDB enabled or maybe SQLlite and many other relational/no relational SGBD can be simply extended).
 
 Installation
 
