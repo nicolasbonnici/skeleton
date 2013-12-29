@@ -3,7 +3,9 @@ sociableCore
 
 Ultra lightweight flexible full stack framework wrote in PHP5 (5.4)
 
-- Connect to any relational SGBD structure and scaffold your business logic objects from it (on the fly ORM)
+- On the fly ORM
+- Connect to any relational SGBD structure and scaffold your business logic objects from it 
+- Scaffold forms, views and also translations
 - Autocast every SGBD data types and auto validate data integrity of your objects attributes on CRUD actions
 - Flexible ACL managment
 - Namespaces
@@ -12,7 +14,7 @@ Ultra lightweight flexible full stack framework wrote in PHP5 (5.4)
 
 Dependancy
 
-Memcached with php5 bindings and a SGBD like MySQL (InnoDB enabled or maybe SQLlite and many other relational/no relational SGBD can be simply extended).
+Memcached
 
 Installation
 
