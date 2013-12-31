@@ -459,10 +459,30 @@ abstract class Entity extends Database  {
 				return true;
 			}
     	}
-		
 		return false;
     }   
-
+	
+	/**
+	 * List all database tables
+	 * 
+	 * @return \Library\Core\Collection
+	 */
+    protected function getDatabaseEntities() 
+    {
+    	$aDatabaseEntities = array();
+    	$aConfig = \Bootstrap::getConfig();
+    	
+    	$oStatement = Database::dbQuery(
+    		'SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE `TABLE_SCHEMA` = ? ORDER BY `TABLES`.`TABLE_SCHEMA` DESC',
+    		array($aConfig['database']['name'])
+		);
+    	if ($oStatement !== false && $oStatement->rowCount() > 0) {
+    	     $aDatabaseEntities = $oStatement->fetchAll(\PDO::FETCH_ASSOC);
+    	}        	
+    	
+    	return $aDatabaseEntities;
+    }	    
+    
 }
 
 class CoreEntityException extends \Exception {}

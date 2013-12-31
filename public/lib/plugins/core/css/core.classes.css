@@ -129,14 +129,12 @@
     visibility: visible !important;
 }
 
-.visibilityToggleOnHover {
+.showOnHover .targetToShow {
     visibility: hidden;
 }
-
-.visibilityToggleOnHover:hover {
+.showOnHover:hover .targetToShow {
     visibility: visible;
 }
-
 .noListStyle {
 	list-style-type: none;
 }
@@ -245,7 +243,6 @@
 .whiteBg {
 	background: #fff !important;
 }
-
 
 .transparentBg { background: transparent !important; }
 
