@@ -55,8 +55,9 @@ class TodoController extends \Library\Core\AuthController {
     }
     
     public function listAction() {
-        $oTodos = new \app\Entities\TodoCollection();
-        $oTodos->loadByUserId($this->_session['iduser']);
+        $oTodos = new \modules\backend\Models\Todo(new \app\Entities\User($this->_session['iduser']));
+        
+        $oTodos->loadByUserId();
         $this->_view['oTodos']  = $oTodos;    	
     	
         $this->render('todo/list.tpl');    	

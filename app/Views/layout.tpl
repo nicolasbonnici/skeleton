@@ -178,6 +178,8 @@
 			</div>
 		</div>
 	
+		{% block modal %}{% endblock %}   	
+	
 		<script	type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script	type="text/javascript" src="/lib/plugins/layout/js/jquery.layout.min.js"></script>
 		<script type="text/javascript" src="/lib/plugins/bootstrap3/js/bootstrap.min.js"></script>
