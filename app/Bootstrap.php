@@ -284,7 +284,8 @@ class Bootstrap {
         
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
             
-            $sLocale = locale_accept_from_http($_SERVER['HTTP_ACCEPT_LANGUAGE']);
+        	// @todo intégrer intl à ce niveau 
+            $sLocale = 'FR_fr';
             
             if (strlen($sLocale) === 2) {
                 $sLocale = strtoupper($sLocale) . '_' . $sLocale;
