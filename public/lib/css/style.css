@@ -1,17 +1,41 @@
 body {
-  background: url(../img/bg.jpg) no-repeat center center fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+	background: url(../img/bg.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.item {
+	
 }
 
 .item.twitter {
-	background: #404040;
 	color: #fff;
 	border: none; 
+	background: #404040 url('http://twitter.com/favicon.ico') 5px 20px no-repeat;
 }
 .item.twitter a {
 	font-weight: bold;
 	color: #48acde;
+}
+
+.item.google {
+	background: #404040 url('http://google.com/favicon.ico') right bottom no-repeat;;
+	color: #404040;
+	border: none; 
+}
+.item.google a {
+	font-weight: bold;
+	color: #48acde;
+}
+
+.item.googleplus {
+	color: #404040;
+	border: none; 
+	background: #fff url('http://plus.google.com/favicon.ico') right bottom no-repeat;
+}
+.item.googleplus a {
+	font-weight: bold;
+	color: #427fed;
 }

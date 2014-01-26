@@ -47,7 +47,7 @@
                                             size: 90,
                                             togglerLength_closed: "100%",                                    
                                             togglerLength_open: 50,
-                                            initClosed:	false,
+                                            initClosed:	true,
                                             onopen_end: function() {
                                                 return false;
                                             },
@@ -56,7 +56,7 @@
                                             }                                    
                                     },
                                     east: {
-                                            size:  100,
+                                            size:  '50%',
                                             applyDefaultStyles: false,
                                             initClosed: true,
                                             togglerLength_closed: 0,
@@ -148,7 +148,7 @@
                 },
                 
                 sendNotification: function(sTitle, sText, sType, sIcon, bCustom) {
-                	var sClass;
+                	var sClass = '';
                 	if (bCustom === true) {
                 		sClass = 'ui-notification';
                 	}
@@ -157,11 +157,11 @@
                 	    text : sText,
                 	    type : sType,
                 	    icon : sIcon,
-                		addclass: sClass + '',
                 		opacity: 1,
                 		nonblock: false,
                 		nonblock_opacity: .2,
-                		stack: {"dir1": "right", "dir2": "down", "push": "bottom"}
+                		addclass: "stack-bottomleft	" + ((sClass.length > 0) ? (' ' + sClass) : ''),
+                		stack: {"dir1": "down", "dir2": "left", "push": "up"}
                 	});                	
                 },     
                 
@@ -196,37 +196,36 @@
                  * @dependancy bootstrap-editable plugin
                  */
                 initEditableElements: function() {
-                    if ($('.ui-editable').size() > 0) {
+                    if ($('.ui-editable').size() > 0 && typeof($.fn.editable) !== 'undefined') {
                     	
                     	// @see setup editable plugin
                     	$.fn.editable.defaults.mode = 'inline';
                     	
-                        $('.ui-editable').each(function() {
-                            
-                            if (!$(this).data('ui-editable-fired')) {
-                            	$(this).data('ui-editable-fired', true);                            	
-                            	$(this).editable({
-                            		params: {entity: $(this).attr('data-entity')},
-                            		success: function(rep) {
-                            			switch(rep.status) {
-	                            			case 1:
-	                            				ui.sendNotification('Success', rep.content, 'success', 'glyphicon glyphicon-ok', false);
-	                            				break;
-	                            			case 2:
-	                            				ui.sendNotification('Error', rep.content, 'error', 'glyphicon glyphicon-exclamation-sign', false);
-	                            				break;
-	                            			case 3:
-	                            				ui.sendNotification('Success', rep.content, 'warning', 'glyphicon glyphicon-time', false);
-	                            				break;
-	                            			default:
-	                            				ui.sendNotification('Info', rep.content, 'info', 'glyphicon glyphicon-info', true);
-                            					break;	                            				
-                            			}
-                            		}
-                            	});
-                            }
-                            
-                        });
+                    	$('.ui-editable').each(function() {
+                    		
+                    		if (!$(this).data('ui-editable-fired')) {
+                    			$(this).data('ui-editable-fired', true);                            	
+                    			$(this).editable({
+                    				success: function(rep) {
+                    					switch(rep.status) {
+                    					case 1:
+                    						ui.sendNotification('Success', rep.content, 'success', 'glyphicon glyphicon-ok', false);
+                    						break;
+                    					case 2:
+                    						ui.sendNotification('Error', rep.content, 'error', 'glyphicon glyphicon-exclamation-sign', false);
+                    						break;
+                    					case 3:
+                    						ui.sendNotification('Warning', rep.content, 'warning', 'glyphicon glyphicon-time', false);
+                    						break;
+                    					default:
+                    						ui.sendNotification('Info', rep.content, 'info', 'glyphicon glyphicon-info', true);
+                    					break;	                            				
+                    					}
+                    				}
+                    			});
+                    		}
+                    		
+                    	});
                     }
                 },
                 

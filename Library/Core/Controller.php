@@ -66,7 +66,7 @@ class Controller extends Acl {
             
         } else {
             
-            throw new CoreException(__CLASS__ . ' Error while loading action ' . $this->_action);
+            throw new CoreControllerException(__CLASS__ . ' Error while loading action ' . $this->_action);
             
         }
      

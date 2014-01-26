@@ -14,24 +14,30 @@
 {% block main %}
 
                 <div class="row transparentBlackBg margin ui-shadow rounded">
-                        <div class="col-md-12">
-                                        <h1>
-                                                Hello, world!
-                                        </h1>
-                                        <p>{{ tr['hello'] }} template engine! (rendered by haanga)</p>
 
-                                        <p>
-                                                <a class="btn btn-primary btn-large" href="#">Learn more »</a>
-                                        </p>
-                        </div>
+                       <div class="col-md-6">
+	                      <h1>
+	                         {{ tr['hello'] }}! <small></small>
+	                      </h1>
+	                      <p>
+							Je suis un développeur situé prés de Paris, spécialisé dans les technologies du web. Je peux réaliser votre site internet, votre boutique en ligne, votre application mobile ou encore votre solution informatique sur mesures. 
+						  </p>
+						  <p>
+							Mes créations respectent les standards W3C et sont accessibles depuis n'importe quel environnement même mobile (directement sur votre terminal iPhone, Android, Blackberry...)		                      
+	                      </p>
+	
+	                      <p>
+                              <a class="btn btn-lg btn-default btn-large" href="#"><i class="glyphicon glyphicon-zoom-in"></i> En savoir plus</a>
+                              <a class="btn btn-lg btn-primary ui-login-popover" href="#"><i class="glyphicon glyphicon-user"></i> {{tr['login']}}</a>
+                              <a class="btn btn-lg btn-info" href="#"><i class="glyphicon glyphicon-envelope"></i> {{tr['contact']}}</a>
+	                      </p>
+                       </div>
+
+                       <div class="col-md-6">
+                       
+                       </div>
+
                 </div>
-				<br />
-				<div class="row">
-					<div id="ui-grid" class="ui-loadable ui-scroll-loadable ui-grid" data-module="frontend" data-controller="home" data-action="list">
-			
-					</div>    				
-				</div>
-
 
 
 {% endblock %}

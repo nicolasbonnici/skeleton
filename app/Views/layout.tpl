@@ -43,19 +43,14 @@
 			<div class="ui-layout-content noOverflow">
 				<div class="row clearfix">
 					<div class="col-md-12 column">
-						<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
-							<div class="navbar-header">
-								 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> 
-								 	<span class="sr-only">Toggle navigation</span><span class="icon-bar"></span>
-								 	<span class="icon-bar"></span><span class="icon-bar"></span>
-								 </button> 
-								 <a class="navbar-brand" href="/">nbonnici.info:~$</a>
-							</div>
-							
+						<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">							
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 								<ul class="nav navbar-nav">
 									<li{% if currentPage|Exists && currentPage == 'homepage' %} class="active"{% endif %}>
 										<a href="/" title="{{tr['homepage_tip']}}"><span class="glyphicon glyphicon-home"></span> {{tr['homepage']}}</a>
+									</li>
+									<li>
+										<a href="/lifestream" title="{{tr['lifestream_tip']}}"><span class="glyphicon glyphicon-globe"></span> {{tr['lifestream']}}</a>
 									</li>
 									<li>
 										<a href="/portfolio" title="{{tr['portfolio_tip']}}"><span class="glyphicon glyphicon-folder-open"></span> {{tr['portfolio']}}</a>
@@ -63,12 +58,19 @@
 									<li>
 										<a href="/contact" title="{{tr['contact_tip']}}"><span class="glyphicon glyphicon-envelope"></span> {{tr['contact']}}</a>
 									</li>
+									<li class="dropdown">
+										<a href="#" title="{{tr['search_tip']}}" class="dropdown-toggle" data-toggle="dropdown">
+											<span class="glyphicon glyphicon-search"></span> {{tr['search']}}
+										</a>									
+										<ul class="dropdown-menu">
+											<form class="navbar-form navbar-left" role="search">
+												<div class="form-group">
+													<input type="text" class="form-control" placeholder="{{tr['search_helper']}}" />
+												</div> 
+											</form>	
+										</ul>
+									</li>									
 								</ul>
-								<form class="navbar-form navbar-left" role="search">
-									<div class="form-group">
-										<input type="text" class="form-control" placeholder="{{tr['search_helper']}}" />
-									</div> <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
-								</form>
 								<ul class="nav navbar-nav navbar-right">
 									{% if aSession|Exists %}
 									<li class="dropdown">
@@ -94,7 +96,7 @@
 									</li> 
 									{% else %}
 									<li class="">
-										<a href="#" class="ui-login-popover"><strong>{{tr['login']}}</strong></a>
+										<a href="/login" class=""><strong>{{tr['login']}}</strong></a>
 										
 										<div id="login-popover" class="hide">
 											<div class="row clearfix">
@@ -139,7 +141,7 @@
 			</div>
 		</div>
 	
-		<div class="ui-layout-west whiteBg ui-scrollable GPUrender">
+		<div class="ui-layout-west whiteBg ui-scrollable">
 			<div class="ui-layout-content">
 				<div class="row">
 					<div class="col-md-12">

@@ -19,43 +19,7 @@ class Router {
     static protected $aRequest;
     
     // @todo just for test purposes
-    static protected $aRules = array(
-            '/login/:module/:[module]/:controller/:[controller]/:action/:[action]/' => array(
-                'module'    => 'frontend',
-                'controller' => 'auth',
-                'action'    => 'index'
-            ),
-            '/logout' => array(
-                'module'    => 'frontend',
-                'controller' => 'auth',
-                'action'    => 'logout'
-            ),
-            '/profile' => array(
-                'module'    => 'backend',
-                'controller' => 'user',
-                'action'    => 'profile'
-            ),
-            '/profile/update/:id/:[id]/' => array(
-                'module'    => 'backend',
-                'controller' => 'user',
-                'action'    => 'update'
-            ),
-            '/blog/:param/' => array(
-                'module'    => 'frontend',
-                'controller' => 'blog',
-                'action'    => 'index'
-            ),
-            '/portfolio/:param/' => array(
-                'module'    => 'frontend',
-                'controller' => 'home',
-                'action'    => 'portfolio'
-            ),
-            '/contact/:param/' => array(
-                'module'    => 'frontend',
-                'controller' => 'home',
-                'action'    => 'contact'
-            )
-        );    
+    static protected $aRules = array();   
 
     public static function getInstance() {
         if (!self::$instance instanceof self) {
@@ -66,6 +30,49 @@ class Router {
 
     public static function init() {
 
+    	self::$aRules = array(
+    			'/login/:module/:[module]/:controller/:[controller]/:action/:[action]/' => array(
+    					'module'    => 'frontend',
+    					'controller' => 'auth',
+    					'action'    => 'index'
+    			),
+    			'/logout' => array(
+    					'module'    => 'frontend',
+    					'controller' => 'auth',
+    					'action'    => 'logout'
+    			),
+    			'/profile' => array(
+    					'module'    => 'backend',
+    					'controller' => 'user',
+    					'action'    => 'profile'
+    			),
+    			'/profile/update/:id/:[id]/' => array(
+    					'module'    => 'backend',
+    					'controller' => 'user',
+    					'action'    => 'update'
+    			),
+    			'/blog/:param/' => array(
+    					'module'    => 'frontend',
+    					'controller' => 'blog',
+    					'action'    => 'index'
+    			),
+    			'/portfolio/:param/' => array(
+    					'module'    => 'frontend',
+    					'controller' => 'home',
+    					'action'    => 'portfolio'
+    			),
+    			'/lifestream/:param/' => array(
+    					'module'    => 'frontend',
+    					'controller' => 'home',
+    					'action'    => 'lifestream'
+    			),
+    			'/contact/:param/' => array(
+    					'module'    => 'frontend',
+    					'controller' => 'home',
+    					'action'    => 'contact'
+    			)
+    	);    	
+    	
         self::$sUrl = $_SERVER['REQUEST_URI'];
 
         self::$aRequest = self::cleanArray(explode('/', self::$sUrl));        // @todo move function cleanArray to toolbox

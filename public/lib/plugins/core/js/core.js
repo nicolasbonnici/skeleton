@@ -1,7 +1,8 @@
 
 (function($) {
         $.fn.core = function(params) {
-
+            var ui = $.fn.userInterface();
+            
             var core = {        
                 
                 preload: function(selector) {
@@ -61,7 +62,7 @@
 
             		var sSelector = '#'+$obj.attr('id');                			
             		var iStep = $(sSelector + ' .item').length;           		         		            		
-        			console.log(iStep);
+
                     $.ajax({
                         type: 'POST',
                         url: '/'+$obj.attr('data-module')+'/'+$obj.attr('data-controller')+'/'+$obj.attr('data-action'),
@@ -71,7 +72,7 @@
                         },
                         success: function(rep){
                         	if (rep.status === 1) { // @see if XHR_STATUS_OK                                               		                                    		
-                        		$(sSelector).append(rep.content);                                              
+                        		$(sSelector).append(rep.content);
                         		$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		
                         	}
                         },
@@ -177,7 +178,6 @@
 
 
 $(document).ready(function() {
-
     
     var ui = $.fn.userInterface();
     var core = $.fn.core();   
@@ -226,12 +226,13 @@ $(document).ready(function() {
     });    
 
 	$('.ui-login-popover').popover({
-			container: 'body', 
-	        placement : 'auto', 
-	        title : '<h4>Login</h4>',
-	        html: 'true', 
-	        animation: true,
-	        content : $('#login-popover').html()
+		container: 'body', 
+        placement : 'auto', 
+        title : '<h4>Login</h4>',
+        html: 'true', 
+        animation: true,
+        
+        content : $('#login-popover').html()
 	});
     
 });

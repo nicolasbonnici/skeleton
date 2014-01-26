@@ -87,4 +87,12 @@
 	width: 33px;
 	height: 33px;
 }
+.ui-pnotify-history-container {
 
+}
+.ui-pnotify.stack-bottomleft {
+	bottom: 25px;
+	left: 25px;
+	top: auto;
+	right: auto;
+}

@@ -22,6 +22,11 @@ class HomeController extends \Library\Core\Controller {
         $this->render('home/index.tpl');
     }
     
+    public function lifestreamAction() 
+    {
+        $this->render('home/lifestream.tpl');    	
+    }
+    
     public function portfolioAction() 
     {
         $this->render('home/portfolio.tpl');    	
@@ -35,7 +40,7 @@ class HomeController extends \Library\Core\Controller {
     public function listAction() {  
 		$aLimit = array(0,25);
     	if (isset($this->_params['iStep'])) {
-    		$aLimit = array($this->_params['iStep'], 5);
+    		$aLimit = array($this->_params['iStep'], 25);
     	}
     	
     	$oItems = new \app\Entities\Collection\FeedItemCollection();

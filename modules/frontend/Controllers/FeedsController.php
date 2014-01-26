@@ -34,8 +34,10 @@ class FeedsController extends \Library\Core\Controller {
         $this->render('feeds/index.tpl');
     }
 
-    private function parseTwitterActivity(\app\Entities\Feed $oTwitterFeed, $bSaveNewActivities = false) {
-    	   	    	
+    private function parseTwitterActivity(\app\Entities\Feed $oTwitterFeed, $bSaveNewActivities = false, $iDelta = 100) {
+    	
+    	assert('$oTwitterFeed->isLoaded() && \Library\Core\Validator::integer($iDelta, 0, 500) === \Library\Core\Validator::STATUS_OK');   	
+    	    	
     	$oItems = new \app\Entities\Collection\FeedItemCollection();
     	
     	// @see loader les derniers enregistrements de la db pour persister le diff des nouvelles activités
@@ -55,7 +57,7 @@ class FeedsController extends \Library\Core\Controller {
     	
 		// @todo move and use config dynamiser ...
 		$sRequestMethod = 'GET';
-		$sGetfield = '?screen_name=nicolasbonnici&count=31'; //@todo var iDelta
+		$sGetfield = '?screen_name=nicolasbonnici&count=' . $iDelta;
 		
 		$aSettings = array(
 		    'oauth_access_token' => "17471981-qdnKvIpNmOMgRYEX93uG7uS7rrtOOZCY8YRNd9NWE",
