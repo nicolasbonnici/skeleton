@@ -87,8 +87,6 @@ class Controller extends Acl {
             require_once MODULES_PATH . '/modules/' . DEFAULT_MODULE . '/translations/' . $this->_lang . '/' . $sTranslationFile;
         }
         
-        //var_dump($this->_view);
-		$this->_view['sModule'] = $this->_module;  
 		if (count($this->_session) > 0) {		
 			$this->_view['aSession'] = $this->_session;			
 			$this->_view['sGravatarSrc16'] = Tools::getGravatar($this->_session['mail'],  16);			
@@ -96,19 +94,30 @@ class Controller extends Acl {
 			$this->_view['sGravatarSrc64'] = Tools::getGravatar($this->_session['mail'],  64);			
 			$this->_view['sGravatarSrc128'] = Tools::getGravatar($this->_session['mail'], 128);			
 		}  
-        $this->_view['framework_started'] = FRAMEWORK_STARTED;      
-        $this->_view["sAppName"] = $this->_config['app']['name'];        
-        $this->_view["lang"] = $this->_lang;     
+		
+		// Translation
+		$this->_view["sAppName"] = $this->_config['app']['name'];
+		$this->_view["lang"] = $this->_lang;
+		$this->_view["tr"] = $tr; // @see loading de la traduction pour la vue		    
+
+        // Views common couch
         $this->_view["appLayout"] = '../../../app/Views/layout.tpl'; // @todo degager ca ou constante mais quelquechose
-        $this->_view["helpers"] = '../../../app/Views/helpers/';
-        $this->_view["sDeBugHelper"] = '../../../app/Views/helpers/debug.tpl';
         $this->_view["appLoginLayout"] = '../../../app/Views/loginLayout.tpl';
-        $this->_view["tr"] = $tr; // @see loading de la traduction pour la vue
-        $this->_view["aLoadedClass"] = \Bootstrap::getLoadedClass();
-        $this->_view["render_time"] = microtime(true);
+        $this->_view["helpers"] = '../../../app/Views/helpers/';        
+                
+        // MVC
+        $this->_view['sModule'] = $this->_module;        
         $this->_view["sController"] = $this->_controller;
         $this->_view["sAction"] = $this->_action;
 
+        // debug
+        $this->_view["aLoadedClass"] = \Bootstrap::getLoadedClass();
+        $this->_view["render_time"] = microtime(true);
+        $this->_view["sDeBugHelper"] = '../../../app/Views/helpers/debug.tpl';
+        
+        // Benchmark
+        $this->_view['framework_started'] = FRAMEWORK_STARTED;        
+        
     	// @see check if it's an XMLHTTPREQUEST
 	    if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
 	    	//var_dump($this->_view);

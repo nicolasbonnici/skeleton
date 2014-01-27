@@ -18,7 +18,7 @@ class Router {
     static protected $sUrl;
     static protected $aRequest;
     
-    // @todo just for test purposes
+
     static protected $aRules = array();   
 
     public static function getInstance() {
@@ -30,6 +30,7 @@ class Router {
 
     public static function init() {
 
+    	// @todo retrieve from db
     	self::$aRules = array(
     			'/login/:module/:[module]/:controller/:[controller]/:action/:[action]/' => array(
     					'module'    => 'frontend',

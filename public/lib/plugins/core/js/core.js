@@ -61,12 +61,13 @@
                 loadScroll: function($obj) {
 
             		var sSelector = '#'+$obj.attr('id');                			
-            		var iStep = $(sSelector + ' .item').length;           		         		            		
-
+            		var iStep = $(sSelector).data('istep', $(sSelector + ' .item').length);           		         		            		
+            		var aData = $(sSelector).data();
+            		
                     $.ajax({
                         type: 'POST',
                         url: '/'+$obj.attr('data-module')+'/'+$obj.attr('data-controller')+'/'+$obj.attr('data-action'),
-                        data: 'iStep=' + iStep,
+                        data: aData,
                         beforeSend : function(preload) {
                         	
                         },
@@ -76,7 +77,7 @@
                         		$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		
                         	}
                         },
-                        error: function(err){                            
+                        error: function(rep){                            
                             // Restore cached content
                         	$(sSelector).append($(sSelector).data('initialContent'));  
                     		$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		                        	
@@ -141,11 +142,28 @@
                                 // Mettre en cache et vider l'objet qui contiendra la reponse
                                 $(this).data('initialContent', $(this).html());	                				
                 				
+                                var sUrlTarget = '';
+                                if (
+                            		typeof($(this).data('module')) !== 'undefined' && 
+                            		typeof($(this).data('controller')) !== 'undefined' && 
+                            		typeof($(this).data('action')) !== 'undefined' 
+                                ) {
+                                	sUrlTarget = '/'+$(this).data('module')+'/'+$(this).data('controller')+'/'+$(this).data('action');
+                                } else if (typeof($(this).data('url')) !== 'undefined') {
+                                	sUrlTarget = $(this).data('url');
+                                } else {
+                                	ui.sendNotification('Error', 'No url specified to load ui-loadable div #' + $(this).attr('id'), 'error', 'glyphicon glyphicon-warning', false);
+                                	return false;
+                                }
+
                                 var sSelector = '#'+$(this).attr('id');
+
+                                var aData = $(sSelector).data();
                                 
                                 $.ajax({
                                     type: 'POST',
-                                    url: '/'+$(this).attr('data-module')+'/'+$(this).attr('data-controller')+'/'+$(this).attr('data-action'),
+                                    url: sUrlTarget,
+                                    data: aData,
                                     beforeSend : function(preload) {
                                     	$(sSelector).empty();                                                            
                                     },
@@ -168,8 +186,54 @@
                 		});
                 		
                 	}
-                }                
+                },             
+                
+                reload: function(oItem) {
+                	// Mettre en cache et vider l'objet qui contiendra la reponse
+                	oItem.data('initialContent', oItem.html());	                				
+                	
+                	var sUrlTarget = '';
+                	if (
+                			typeof(oItem.data('module')) !== 'undefined' && 
+                			typeof(oItem.data('controller')) !== 'undefined' && 
+                			typeof(oItem.data('action')) !== 'undefined' 
+                	) {
+                		sUrlTarget = '/'+oItem.data('module')+'/'+oItem.data('controller')+'/'+oItem.data('action');
+                	} else if (typeof(oItem.data('url')) !== 'undefined') {
+                		sUrlTarget = oItem.data('url');
+                	} else {
+                		ui.sendNotification('Error', 'No url specified to load ui-loadable div #' + oItem.attr('id'), 'error', 'glyphicon glyphicon-warning', false);
+                		return false;
+                	}
+                	
+                	var sSelector = '#'+oItem.attr('id');
+                	
+                    var aData = $(sSelector).data();                	
+                	
+                	$.ajax({
+                		type: 'POST',
+                		url: sUrlTarget,
+                        data: aData,                		
+                		beforeSend : function(preload) {
+                			$(sSelector).empty();                                                            
+                		},
+                		success: function(rep){
+                			if (rep.status === 1) { // @see if XHR_STATUS_OK                                               		                                    		
+                				$(sSelector).append(rep.content);                                              
+                				$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		
+                			}
+                		},
+                		error: function(err){                            
+                			// Restore cached content
+                			$(sSelector).append($(sSelector).data('initialContent'));                            
+                		},
+                		complete: function(){
+                			
+                		}
+                	});                   	
+                }
             }
+            
 
             //~ // Permettre le chaînage par jQuery
             return core;
@@ -197,18 +261,27 @@ $(document).ready(function() {
     // ---------------------------- Asynchrone request
 
     // Envoyer une requete XHR lors d'un clic ou d'un change sur un select
-    $('body').on('click', '.ui-sendxhr', function(){
+    $('.ui-sendxhr').on('click', function(){
         core.sendXHR($(this));
         return false;	
     });
-    $('body').on('change', '.sendXHROnChange',  function(){
+    $('.sendXHROnChange').on('change',  function(){
         core.sendXHR($(this));
         return false;	
     });
+    
+    // Envoyer des formulaires en asynchrone
+    $('.ui-sendform').on('click', function() {		
+    	core.sendForm($(this));		
+    	return false;	
+    });        
 	
     // Envoyer des formulaires en asynchrone
-    $('body').on('click', '.ui-sendform', function() {		
-        core.sendForm($(this));		
+    $('.ui-reload').on('click', function() {	
+    	console.log($(this).data('sreloadtarget'));
+    	if (typeof($(this).data('sreloadtarget')) !== 'undefined') {
+    		core.reload($($(this).data('sreloadtarget')));		
+    	}
         return false;	
     });        
     

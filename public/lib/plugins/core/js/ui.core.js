@@ -175,7 +175,7 @@
                 			
                 			var iTimestamp = parseInt($(this).attr('data-timestamp'));
                 			var oDate = new Date(iTimestamp*1000);                	
-                			$(this).append(oDate.toLocaleDateString() + ' ' + oDate.toLocaleTimeString() + ' <span class="glyphicon glyphicon-time"></span>');
+                			$(this).empty().append(oDate.toLocaleDateString() + ' ' + oDate.toLocaleTimeString() + ' <span class="glyphicon glyphicon-time"></span>');
                 			
 	                		$(this).data('formatTimestampFired', true);
                 		}
@@ -233,21 +233,23 @@
                  * Faire un plugin de ca
                  */
                 initGrids: function() {
-                    var $container = $('#ui-grid');
-                    if (!$container.data('grid-loaded')) {
-                    	
-                    	$container.data('grid-loaded', true);      
-                    	// On ajoute 4 colonnes @todo dynamiser avec un param
-	                    $container.append('<div class="ui-grid-column col-md-3"></div><div class="ui-grid-column col-md-3"></div><div class="ui-grid-column col-md-3"></div><div class="ui-grid-column col-md-3"></div>');
-                    }
-                    
-                    $container.data('curCol',0);
-                    $('#ui-grid .item').each(function(index) {
-                    	$container.find('.ui-grid-column').eq($container.data('curCol')).append($(this));
-                    	var iCurrentColumnIndex = (($container.data('curCol') + 1) > 3) ? 0 : ($container.data('curCol') + 1); // @see reset @ > 3           	
-                    	$container.data('curCol', iCurrentColumnIndex);
-                    	//console.log($container.data('curCol'), $('#ui-grid .item').length);
-                    });
+                	$('.ui-grid').each(function() {
+                		$container = $(this);
+                        if (!$container.data('grid-loaded')) {
+                        	
+                        	$container.data('grid-loaded', true);      
+                        	// On ajoute 4 colonnes @todo dynamiser avec un param
+    	                    $container.append('<div class="column ui-grid-column col-md-3"></div><div class="column ui-grid-column col-md-3"></div><div class="column ui-grid-column col-md-3"></div><div class="column ui-grid-column col-md-3"></div>');
+                        }
+                        
+                        $container.data('curCol',0);
+                        $('#' + $container.attr('id') + ' .item').each(function(index) {
+                        	$container.find('.ui-grid-column').eq($container.data('curCol')).append($(this));
+                        	var iCurrentColumnIndex = (($container.data('curCol') + 1) > 3) ? 0 : ($container.data('curCol') + 1); // @see reset @ > 3           	
+                        	$container.data('curCol', iCurrentColumnIndex);
+                        	//console.log($container.data('curCol'), $('#ui-grid .item').length);
+                        });                		
+                	});
                 },
                 
                 initUi: function() {
@@ -279,7 +281,13 @@
                     this.initEditableElements();
                                                            
                     // Move all modals directly on the body (bugfix pour le layout)
-                    $('.ui-modal').appendTo("body");                    
+                    $('.ui-modal').appendTo("body");  
+                    
+                    // init carousel
+                    $('.ui-carousel').carousel({
+                    	  interval: 2000,
+                    	  duration: 50
+                    });
 
                 }
             }

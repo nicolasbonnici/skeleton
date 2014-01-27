@@ -46,19 +46,19 @@
 						<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">							
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 								<ul class="nav navbar-nav">
-									<li{% if currentPage|Exists && currentPage == 'homepage' %} class="active"{% endif %}>
+									<li{% if sAction|Exists && sAction == 'indexAction' %} class="active"{% endif %}>
 										<a href="/" title="{{tr['homepage_tip']}}"><span class="glyphicon glyphicon-home"></span> {{tr['homepage']}}</a>
 									</li>
-									<li>
+									<li{% if sAction|Exists && sAction == 'lifestreamAction' %} class="active"{% endif %}>
 										<a href="/lifestream" title="{{tr['lifestream_tip']}}"><span class="glyphicon glyphicon-globe"></span> {{tr['lifestream']}}</a>
 									</li>
-									<li>
+									<li{% if sAction|Exists && sAction == 'portfolioAction' %} class="active"{% endif %}>
 										<a href="/portfolio" title="{{tr['portfolio_tip']}}"><span class="glyphicon glyphicon-folder-open"></span> {{tr['portfolio']}}</a>
 									</li>
-									<li>
+									<li{% if sAction|Exists && sAction == 'contactAction' %} class="active"{% endif %}>
 										<a href="/contact" title="{{tr['contact_tip']}}"><span class="glyphicon glyphicon-envelope"></span> {{tr['contact']}}</a>
 									</li>
-									<li class="dropdown">
+									<li class="dropdown{% if sAction|Exists && sAction == 'homepage' %} active{% endif %}">
 										<a href="#" title="{{tr['search_tip']}}" class="dropdown-toggle" data-toggle="dropdown">
 											<span class="glyphicon glyphicon-search"></span> {{tr['search']}}
 										</a>									
@@ -90,7 +90,15 @@
 												</a>
 											</li>
 											<li class="divider"></li>
-											<li><a href="/logout">{{tr['logout']}}</a>
+											<li>
+												<a href="/logout">{{tr['logout']}}</a>
+												<div id="login-popover" class="hide">
+													<div class="row clearfix">
+														<div class="col-md-12 column">
+											            	<a href="/logout" class="btn btn-danger" data-loading-text="Loading...">{{tr['logout']}}</a>	
+														</div>
+													</div>
+												</div>												
 											</li>
 										</ul>
 									</li> 
