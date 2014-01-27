@@ -77,7 +77,7 @@ abstract class Entity extends Database  {
     /**
      * Constructor
      * @param mixed $mPrimaryKey Primary key. If left empty, blank object will be instanciated
-     * @throws CoreEntityException
+     * @throws EntityException
      */
     public function __construct($mPrimaryKey = null)
     {
@@ -121,7 +121,7 @@ abstract class Entity extends Database  {
         }
 
         if (!isset($this->$sName)) {
-            throw new CoreEntityException('Trying to get undefined member "' . $sName . '" of entity "' . get_called_class() . '"');
+            throw new EntityException('Trying to get undefined member "' . $sName . '" of entity "' . get_called_class() . '"');
         }
 
         return $this->$sName;
@@ -158,12 +158,12 @@ abstract class Entity extends Database  {
      * Parameters is a key/value array, key being table fields names
      * @param   array   $aParameters Parameters to check
      * @return  boolean TRUE if object was successfully loaded, otherwise FALSE
-     * @throws  CoreEntityException
+     * @throws  EntityException
      */
     public function loadByParameters(array $aParameters)
     {
         if (empty($aParameters)) {
-            throw new CoreEntityException('No parameter provided for loading object of type ' . get_called_class());
+            throw new EntityException('No parameter provided for loading object of type ' . get_called_class());
         }
 
         return $this->loadByQuery(
@@ -182,7 +182,7 @@ abstract class Entity extends Database  {
      * @param   boolean $bUseCache      Whether object caching must be used to retrieve data or not
      * @param   string  $sCacheKey      Cache key for given query
      * @return  boolean TRUE if object was successfully loaded, otherwise FALSE
-     * @throws  CoreEntityException
+     * @throws  EntityException
      */
     protected function loadByQuery($sQuery, array $aBindedValues = array(), $bUseCache = true, $sCacheKey = null)
     {
@@ -199,7 +199,7 @@ abstract class Entity extends Database  {
             $bRefreshCache = true;
 
             if (($oStatement = \Library\Core\Database::dbQuery($sQuery, $aBindedValues)) === false) {
-                throw new CoreEntityException('Unable to construct object of class ' . get_called_class() . ' with query ' . $sQuery);
+                throw new EntityException('Unable to construct object of class ' . get_called_class() . ' with query ' . $sQuery);
             }
 
             if ($oStatement->rowCount() === 0) {
@@ -207,7 +207,7 @@ abstract class Entity extends Database  {
             }
 
             if ($oStatement->rowCount() > 1) {
-                throw new CoreEntityException('More than one occurence of object try to build a entityCollection?...' . get_called_class() . ' found for query ' . $sQuery);
+                throw new EntityException('More than one occurence of object try to build a entityCollection?...' . get_called_class() . ' found for query ' . $sQuery);
             }
 
             $aObject = $oStatement->fetchAll(\PDO::FETCH_ASSOC);
@@ -240,7 +240,7 @@ abstract class Entity extends Database  {
     /**
      * Add record corresponding to object to database
      * @return boolean TRUE if record was successfully inserted, otherwise FALSE
-     * @throws CoreEntityException
+     * @throws EntityException
      */
     public function add()
     {
@@ -258,7 +258,7 @@ abstract class Entity extends Database  {
         }
 
         if (count($aInsertedFields) === 0) {
-            throw new CoreEntityException('Cannot create empty object of class ' . get_called_class());
+            throw new EntityException('Cannot create empty object of class ' . get_called_class());
         }
 
         try {
@@ -275,7 +275,7 @@ abstract class Entity extends Database  {
     /**
      * Update record corresponding to object in database
      * @return boolean TRUE if record was successfully updated, otherwise FALSE
-     * @throws CoreEntityException
+     * @throws EntityException
      */
     public function update()
     {
@@ -293,11 +293,11 @@ abstract class Entity extends Database  {
         }
 
         if (count($aUpdatedFields) === 0) {
-            throw new CoreEntityException('Cannot update empty object of class ' . get_called_class());
+            throw new EntityException('Cannot update empty object of class ' . get_called_class());
         }
 
         if (empty($this->{static::PRIMARY_KEY})) {
-            throw new CoreEntityException('Cannot update object of class ' . get_called_class() . ' with no primary key value');
+            throw new EntityException('Cannot update object of class ' . get_called_class() . ' with no primary key value');
         }
 
         try {
@@ -323,12 +323,12 @@ abstract class Entity extends Database  {
     /**
      * Retrieve instance ID (primary key)
      * @return mixed Instance ID
-     * @throws CoreEntityException
+     * @throws EntityException
      */
     public function getId()
     {
         if (!$this->bIsLoaded) {
-            throw new CoreEntityException('Cannot get ID of object not loaded');
+            throw new EntityException('Cannot get ID of object not loaded');
         }
         return $this->{static::PRIMARY_KEY};
     }
@@ -356,12 +356,12 @@ abstract class Entity extends Database  {
      * Load object using its primary key
      * @param   boolean $bUseCache Whether object caching must be used to retrieve data or not
      * @return  boolean TRUE if object was successfully loaded, otherwise FALSE
-     * @throws  CoreEntityException
+     * @throws  EntityException
      */
     protected function loadByPrimaryKey($bUseCache = true)
     {
         if (!isset($this->{static::PRIMARY_KEY})) {
-            throw new CoreEntityException('Cannot load object of class ' . get_called_class() . ' by primary key, no value provided for key ' . static::PRIMARY_KEY);
+            throw new EntityException('Cannot load object of class ' . get_called_class() . ' by primary key, no value provided for key ' . static::PRIMARY_KEY);
         }
 
         return $this->loadByQuery(
@@ -374,14 +374,14 @@ abstract class Entity extends Database  {
 
     /**
      * Load the list of fields of the associated database table
-     * @throws CoreEntityException
+     * @throws EntityException
      */
     protected function loadFields()
     {
         $sCacheKey = Cache::getKey(__METHOD__, get_called_class());
         if (($this->aFields = Cache::get($sCacheKey)) === false) {
             if (($oStatement = \Library\Core\Database::dbQuery('SHOW COLUMNS FROM ' . static::TABLE_NAME)) === false) {
-                throw new CoreEntityException('Unable to list fields for table ' . static::TABLE_NAME);
+                throw new EntityException('Unable to list fields for table ' . static::TABLE_NAME);
             }
 
             foreach ($oStatement->fetchAll(\PDO::FETCH_ASSOC) as $aColumn) {
@@ -397,7 +397,7 @@ abstract class Entity extends Database  {
      *
      * @param string $sName
      * @return string|null
-     * @throws CoreEntityException
+     * @throws EntityException
      */
     public function getDataType($sName = null) {
 
@@ -417,7 +417,7 @@ abstract class Entity extends Database  {
 			} elseif (preg_match('#^enum#', $this->aFields[$sName]['Type'])) {
 				$sDataType = 'enum'; // @todo ajouter un type enum dans validator puis un inArray pour valider
 			} else {
-				throw new CoreEntityException(__CLASS__ . ' Unsuported database field type: ' . $this->aFields[$sName]['Type']);
+				throw new EntityException(__CLASS__ . ' Unsuported database field type: ' . $this->aFields[$sName]['Type']);
 			}
     	}
 		return $sDataType;
@@ -440,7 +440,7 @@ abstract class Entity extends Database  {
      *
      * @param string $sFieldName
      * @param mixed string|int|float $mValue
-     * @throws CoreEntityException
+     * @throws EntityException
      * @return bool
      */
     protected function validateDataIntegrity($sFieldName, $mValue)
@@ -491,6 +491,6 @@ abstract class Entity extends Database  {
 
 }
 
-class CoreEntityException extends \Exception {}
+class EntityException extends \Exception {}
 
 ?>

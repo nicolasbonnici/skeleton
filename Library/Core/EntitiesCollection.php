@@ -259,3 +259,4 @@ abstract class EntitiesCollection extends Collection {
     }
 }
 
+class EntitiesCollectionException extends \Exception {}

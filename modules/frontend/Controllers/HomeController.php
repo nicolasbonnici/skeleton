@@ -41,7 +41,7 @@ class HomeController extends \Library\Core\Controller {
     }
 
     public function listAction(array $aFeedIds = array(1,2,3), $iLoadStep = 64) {
-    	$oItems = new \app\Entities\Collection\FeedItemCollection();
+
 		$aLimit = array(0, $iLoadStep);
 
     	if (isset($this->_params['istep']) && $this->_params['istep'] > 0) {
@@ -51,22 +51,11 @@ class HomeController extends \Library\Core\Controller {
     	if (isset($this->_params['sfeedid'])) {
     		$aFeedIds = explode(',', $this->_params['sfeedid']);
     	}
-//@todo migrer en couche model
-    	$oItems->loadByParameters(// @todo ajouter le support des array en param et faire des IN ensuite
-    		array(
-				'status'		=> 'publish',
-				'feed_idfeed'	=> $aFeedIds
-			),
-    		array(
-    			'created' => 'desc'
-    		),
-    		$aLimit
-    	);
-    	foreach ($oItems as $oItem) {
-    		$oItem->title = utf8_encode($oItem->title);
-    	}
 
-    	$this->_view['oItems'] = $oItems;
+    	$oFeedItems = new \modules\frontend\Models\FeedItem();
+		$oFeedItems->loadByFeed($aFeedIds, $aLimit);
+
+    	$this->_view['oItems'] = $oFeedItems->getItems();
 
     	$this->render('home/list.tpl');
     }
