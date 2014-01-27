@@ -29,15 +29,14 @@
                 sendXHR: function(obj) {
 
                     var sUrl = obj.attr('data-url');
-                    var $domTarget = $(obj.attr('data-selector'));			
-
-                    // Mettre en cache et vider l'objet qui contiendra la reponse
-                    $domTarget.data('initialContent', $domTarget.html());			
+                    var $domTarget = $(obj.attr('data-selector'));				
 
                     $.ajax({
                         type: 'POST',
                         url: sUrl,
                         beforeSend : function(preload) {
+                            // Mettre en cache et vider l'objet qui contiendra la reponse
+                            $domTarget.data('initialContent', $domTarget.html());		                        	
                         	$domTarget.empty();                                                            
                         },
                         success: function(rep){
@@ -53,7 +52,7 @@
                         	
                         },
                         complete: function(){
-
+                        	$domTarget.removeData('initialContent');
                         }
                     });
                 },
@@ -63,7 +62,8 @@
             		var sSelector = '#'+$obj.attr('id');                			
             		var iStep = $(sSelector).data('istep', $(sSelector + ' .item').length);           		         		            		
             		var aData = $(sSelector).data();
-            		
+console.log(aData);
+					$obj.data('initialContent', $obj.html());
                     $.ajax({
                         type: 'POST',
                         url: '/'+$obj.attr('data-module')+'/'+$obj.attr('data-controller')+'/'+$obj.attr('data-action'),
@@ -84,9 +84,9 @@
                         },
                         complete: function(){
                         	$.pnotify_remove_all();
+                        	$(sSelector).removeData('initialContent');
                         }
                     });    
-
                 },
                 
                 // Envoyer un formulaire en asynchrone
@@ -104,14 +104,14 @@
                         });
                     }					
 
-                    // Mettre en cache et vider l'objet qui contiendra la reponse
-                    $domTarget.data('initialContent', $domTarget.html());			
 
                     $.ajax({
                         type: 'POST',
                         url: $formTarget.attr('action'),
                         data: data,
                         beforeSend : function(preload) {
+                        	// Mettre en cache et vider l'objet qui contiendra la reponse
+                        	$domTarget.data('initialContent', $domTarget.html());			
                         	$domTarget.empty();                                                            
                         },
                         success: function(rep){
@@ -124,7 +124,7 @@
                         	$domTarget.append($domTarget.data('initialContent'));                            
                         },
                         complete: function(){
-
+                        	$domTarget.removeData('initialContent');
                         }
                     });
                 },
@@ -138,9 +138,6 @@
                 			if (!$(this).data('ui-loaded')) {
                 				
                 				$(this).data('ui-loaded', true);
-                				
-                                // Mettre en cache et vider l'objet qui contiendra la reponse
-                                $(this).data('initialContent', $(this).html());	                				
                 				
                                 var sUrlTarget = '';
                                 if (
@@ -159,12 +156,13 @@
                                 var sSelector = '#'+$(this).attr('id');
 
                                 var aData = $(sSelector).data();
-                                
                                 $.ajax({
                                     type: 'POST',
                                     url: sUrlTarget,
                                     data: aData,
                                     beforeSend : function(preload) {
+                                    	// Mettre en cache et vider l'objet qui contiendra la reponse
+                                    	$(this).data('initialContent', $(this).html());	                                 
                                     	$(sSelector).empty();                                                            
                                     },
                                     success: function(rep){
@@ -178,7 +176,7 @@
                                     	$(sSelector).append($(sSelector).data('initialContent'));                            
                                     },
                                     complete: function(){
-
+                                    	$(sSelector).removeData('initialContent');
                                     }
                                 });             				
                 			}

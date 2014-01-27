@@ -47,7 +47,7 @@
                                             size: 90,
                                             togglerLength_closed: "100%",                                    
                                             togglerLength_open: 50,
-                                            initClosed:	true,
+                                            initClosed:	false,
                                             onopen_end: function() {
                                                 return false;
                                             },

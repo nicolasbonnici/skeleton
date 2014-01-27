@@ -4,12 +4,11 @@ namespace Library\Core;
 
 /**
  * MVC basic router
- * 
+ *
  * module/controler/action/:param
  */
-class Router {
+class Router extends Singleton {
 
-    static protected $instance;
     static protected $sLang;
     static protected $sModule;
     static protected $sController;
@@ -17,16 +16,8 @@ class Router {
     static protected $aParams;
     static protected $sUrl;
     static protected $aRequest;
-    
 
-    static protected $aRules = array();   
-
-    public static function getInstance() {
-        if (!self::$instance instanceof self) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
+    static protected $aRules = array();
 
     public static function init() {
 
@@ -72,90 +63,90 @@ class Router {
     					'controller' => 'home',
     					'action'    => 'contact'
     			)
-    	);    	
-    	
+    	);
+
         self::$sUrl = $_SERVER['REQUEST_URI'];
 
         self::$aRequest = self::cleanArray(explode('/', self::$sUrl));        // @todo move function cleanArray to toolbox
-        
+
         self::$sLang = DEFAULT_LANG;
         self::$sModule = DEFAULT_MODULE;
         self::$sController = DEFAULT_CONTROLLER;
         self::$sAction = DEFAULT_ACTION;
-        
+
         if (is_array(self::$aRequest) && count(self::$aRequest) > 0) {
-            
+
             // Test custom routing here
-            self::matchRules();                        
-            
+            self::matchRules();
+
         }
-		
+
 		foreach($_FILES as $key=>$value) {
             self::$aParams[$key] = $value;
         }
 
         foreach($_POST as $key=>$value) {
             self::$aParams[$key] = $value;
-        }		
+        }
 
         foreach($_GET as $key=>$value) {
             self::$aParams[$key] = $value;
-        }		
+        }
 
         return;
     }
-    
+
 
     private static function matchRules() {
-        
+
         assert('is_array(self::$aRequest) && count(self::$aRequest)>0');
 
         // @see flag cstom route found
-        $bRouted = false;       
+        $bRouted = false;
 
-        foreach (self::$aRules as $sUrl=>$aRule) {   
-            
+        foreach (self::$aRules as $sUrl=>$aRule) {
+
             // @see custom routing rule match with request
             $aUrl = explode(':', $sUrl);
             if (preg_match('#^/' . self::$aRequest[0] . '#', $aUrl[0])) {
-                
+
                 assert('is_array($aRule)');
-                
-                $bRouted = false;  
-                
+
+                $bRouted = false;
+
                 self::$sModule = self::$aRules[$sUrl]['module'];
                 self::$sController = self::$aRules[$sUrl]['controller'];
-                self::$sAction = self::$aRules[$sUrl]['action'];   
+                self::$sAction = self::$aRules[$sUrl]['action'];
                 if (
-                	($aParams = array_slice(self::$aRequest, count(self::cleanArray(explode('/', $aUrl[0]))))) 
+                	($aParams = array_slice(self::$aRequest, count(self::cleanArray(explode('/', $aUrl[0])))))
                 	&& count($aParams) > 0
 				) {
-	                self::setParams($aParams); 
+	                self::setParams($aParams);
                 }
 
                 return;
-                
+
             }
-                  
+
         }
         if (!$bRouted) {
             // @see no custom route matched so we proceed with a basic routing treatment
             if (($iRequestCount = count(self::$aRequest)) > 0) {
-                // @todo optimiser ce traitement 
+                // @todo optimiser ce traitement
                 if (isset(self::$aRequest[0])) {
-                    self::$sModule = self::$aRequest[0];                
-                } 
-                
+                    self::$sModule = self::$aRequest[0];
+                }
+
                 if (isset(self::$aRequest[1])) {
-                    self::$sController = self::$aRequest[1];                    
-                } 
-                
+                    self::$sController = self::$aRequest[1];
+                }
+
                 if(isset(self::$aRequest[2])) {
                     self::$sAction = self::$aRequest[2];
                 }
 
-                self::setParams(array_slice(self::$aRequest, 3));        
-                
+                self::setParams(array_slice(self::$aRequest, 3));
+
             }
         }
 
@@ -176,7 +167,7 @@ class Router {
 
     /**
      * Parse parameters from request url
-     * 
+     *
      * @param array $items
      * @return array
      */
@@ -193,40 +184,40 @@ class Router {
 
     /**
      * Simple redirection abstraction layer
-     * 
+     *
      * @param mixed array|string $mUrl
-     * @todo handle router request 
+     * @todo handle router request
      */
     public static function redirect($mUrl) {
         assert('is_string($mUrl) || is_array($mUrl)');
-        
+
         if (is_string($mUrl)) {
-            header('Location: ' . $mUrl );      
+            header('Location: ' . $mUrl );
             exit();
         } elseif (is_array($mUrl)) {
-             
+
             if (
-                    array_key_exists('request', $mUrl) && 
+                    array_key_exists('request', $mUrl) &&
                     isset(
-                            $mUrl['request']['module'], 
+                            $mUrl['request']['module'],
                             $mUrl['request']['controller'],
                             $mUrl['request']['action']
                     )
              ) {
                 self::$sUrl = '/' . $mUrl['request']['module'] . '/' .$mUrl['request']['controller'] . '/' . $mUrl['request']['action'];
             } else {
-                throw new RouterException(__METHOD__ . ' malformed redirection request  ');                
+                throw new RouterException(__METHOD__ . ' malformed redirection request  ');
             }
-                        
-            header('Location: ' .  self::$sUrl);   
+
+            header('Location: ' .  self::$sUrl);
         } else {
-            
+
             throw new RouterException(__METHOD__ . ' wrong request data type (mixed string|array)  ');
         }
-        
+
         return;
     }
-    
+
     public static function getModule() {
         return self::$sModule;
     }
@@ -246,7 +237,7 @@ class Router {
     public static function getParam($id) {
         return self::$aParams[$id];
     }
-    
+
     public static function getLang() {
         return self::$sLang;
     }

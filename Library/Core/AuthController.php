@@ -7,41 +7,41 @@ namespace Library\Core;
  *
  * @author infradmin
  */
-class AuthController extends Controller {    
-    
+class AuthController extends Controller {
+
 	/**
 	 * Currently logged user instance
-	 * 
+	 *
 	 * @type \app\Entities\User
 	 */
 	protected $oUser;
-	
+
     public function __construct() {
-    	    	
+
     	$this->loadRequest();
-    	
+
         /**
          * Check php session
          */
         if (
-        	isset($_SESSION['token']) && 
+        	isset($_SESSION['token']) &&
         	($this->_session = $_SESSION) &&
         	$this->checkSessionintegrity()
-        ) {        	         
-            parent::__construct($this->oUser);            
+        ) {
+            parent::__construct($this->oUser);
         } else {
             Router::redirect('/login/');
         }
-        
+
     }
-    
+
 	/**
 	 * Validate session integrity
 	 * @return bool
 	 */
     public function checkSessionintegrity() {
-    	$this->oUser = new \app\Entities\User();    
-    	
+    	$this->oUser = new \app\Entities\User();
+
     	try {
     		$this->oUser->loadByParameters(
     			array(
@@ -51,35 +51,35 @@ class AuthController extends Controller {
     				'created' => $this->_session['created']
     			)
     		);
-    	} catch(CoreEntityException $oException) {}    	
+    	} catch(CoreEntityException $oException) {}
     	if ($this->oUser->isLoaded()) {
 
             foreach ($this->oUser as $key=>$mValue) {
             	$_SESSION[$key] = $mValue;
-            }                   		
-    		
+            }
+
             // Regenerate session token
-    		$_SESSION['token'] = $this->generateToken(); 
+    		$_SESSION['token'] = $this->generateToken();
     		// Unset password
 			unset($_SESSION['pass']);
-    		
-            $this->oUser->token = $_SESSION['token'];            
-            
-			return $this->oUser->update();            
+
+            $this->oUser->token = $_SESSION['token'];
+
+			return $this->oUser->update();
     	}
-    	
+
         return false;
     }
-    
+
     /**
      * Generate token session
-     * 
-     * @return int 
+     *
+     * @return int
      */
     private function generateToken() {
         return hash('SHA256', uniqid((double)microtime()*1000000, true));
-    }    
-    
+    }
+
 }
 
 class CoreAuthControllerException extends \Exception {}

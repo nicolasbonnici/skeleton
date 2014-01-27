@@ -8,7 +8,7 @@ namespace Library\Core;
  * @version 1.1.0 - 2013-07-09 - Antoine <antoine.preveaux@bazarchic.com>
  *              Add getKey() method
  */
-class Memc {
+class Cache {
     /**
      * Predifened constants for easier use/reading of cache time durations
      * @var integer

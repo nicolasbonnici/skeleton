@@ -4,12 +4,15 @@ namespace Library\Core;
 
 /**
  * On the fly ORM CRUD managment
- * 
+ * @author niko nicolasbonnici@gmail.com
+ *
+ * @todo optimiser la gestion du cache dans le composant Cache
  * @dependancy \Library\Core\Validator
  * @important Entity need a primary auto incremeted index
  */
+
 abstract class Entity extends Database  {
-	
+
     /**
      * List of associated table's fields
      * @var array
@@ -33,22 +36,22 @@ abstract class Entity extends Database  {
      * @var boolean
      */
     protected $bIsLoaded = false;
-    
+
     /**
      * If loaded with an array of primary keys identifier
      * @var object collection
      */
     protected $aCollection = array();
-    
+
     /**
      * Enhance perf
      * @var string
      */
     protected $sChildClass;
-    
+
     /**
      * Cache identifiers params at instance
-     *  
+     *
      * Collection Idientifiers list at instance (optionnal)
      */
     protected $aOriginIds = array();
@@ -69,38 +72,38 @@ abstract class Entity extends Database  {
 	    );
      * @var array
      */
-    protected $aLinkedEntities = array();    
-    
+    protected $aLinkedEntities = array();
+
     /**
      * Constructor
      * @param mixed $mPrimaryKey Primary key. If left empty, blank object will be instanciated
      * @throws CoreEntityException
      */
     public function __construct($mPrimaryKey = null)
-    { 	    	
+    {
         // If we just want to instanciate a blank object, do not pass any parameter to constructor
 		$this->loadFields();
         if (!is_null($mPrimaryKey) && is_string($mPrimaryKey) || is_int($mPrimaryKey)) {
-            
+
             // @see Build only one object
             $this->{static::PRIMARY_KEY} = $mPrimaryKey;
             $this->loadByPrimaryKey();
-                        
+
         } elseif (is_array($mPrimaryKey)) {
         	// @see Sinon si c'est un array je load l'objet via different paramètres
         	$this->loadByParameters($mPrimaryKey);
         }
-        
+
         $this->sChildClass = get_called_class();
-        
+
         return;
     }
-    
+
     /**
      * Restrict scope to database schema and manage dependances
-     * 
+     *
      * @todo performance loose
-     * 
+     *
      * @param type $sName
      * @return object
      * @throws CoreException
@@ -122,9 +125,9 @@ abstract class Entity extends Database  {
         }
 
         return $this->$sName;
-    }    
+    }
      */
-    
+
     /**
      * Load object with provided data
      * Data must be an array of key/value, key being table fields names
@@ -134,17 +137,17 @@ abstract class Entity extends Database  {
      */
     public function loadByData($aData, $bRefreshCache = true)
     {
-        foreach ($aData as $sName => $mValue) {        	
+        foreach ($aData as $sName => $mValue) {
             if (!in_array($sName, $this->aFields)) {
                 $this->aFields[$sName]['value'] = $mValue;
             }
 
-		    $this->{$sName} = $mValue;				            	           
+		    $this->{$sName} = $mValue;
         }
 
         if ($this->bIsCacheable && $bRefreshCache && isset($aData[static::PRIMARY_KEY]) && !empty($this->iCacheDuration)) {
-            $sCacheKey = Memc::getKey(get_called_class(), $aData[static::PRIMARY_KEY]); // Do not change this key, it must match isInCache() method
-            Memc::set($sCacheKey, $aData, false, $this->iCacheDuration);
+            $sCacheKey = Cache::getKey(get_called_class(), $aData[static::PRIMARY_KEY]); // Do not change this key, it must match isInCache() method
+            Cache::set($sCacheKey, $aData, false, $this->iCacheDuration);
         }
 
         return ($this->bIsLoaded = true);
@@ -167,7 +170,7 @@ abstract class Entity extends Database  {
             'SELECT * FROM ' . static::TABLE_NAME . ' WHERE `' . implode('` = ? AND `', array_keys($aParameters)) . '` = ?',
             array_values($aParameters),
             true,
-            Memc::getKey(__METHOD__, $aParameters)
+            Cache::getKey(__METHOD__, $aParameters)
         );
     }
 
@@ -186,9 +189,9 @@ abstract class Entity extends Database  {
         $bRefreshCache = false;
         if ($bUseCache && $this->bIsCacheable && !empty($this->iCacheDuration)) {
             if (is_null($sCacheKey)) {
-                $sCacheKey = Memc::getKey(get_called_class(), $sQuery, $aBindedValues);
+                $sCacheKey = Cache::getKey(get_called_class(), $sQuery, $aBindedValues);
             }
-            $aObject = Memc::get($sCacheKey);
+            $aObject = Cache::get($sCacheKey);
 
         }
 
@@ -212,25 +215,28 @@ abstract class Entity extends Database  {
         }
 
         return $this->loadByData($aObject, $bRefreshCache);
-    }    
+    }
 
     /**
      * Retrieve the cached instances of objects
-     * @param   array   $aIds IDs of cached objects to get
-     * @return  array   Instances of cached objects
+     * @param   integer $iId Instance ID (primary key of table)
+     * @return  boolean TRUE if instance is in cache, otherwise false
      */
-    protected function getCachedObjects($aIds)
+    protected function getCached($iId)
     {
-        $aCachedObjects = array();
-        foreach ($aIds as $iId)
-        {
-            if (call_user_func(array($this->sChildClass, 'isInCache'), $iId)) {
-                $aCachedObjects[] = $iId;
-            }
-        }
-        return $aCachedObjects;
-    }    
-    
+        return \Library\Core\Cache::get(self::getCacheKey($iId));
+    }
+
+    /**
+     * Retrieve cache key for single instance of class for given ID
+     * @param unknown $iId
+     * @return string
+     */
+    public static function getCacheKey($iId)
+    {
+    	return \Library\Core\Cache::getKey(get_called_class(), $iId);
+    }
+
     /**
      * Add record corresponding to object to database
      * @return boolean TRUE if record was successfully inserted, otherwise FALSE
@@ -242,7 +248,7 @@ abstract class Entity extends Database  {
         $aInsertedValues = array();
         foreach ($this->aFields as $sFieldName=>$aFieldInfos) {
         	if (
-        		isset($this->{$sFieldName}) && 
+        		isset($this->{$sFieldName}) &&
         		!is_null($this->{$sFieldName}) &&
         		$this->validateDataIntegrity($sFieldName, $this->{$sFieldName})
         	) {
@@ -277,13 +283,13 @@ abstract class Entity extends Database  {
         $aUpdatedValues = array();
         foreach ($this->aFields as $sFieldName=>$aFieldInfos) {
         	if (
-        		isset($this->{$sFieldName}) && 
+        		isset($this->{$sFieldName}) &&
         		!is_null($this->{$sFieldName}) &&
         		$this->validateDataIntegrity($sFieldName, $this->{$sFieldName})
         	) {
                 $aUpdatedFields[] = $sFieldName;
                 $aUpdatedValues[] = $this->{$sFieldName};
-            }          
+            }
         }
 
         if (count($aUpdatedFields) === 0) {
@@ -343,7 +349,7 @@ abstract class Entity extends Database  {
      */
     public static function isInCache($iId)
     {
-        return (Memc::get(Memc::getKey(get_called_class(), $iId)) !== false);
+        return (Cache::get(Cache::getKey(get_called_class(), $iId)) !== false);
     }
 
     /**
@@ -362,7 +368,7 @@ abstract class Entity extends Database  {
             'SELECT * FROM ' . static::TABLE_NAME . ' WHERE `' . static::PRIMARY_KEY . '` = ?',
             array($this->{static::PRIMARY_KEY}),
             $bUseCache,
-            Memc::getKey(get_called_class(), $this->{static::PRIMARY_KEY})
+            Cache::getKey(get_called_class(), $this->{static::PRIMARY_KEY})
         );
     }
 
@@ -372,8 +378,8 @@ abstract class Entity extends Database  {
      */
     protected function loadFields()
     {
-        $sCacheKey = Memc::getKey(__METHOD__, get_called_class());
-        if (($this->aFields = Memc::get($sCacheKey)) === false) {
+        $sCacheKey = Cache::getKey(__METHOD__, get_called_class());
+        if (($this->aFields = Cache::get($sCacheKey)) === false) {
             if (($oStatement = \Library\Core\Database::dbQuery('SHOW COLUMNS FROM ' . static::TABLE_NAME)) === false) {
                 throw new CoreEntityException('Unable to list fields for table ' . static::TABLE_NAME);
             }
@@ -382,26 +388,26 @@ abstract class Entity extends Database  {
                 $this->aFields[$aColumn['Field']] = $aColumn;
             }
 
-            Memc::set($sCacheKey, $this->aFields, false, Memc::CACHE_TIME_MINUTE);
+            Cache::set($sCacheKey, $this->aFields, false, Cache::CACHE_TIME_MINUTE);
         }
     }
-    
+
     /**
      * Return type of data in function of database field type
-     * 
+     *
      * @param string $sName
      * @return string|null
      * @throws CoreEntityException
      */
-    public function getDataType($sName = null) { 
+    public function getDataType($sName = null) {
 
     	assert('$this->getFieldType($sName) !== null');
-    	
+
     	$sDataType = null;
     	if (!is_null($sName)) {
-    		
+
     		$sDataType = $this->getFieldType($sName);
-    		
+
 			if (preg_match('#(^int|^integer|^tinyint|^smallmint|^mediumint|^tinyint|^bigint)#', $sDataType)) {
 				$sDataType = 'integer';
 			} elseif (preg_match('#(^float|^decimal|^numeric)#', $this->aFields[$sName]['Type'])) {
@@ -414,33 +420,33 @@ abstract class Entity extends Database  {
 				throw new CoreEntityException(__CLASS__ . ' Unsuported database field type: ' . $this->aFields[$sName]['Type']);
 			}
     	}
-		return $sDataType;    	
+		return $sDataType;
     }
-    
+
 	/**
 	 * Return database field type
-	 * 
+	 *
 	 * @param string $sName
 	 * @return string
 	 */
     protected function getFieldType($sName = '') {
 		return (!empty($sName) && isset($this->aFields[$sName]['Type'])) ? $this->aFields[$sName]['Type'] : null;
     }
-    
+
     /**
      * Validate data integrity for the database field
-     * 
+     *
      * @todo remettre la gestion des exceptions
-     * 
+     *
      * @param string $sFieldName
      * @param mixed string|int|float $mValue
      * @throws CoreEntityException
      * @return bool
      */
     protected function validateDataIntegrity($sFieldName, $mValue)
-    { 
+    {
     	assert('isset($this->aFields[$sFieldName]["Type"])');
-    	
+
     	$iValidatorStatus = 0;
     	$sDataType = '';
 
@@ -449,40 +455,40 @@ abstract class Entity extends Database  {
     	if (is_null($mValue) && $this->aFields[$sFieldName]['Null'] === 'YES') {
     		return true;
     	}
-    	
+
     	if (!empty($sFieldName) && !empty($mValue)) {
-			if (				
+			if (
 	            ($sDataType = $this->getDataType($sFieldName)) !== NULL &&
-	            method_exists(__NAMESPACE__ . '\\Validator', $sDataType) && 
-	            ($iValidatorStatus = Validator::$sDataType($mValue)) === Validator::STATUS_OK		
+	            method_exists(__NAMESPACE__ . '\\Validator', $sDataType) &&
+	            ($iValidatorStatus = Validator::$sDataType($mValue)) === Validator::STATUS_OK
 			) {
 				return true;
 			}
     	}
 		return false;
-    }   
-	
+    }
+
 	/**
 	 * List all database tables
-	 * 
+	 *
 	 * @return \Library\Core\Collection
 	 */
-    protected function getDatabaseEntities() 
+    protected function getDatabaseEntities()
     {
     	$aDatabaseEntities = array();
     	$aConfig = \Bootstrap::getConfig();
-    	
+
     	$oStatement = Database::dbQuery(
     		'SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE `TABLE_SCHEMA` = ? ORDER BY `TABLES`.`TABLE_SCHEMA` DESC',
     		array($aConfig['database']['name'])
 		);
     	if ($oStatement !== false && $oStatement->rowCount() > 0) {
     	     $aDatabaseEntities = $oStatement->fetchAll(\PDO::FETCH_ASSOC);
-    	}        	
-    	
+    	}
+
     	return $aDatabaseEntities;
-    }	    
-    
+    }
+
 }
 
 class CoreEntityException extends \Exception {}

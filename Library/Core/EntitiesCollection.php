@@ -1,9 +1,13 @@
 <?php
 
 namespace Library\Core;
-
+/**
+ *
+ * @author niko
+ *
+ */
 abstract class EntitiesCollection extends Collection {
-    
+
     /**
      * Collection objects class name
      * @var string
@@ -23,14 +27,49 @@ abstract class EntitiesCollection extends Collection {
      */
     public function __construct($aIds = array())
     {
-        $this->sChildClass = str_replace(array('\Collection', 'Collection'), '', get_called_class()); 
+        $this->sChildClass = str_replace(array('\Collection', 'Collection'), '', get_called_class());
         if (is_array($aIds) && count($aIds)>0) {
             $this->loadByIds($aIds);
         }
-        
+
         return;
-    }    
-    
+    }
+
+    /**
+     * Simple methode de load
+     *
+     * @param string $sOrderBy database field name
+     * @param string $sOrder DESC|ASC
+     * @param array $aLimit
+     * @throws CoreEntityException
+     */
+    public function load($sOrderBy = '', $sOrder = 'DESC', array $aLimit = array(0,50))
+    {
+    	if (empty($sOrderBy)) {
+    		$sOrderBy = constant($this->sChildClass . '::PRIMARY_KEY');
+    	}
+
+    	if (!in_array($sOrder, array('ASC','DESC'))) {
+    		$sOrder = 'DESC';
+    	}
+
+    	$sQuery = 'SELECT *
+    	FROM `' . constant($this->sChildClass . '::TABLE_NAME') . '`
+    	ORDER BY ' . $sOrderBy . ' ' . $sOrder . ' LIMIT ' .$aLimit[0] . ',' . $aLimit[1];
+    	try {
+    		$oStatement = Database::dbQuery($sQuery);
+    	} catch (\PDOException $oException) {
+    		throw new CoreEntityException('Unable to load collection of ' . $this->sChildClass . ' with query "' . $sQuery . '" ');
+    	}
+    	if ($oStatement !== false) {
+    		foreach ($oStatement->fetchAll(\PDO::FETCH_ASSOC) as $aObjectData) {
+    			$oObject = new $this->sChildClass();
+    			$oObject->loadByData($aObjectData);
+    			$this->add($oObject->getId(), $oObject);
+    		}
+    	}
+    }
+
     /**
      * Load collection regarding given IDs
      * @param array $aIds List of IDs
@@ -65,13 +104,13 @@ abstract class EntitiesCollection extends Collection {
             );
         }
 
-        uksort($this->aElements, array($this, 'sortElements'));
+        uksort($this->aElements, array($this, 'sortElementsById'));
     }
-    
-        
+
+
     /**
      * Load collection regarding values and ordering parameters
-     * 
+     *
      * @param array $aParameters List of parameters name/value
      * @param array $aOrderFields List of order fields/direction
      * @param array $aLimit Start / End limit request for pagination
@@ -79,32 +118,62 @@ abstract class EntitiesCollection extends Collection {
      */
     public function loadByParameters(array $aParameters, array $aOrderFields = array(), array $aLimit = array(0,10))
     {
-        
+
         assert('is_int($aLimit[0]) && is_int($aLimit[1])');
-        
+
         if (empty($aParameters)) {
-            throw new CoreEntityException('No parameter provided for loading collection of type ' . $this->sChildClass);
+            throw new ObjectException('No parameter provided for loading collection of type ' . $this->sChildClass);
         }
 
-        if (empty($aOrderFields)) {
-            $sOrderBy = '`' . constant($this->sChildClass . '::PRIMARY_KEY') . '` DESC';
-        } else {
-            $sOrderBy = '';
-            foreach ($aOrderFields as $sFieldName => $sOrder) {
-                $sOrderBy .= '`' . $sFieldName . '` ' . $sOrder . ', ';
+        $sWhere = '';
+        $aBindedValues = array();
+
+        foreach ($aParameters as $sParameterName => $mParameterValue) {
+            if (!empty($sWhere)) {
+                $sWhere .= ' AND ';
             }
-            $sOrderBy = trim($sOrderBy, ', ');
+            // Enable using LOWER(), UPPER(), ...
+            if (strpos($sParameterName, '(') === false) {
+                $sWhere .= '`' . $sParameterName . '`';
+            } else {
+                $sWhere .= $sParameterName;
+            }
+
+            if (is_array($mParameterValue)) {
+                $sWhere .= ' IN(?' . str_repeat(', ?', count($mParameterValue) - 1) . ')';
+                $aBindedValues = array_merge($aBindedValues, $mParameterValue);
+            } else {
+                $sWhere .= ' = ?';
+                $aBindedValues[] = $mParameterValue;
+            }
         }
 
-        $this->loadByQuery('
+        $sQuery = '
             SELECT *
             FROM `' . constant($this->sChildClass . '::TABLE_NAME') . '`
-            WHERE `' . implode('` = ? AND `', array_keys($aParameters)) . '` = ?
-            ORDER BY ' . $sOrderBy . ' LIMIT ' .$aLimit[0] . ',' . $aLimit[1],
-            array_values($aParameters)
-        );
+            WHERE ' . $sWhere . '
+            ORDER BY ';
+
+        if (empty($aOrderFields)) {
+            $sQuery .= '`' . constant($this->sChildClass . '::PRIMARY_KEY') . '` DESC';
+        } else {
+            foreach ($aOrderFields as $sFieldName => $sOrder) {
+                if (strpos($sFieldName, '(') === false) {
+                    $sQuery .= '`' . $sFieldName . '` ' . $sOrder . ', ';
+                } else {
+                    $sQuery .= $sFieldName . ' ' . $sOrder . ', ';
+                }
+            }
+            $sQuery = trim($sQuery, ', ');
+        }
+
+        if (is_int($aLimit[0]) && is_int($aLimit[1])) {
+            $sQuery .= ' LIMIT ' . $aLimit[0] . ', ' . $aLimit[1];
+        }
+        $this->loadByQuery($sQuery, $aBindedValues);
+
     }
-    
+
     /**
      * Load collection regarding given Database query and values
      * @param string $sQuery Database query
@@ -126,43 +195,8 @@ abstract class EntitiesCollection extends Collection {
                 $this->add($oObject->getId(), $oObject);
             }
         }
-    }    
-    
-    /**
-     * Simple methode de load
-     * 
-     * @param string $sOrderBy database field name
-     * @param string $sOrder DESC|ASC
-     * @param array $aLimit
-     * @throws CoreEntityException
-     */
-    public function load($sOrderBy = '', $sOrder = 'DESC', array $aLimit = array(0,50)) 
-    {
-    	if (empty($sOrderBy)) {
-    		$sOrderBy = constant($this->sChildClass . '::PRIMARY_KEY');
-    	}
-    	
-    	if (!in_array($sOrder, array('ASC','DESC'))) {
-    		$sOrder = 'DESC';
-    	}
-    	
-    	$sQuery = 'SELECT *
-            FROM `' . constant($this->sChildClass . '::TABLE_NAME') . '`
-            ORDER BY ' . $sOrderBy . ' ' . $sOrder . ' LIMIT ' .$aLimit[0] . ',' . $aLimit[1];
-        try {
-            $oStatement = Database::dbQuery($sQuery);
-        } catch (\PDOException $oException) {
-            throw new CoreEntityException('Unable to load collection of ' . $this->sChildClass . ' with query "' . $sQuery . '" ');
-        }
-        if ($oStatement !== false) {
-            foreach ($oStatement->fetchAll(\PDO::FETCH_ASSOC) as $aObjectData) {
-               $oObject = new $this->sChildClass();
-               $oObject->loadByData($aObjectData);
-               $this->add($oObject->getId(), $oObject);               
-            }
-        }    	
     }
-    
+
     /**
      * Retrieve the cached instances of objects
      * @param   array   $aIds IDs of cached objects to get
@@ -171,15 +205,14 @@ abstract class EntitiesCollection extends Collection {
     protected function getCachedObjects($aIds)
     {
         $aCachedObjects = array();
-        foreach ($aIds as $iId)
-        {
-            if (call_user_func(array($this->sChildClass, 'isInCache'), $iId)) {
-                $aCachedObjects[] = $iId;
+        foreach ($aIds as $iId) {
+            if (($aCachedObject = call_user_func(array($this->sChildClass, 'getCached'), $iId)) !== false) {
+                $aCachedObjects[$iId] = $aCachedObject;
             }
         }
         return $aCachedObjects;
-    }    
-    
+    }
+
     /**
      * Sort collection elements according to collection call order
      * @param   integer $iFirstKey  First element key
@@ -191,14 +224,14 @@ abstract class EntitiesCollection extends Collection {
         $aKeys = array_flip($this->aOriginIds);
         return ($aKeys[$iFirstKey] > $aKeys[$iSecondKey]) ? 1 : -1;
     }
-    
+
 
 	/**
 	 * Search within the collection
-	 * 
-	 * @todo ajouter la gestion des filtre pour obtenir des sous collection avec cette methode 
+	 *
+	 * @todo ajouter la gestion des filtre pour obtenir des sous collection avec cette methode
 	 * @todo migrer cette methode vers entitiesCollection!!
-	 * 
+	 *
 	 * @param int|string $mKey
 	 * @param int|string $mValue
 	 * @return object|mixed|NULL Entity otherwhise NULL
@@ -207,10 +240,22 @@ abstract class EntitiesCollection extends Collection {
     {
     	foreach ($this->aElements as $iCollectionIndex=>$oEntity) {
     		if (isset($oEntity->$mKey) && $oEntity->$mKey === $mValue) {
-    			return $oEntity;    			
+    			return $oEntity;
     		}
     	}
         return NULL;
-    }    
+    }
+
+    /**
+     * Sort collection elements according to collection call order
+     * @param   integer $iFirstKey  First element key
+     * @param   integer $iSecondKey Second element key
+     * @return  integer 1 if first element is after second element, otherwise -1
+     */
+    protected function sortElementsById($iFirstKey, $iSecondKey)
+    {
+    	$aKeys = array_flip($this->aOriginIds);
+    	return ($aKeys[$iFirstKey] > $aKeys[$iSecondKey]) ? 1 : -1;
+    }
 }
 

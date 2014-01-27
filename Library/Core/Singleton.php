@@ -1,11 +1,11 @@
 <?php
 
-namespace core;
+namespace Library\Core;
 
 /**
  * Singleton design pattern implementation class
- * @author Antoine <antoine.preveaux@bazarchic.com>
- * @version 1.0.0 - 2013-07-29 - Antoine <antoine.preveaux@bazarchic.com>
+ * @author Antoine <nicolasbonnici@gmail.com>
+ * @version 1.0.0 - 2013-07-29 - Nicolas BONNICI <nicolasbonnici@gmail.com>
  */
 abstract class Singleton
 {
