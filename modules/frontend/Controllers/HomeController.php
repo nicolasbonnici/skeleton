@@ -43,12 +43,11 @@ class HomeController extends \Library\Core\Controller {
     public function listAction(array $aFeedIds = array(1,2,3), $iLoadStep = 64) {
 
 		$aLimit = array(0, $iLoadStep);
-
-    	if (isset($this->_params['istep']) && $this->_params['istep'] > 0) {
-    		$aLimit = array($this->_params['istep'], $iLoadStep);
+    	if (isset($this->_params['ioffset']) && $this->_params['ioffset'] > 0) {
+    		$aLimit = array((int)$this->_params['ioffset'], $iLoadStep);
     	}
 
-    	if (isset($this->_params['sfeedid'])) {
+    	if (isset($this->_params['sfeedid']) && strlen($this->_params['sfeedid']) > 3) {
     		$aFeedIds = explode(',', $this->_params['sfeedid']);
     	}
 

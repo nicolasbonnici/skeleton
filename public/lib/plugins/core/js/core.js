@@ -60,31 +60,29 @@
                 loadScroll: function($obj) {
 
             		var sSelector = '#'+$obj.attr('id');                			
-            		var iStep = $(sSelector).data('istep', $(sSelector + ' .item').length);           		         		            		
+            		var iOffSet = $(sSelector).data('ioffset', $(sSelector + ' .item').length);           		         		            		
             		var aData = $(sSelector).data();
-console.log(aData);
-					$obj.data('initialContent', $obj.html());
                     $.ajax({
                         type: 'POST',
                         url: '/'+$obj.attr('data-module')+'/'+$obj.attr('data-controller')+'/'+$obj.attr('data-action'),
                         data: aData,
                         beforeSend : function(preload) {
-                        	
+                        	$obj.data('initialContent', $obj.html());
                         },
                         success: function(rep){
                         	if (rep.status === 1) { // @see if XHR_STATUS_OK                                               		                                    		
-                        		$(sSelector).append(rep.content);
+                        		$obj.append(rep.content);
                         		$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		
                         	}
                         },
                         error: function(rep){                            
                             // Restore cached content
-                        	$(sSelector).append($(sSelector).data('initialContent'));  
+                        	$obj.append($(sSelector).data('initialContent'));  
                     		$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		                        	
                         },
                         complete: function(){
                         	$.pnotify_remove_all();
-                        	$(sSelector).removeData('initialContent');
+                        	$obj.removeData('initialContent');
                         }
                     });    
                 },
@@ -186,9 +184,7 @@ console.log(aData);
                 	}
                 },             
                 
-                reload: function(oItem) {
-                	// Mettre en cache et vider l'objet qui contiendra la reponse
-                	oItem.data('initialContent', oItem.html());	                				
+                reload: function(oItem) {             			
                 	
                 	var sUrlTarget = '';
                 	if (
@@ -213,6 +209,8 @@ console.log(aData);
                 		url: sUrlTarget,
                         data: aData,                		
                 		beforeSend : function(preload) {
+                        	// Mettre en cache et vider l'objet qui contiendra la reponse
+                        	oItem.data('initialContent', oItem.html());	                   			
                 			$(sSelector).empty();                                                            
                 		},
                 		success: function(rep){
@@ -226,7 +224,7 @@ console.log(aData);
                 			$(sSelector).append($(sSelector).data('initialContent'));                            
                 		},
                 		complete: function(){
-                			
+                			$(sSelector).removeData('initialContent');
                 		}
                 	});                   	
                 }

@@ -8,11 +8,13 @@
 {% block js %}
 <script>
 $(document).ready(function() {
+	var core = $.fn.core();
 	$('.filterFeedItems').on('click', function() {
 		var iFeedId = $(this).data('ifeedid');
 		if (parseInt(iFeedId) > 0) {
-			$($(this).data('sreloadtarget')).attr('data-ifeedid', iFeedId);
-		}
+			$($(this).data('sreloadtarget')).data('data-sfeedid', iFeedId);
+			core.reload( $( $(this).data('sreloadtarget') ) );
+		}		
 		return false;
 	});
 });
@@ -25,7 +27,7 @@ $(document).ready(function() {
 			{% if oFeeds|Exists %}
 				<div class="col-md-12 btn-group transparentBg padding margin">
 				{% for oFeed in oFeeds %}
-					<a href="#" data-sfeedid="{{oFeed.idfeed}}" class="ui-reload filterFeedItems btn btn-default btn-lg" data-sreloadtarget="#lifestream" data-title="Uniquement afficher l'activité du feed {{oFeed.title}}" data-istep="64">
+					<a href="#" data-ifeedid="{{oFeed.idfeed}}" class="filterFeedItems btn btn-default btn-lg" data-sreloadtarget="#lifestream" data-title="Uniquement afficher l'activité du feed {{oFeed.title}}">
 						<img src="{{oFeed.icon}}" class="icon-feed" alt="Feed icon" /> {{oFeed.domain}}
 					</a>
 				{% endfor %}

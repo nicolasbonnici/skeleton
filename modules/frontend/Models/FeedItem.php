@@ -21,7 +21,7 @@ class FeedItem {
 	 *
 	 * @param integer|array Just a int or an array of integers \app\Feed primary key value
 	 */
-	public function loadByFeed($mFeedId, array $aLimit = array(), $sStatus = 'publish')
+	public function loadByFeed($mFeedId, array $aLimit = array(0,64), $sStatus = 'publish')
 	{
 		assert('\Library\Core\Validator::string($sStatus, 1) === \Library\Core\Validator::STATUS_OK');
 		assert('$this->oItems instanceOf \app\Entities\Collection\FeedItemCollection');
@@ -34,7 +34,7 @@ class FeedItem {
 							'feed_idfeed'	=> $mFeedId
 					),
 					array(
-							'created' => 'desc'
+							'created' => 'DESC'
 					),
 					$aLimit
 			);
@@ -42,6 +42,7 @@ class FeedItem {
 			foreach ($this->oItems as $oItem) {
 				$oItem->title = utf8_encode($oItem->title);
 			}
+			$this->oItems->rewind();
 		} catch (\Library\Core\EntityException $oException) {
 			// @todo ajouter une methode pour reset la collection
 		}
