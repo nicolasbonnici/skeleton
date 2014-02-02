@@ -4,14 +4,11 @@
 {% block meta_description %}{% endblock meta_description %}
 
 {% block js %}
-<script type="text/javascript" src="/lib/plugins/hotkeys/js/jquery.hotkeys.js"></script>
-<script type="text/javascript" src="/lib/plugins/bootstrap-wysiwyg/js/bootstrap-wysiwyg.js"></script>
-<script type="text/javascript" src="/lib/plugins/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+
 {% endblock %}
 
 {% block css %}
-<link href="/lib/plugins/bootstrap-wysiwyg/css/bootstrap-wysiwyg.css" rel="stylesheet">
-<link href="/lib/plugins/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
+
 {% endblock %}
 
 {% block main %}

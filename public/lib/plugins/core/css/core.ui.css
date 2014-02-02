@@ -25,9 +25,17 @@
 .ui-layout-center .ui-layout-content {
     padding: 15px 0 0 0;
 }
+
+.ui-layout-content {
+	overflow-x: hidden;
+}
+
 .ui-layout-west .ui-layout-content {
 }
 .ui-layout-east .ui-layout-content {
+}
+.ui-layout-south .ui-layout-content {
+    background: #404040;
 }
 
 .ui-layout-resizer {

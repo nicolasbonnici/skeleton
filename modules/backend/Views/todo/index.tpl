@@ -4,11 +4,13 @@
 {% block meta_description %}{% endblock meta_description %}
 
 {% block js %}
+<script type="text/javascript" src="/lib/plugins/bootstrap-editable/js/bootstrap-editable.min.js"></script>
 <script type="text/javascript" src="/lib/plugins/summernote/js/summernote.js"></script>
 {% endblock %}
 
 {% block css %}
 <link href="/lib/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="/lib/plugins/bootstrap-editable/css/bootstrap-editable.css" rel="stylesheet">
 <link href="/lib/plugins/summernote/css/summernote.css" rel="stylesheet">
 <link href="/lib/plugins/summernote/css/summernote-bs3.css" rel="stylesheet">
 {% endblock %}
@@ -58,11 +60,24 @@
 
 		<div class="col-md-12 column">
 			<div class="btn-group btn-group-lg">
-				 <button class="btn btn-default pull-right" type="button"id="modal-275600" href="#modal-container-275600" role="button" class="btn" data-toggle="modal"><em class="glyphicon glyphicon-file"></em> New todo!</button> 
-				 {#<button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-center"></em> Center</button>#} 
+				<div class="btn-group">
+				  <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown">
+				     <span class="glyphicon glyphicon-filter"></span> Filter
+				  </button>
+				  <ul class="dropdown-menu" role="menu">
+				    <li><a href="#">Action</a></li>
+				    <li><a href="#">Another action</a></li>
+				    <li><a href="#">Something else here</a></li>
+				    <li class="divider"></li>
+				    <li><a href="#">Separated link</a></li>
+				  </ul>
+				</div>				
+				 <button class="btn btn-lg btn-info" type="button"id="modal-275600" href="#modal-container-275600" role="button" data-toggle="modal">
+				    <span class="glyphicon glyphicon-file"></span> New todo!
+				 </button> 
 			</div>					
 
-			<table class="table">
+			<table class="table table-responsive">
 				<thead>
 					<tr>
 						<th>
@@ -71,11 +86,14 @@
 						<th>
 							Title
 						</th>
+                        <th>
+                            Actions
+                        </th>
 						<th>
-							Last edited
+							Deadline
 						</th>
 						<th>
-							Status
+							Last edited
 						</th>
 					</tr>
 				</thead>

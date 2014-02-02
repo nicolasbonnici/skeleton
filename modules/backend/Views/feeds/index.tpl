@@ -15,8 +15,8 @@
 {% endblock %}
 
 {% block main %}
-	<div class="row-fluid">
-		<div class="span12">
+	<div class="row">
+		<div class="col-md-12 column">
 			<div class="page-header">
 				<h1>
 					Feeds <small>1.0</small>
@@ -25,43 +25,27 @@
 		</div>
 	</div>
     
-	<div class="row-fluid">
-		<div class="span12 text-right">
-			<div class="btn-group">
-				 <a href="#new-feed-modal" role="button" class="btn" data-toggle="modal"><em class="icon-file"></em>&nbsp;{{tr['new']}}</a>
-			</div>		
-			
-			<div id="new-feed-modal" class="modal ui-modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-header">
-					 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-					<h3 id="myModalLabel">
-						Modal header
-					</h3>
-				</div>
-				<div class="modal-body">
-					<p>
-						One fine body…
-					</p>
-				</div>
-				<div class="modal-footer">
-					 <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button> <button class="btn btn-primary">Save changes</button>
-				</div>
-			</div>				
-								
-		</div>
-	</div> 
+    <div class="row">
+	       {% for oFeed in oFeeds %}
+    		<div class="col-md-4 column well transparentBlackBg">
+				<h3>
+					<img src="{{oFeed.icon}}" alt="Feed icon" />
+					&nbsp;<a href="#"  class="ui-editable" data-url="/backend/feeds/update/id/{{oFeed.idfeed}}" data-type="text" data-pk="{{oFeed.idfeed}}" data-name="domain" title="{{tr['update']}}">{{oFeed.domain}}</a>
+				</h3>
+				<p>
+					<a href="#" class="ui-editable" data-url="/backend/feeds/update/id/{{oFeed.idfeed}}" data-type="text" data-pk="{{oFeed.idfeed}}" data-name="title" title="{{tr['update']}}">{{oFeed.title}}</a>
+					&nbsp;<a href="#" class="btn btn-primary" title="Raffraichir les informations de ce feed"><span class="glyphicon glyphicon-refresh"></span> {{tr['refresh']}}</a>				
+				</p>
+				<p>
+				    <a href="#" class="ui-editable" data-url="/backend/feeds/update/id/{{oFeed.idfeed}}" data-type="text" data-pk="{{oFeed.idfeed}}" data-name="url" title="{{tr['update']}}">{{oFeed.url}}</a>
+				</p>
+			</div>
+	       {% endfor %}
+    </div>
     
-	{% for oFeed in oFeeds %}
-	<div class="row-fluid">	
-		<div class="span12 well">
-			<h3>
-				<img src="{{oFeed.icon}}" alt="Feed icon" />&nbsp;
-				<a href="#" class="ui-editable" data-url="/backend/feeds/update/id/{{oFeed.idfeed}}" data-type="text" data-pk="{{oFeed.idfeed}}" data-name="title" title="{{tr['update']}}">{{oFeed.title}}</a>
-				&nbsp;(<a href="#"  class="ui-editable" data-url="/backend/feeds/update/id/{{oFeed.idfeed}}" data-type="text" data-pk="{{oFeed.idfeed}}" data-name="domain" title="{{tr['update']}}">{{oFeed.domain}}</a>)
-			</h3>
-			<a href="#" class="ui-editable" data-url="/backend/feeds/update/id/{{oFeed.idfeed}}" data-type="text" data-pk="{{oFeed.idfeed}}" data-name="url" title="{{tr['update']}}">{{oFeed.url}}</a></p>
-		</div>	
-	</div>		
-	{% endfor %}
+	<div class="row">
+         <div id="latestActivities" class="ui-loadable col-md-12 column ui-grid" data-module="frontend" data-controller="home" data-action="list">
 
+         </div> 
+	</div> 
 {% endblock %}

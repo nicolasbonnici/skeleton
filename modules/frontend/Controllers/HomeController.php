@@ -47,7 +47,7 @@ class HomeController extends \Library\Core\Controller {
     		$aLimit = array((int)$this->_params['ioffset'], $iLoadStep);
     	}
 
-    	if (isset($this->_params['sfeedid']) && strlen($this->_params['sfeedid']) > 3) {
+    	if (isset($this->_params['sfeedid'])) {
     		$aFeedIds = explode(',', $this->_params['sfeedid']);
     	}
 

@@ -19,7 +19,6 @@
                 },
 
                 load: function(repWrap, request) {
-                    core.showNotif('Chargement en cours...', 'info');			
                     $(repWrap).fadeOut(300).empty().load('/'+request['controller']+'/'+request['action']).fadeIn(150);
                     core.hideNotif();		
                 },
@@ -211,7 +210,9 @@
                 		beforeSend : function(preload) {
                         	// Mettre en cache et vider l'objet qui contiendra la reponse
                         	oItem.data('initialContent', oItem.html());	                   			
-                			$(sSelector).empty();                                                            
+                			$(sSelector).empty();
+                			$container.data('grid-loaded', false);
+                			ui.sendNotification('Information', 'Chargement en cours...', 'info', 'glyphicon glyphicon-info-sign');
                 		},
                 		success: function(rep){
                 			if (rep.status === 1) { // @see if XHR_STATUS_OK                                               		                                    		
@@ -225,6 +226,7 @@
                 		},
                 		complete: function(){
                 			$(sSelector).removeData('initialContent');
+                			ui.hideNotifications();
                 		}
                 	});                   	
                 }

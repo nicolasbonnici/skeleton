@@ -42,10 +42,10 @@ class CrudController extends \Library\Core\AuthController {
 				}
 				try{
 					$oEntity = new $sEntity($this->_params['pk']);
+						// @todo virer ca et faire un singleton de gestion de session avec un appel directement dans les acl
 					// If we got a foreign key related to a BO user entity
 					if (isset($oEntity->user_userid)) {
-						// @todo virer ca et faire un singleton de gestion de session avec un appel directement dans les acl
-						if ($this->_session['iduser']!=$oEntity->user_userid) {
+						if ($this->_session['iduser']!= $oEntity->user_userid) {
 							die('foreign key exception');
 						}
 					}

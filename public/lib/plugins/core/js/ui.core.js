@@ -56,7 +56,7 @@
                                             }                                    
                                     },
                                     east: {
-                                            size:  '50%',
+                                            size:  50,
                                             applyDefaultStyles: false,
                                             initClosed: true,
                                             togglerLength_closed: 0,
@@ -160,6 +160,7 @@
                 		opacity: 1,
                 		nonblock: false,
                 		nonblock_opacity: .2,
+                		history: false,
                 		addclass: "stack-bottomleft	" + ((sClass.length > 0) ? (' ' + sClass) : ''),
                 		stack: {"dir1": "down", "dir2": "left", "push": "up"}
                 	});                	
@@ -202,31 +203,39 @@
                     	$.fn.editable.defaults.mode = 'inline';
                     	
                     	$('.ui-editable').each(function() {
-                    		if (!$(this).data('ui-editable-fired')) {
-                    			$(this).data('ui-editable-fired', true);                            	
-                    			$(this).editable({
-                    				params: function(aParams) {
-                    					aParams.entity = $(this).data('entity');
-                    			        return aParams;
-                    			    },
-                    				success: function(rep) {
-                    					switch(rep.status) {
-                    					case 1:
-                    						ui.sendNotification('Success', rep.content, 'success', 'glyphicon glyphicon-ok', false);
-                    						break;
-                    					case 2:
-                    						ui.sendNotification('Error', rep.content, 'error', 'glyphicon glyphicon-exclamation-sign', false);
-                    						break;
-                    					case 3:
-                    						ui.sendNotification('Warning', rep.content, 'warning', 'glyphicon glyphicon-time', false);
-                    						break;
-                    					default:
-                    						ui.sendNotification('Info', rep.content, 'info', 'glyphicon glyphicon-info', true);
-                    					break;	                            				
-                    					}
-                    				}
-                    			});
-                    		}
+                    		var oOpts = {
+                    				title: 'Editer ce champs',
+                    				placeholder: $(this).attr('placeholder')
+                    		};
+							if ($(this).hasClass('ui-editable-date')) {
+								var oOpts = {
+									format: 'yyyy-mm-dd',    
+							        viewformat: 'dd/mm/yyyy',    
+							        datepicker: {
+						               weekStart: 1
+						            }
+						        };
+							}                    		
+                    		
+                			$(this).editable({
+                				params: oOpts,
+                				success: function(rep) {
+                					switch(rep.status) {
+                					case 1:
+                						ui.sendNotification('Success', rep.content, 'success', 'glyphicon glyphicon-ok', false);
+                						break;
+                					case 2:
+                						ui.sendNotification('Error', rep.content, 'error', 'glyphicon glyphicon-exclamation-sign', false);
+                						break;
+                					case 3:
+                						ui.sendNotification('Warning', rep.content, 'warning', 'glyphicon glyphicon-time', false);
+                						break;
+                					default:
+                						ui.sendNotification('Info', rep.content, 'info', 'glyphicon glyphicon-info', true);
+                					break;	                            				
+                					}
+                				}
+                			});
                     		
                     	});
                     }
@@ -252,6 +261,15 @@
                         	$container.data('curCol', iCurrentColumnIndex);
                         	//console.log($container.data('curCol'), $('#ui-grid .item').length);
                         });                		
+                	});
+                },
+                
+                initCheckbox: function() {
+                	$('.ui-checkbox').each(function() {
+                		if (!$(this).data('ui-checkbox-fired')) {
+                			$(this).data('ui-checkbox-fired', true);
+                			$(this).bootstrapSwitch();
+                		}
                 	});
                 },
                 
@@ -285,6 +303,8 @@
                                                            
                     // Move all modals directly on the body (bugfix pour le layout)
                     $('.ui-modal').appendTo("body");  
+                    
+                    this.initCheckbox();
                     
                     // init carousel
                     $('.ui-carousel').carousel({

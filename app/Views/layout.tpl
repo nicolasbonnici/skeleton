@@ -28,6 +28,7 @@
 
         <link href="/lib/plugins/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
         <link href="/lib/plugins/bootstrap3/css/bootstrap-theme.min.css" rel="stylesheet">
+        <link href="/lib/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet">
         <link href="/lib/plugins/core/css/core.classes.css" rel="stylesheet">
         <link href="/lib/plugins/pnotify/css/jquery.pnotify.default.css" rel="stylesheet">
         <link href="/lib/plugins/pnotify/css/jquery.pnotify.default.icons.css" rel="stylesheet">
@@ -176,14 +177,12 @@
 	
 		<div class="ui-layout-east ui-scrollable">
 			<div class="ui-layout-content transparentBlackBg">
-                <div class="container">
-                <div class="col-md-12 column">
-                    <div class="page-header">
-                        <h1>
-                            Example page header <small>Subtext for header</small>
-                        </h1>
-                    </div>
-                </div>
+                <div class="row">
+	                <div class="col-md-12 column">
+	                   <div class="btn-group-vertical">
+                            
+                        </div>
+	                </div>
                 </div>
 			</div>
 		</div>
@@ -199,6 +198,7 @@
 		<script	type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script	type="text/javascript" src="/lib/plugins/layout/js/jquery.layout.min.js"></script>
 		<script type="text/javascript" src="/lib/plugins/bootstrap3/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="/lib/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 		<script type="text/javascript" src="/lib/plugins/pnotify/js/jquery.pnotify.js"></script>
 		{% block js %}{% endblock %}
 		<script type="text/javascript" src="/lib/plugins/core/js/ui.core.js"></script>
