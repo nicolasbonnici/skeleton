@@ -222,7 +222,7 @@ abstract class Entity extends Database  {
      * @param   integer $iId Instance ID (primary key of table)
      * @return  boolean TRUE if instance is in cache, otherwise false
      */
-    protected function getCached($iId)
+    public function getCached($iId)
     {
         return \Library\Core\Cache::get(self::getCacheKey($iId));
     }
@@ -330,7 +330,7 @@ abstract class Entity extends Database  {
         if (!$this->bIsLoaded) {
             throw new EntityException('Cannot get ID of object not loaded');
         }
-        return $this->{static::PRIMARY_KEY};
+        return (int)$this->{static::PRIMARY_KEY};
     }
 
     /**

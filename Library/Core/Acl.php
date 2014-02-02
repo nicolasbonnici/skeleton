@@ -3,46 +3,47 @@
 namespace Library\Core;
 
 /**
- * Manage access to entities
- * 
- * 
+ * @author Nicolas Bonnici <nicolasbonnici@gmail.com>
+ *
+ * ACL couch layer
+ * Manage CRUD access to entities
  */
 abstract class Acl   {
-    
+
 	/**
-	 * User instance 
+	 * User instance
 	 * @var \app\Entities\User
 	 */
     protected $oUser;
-    
+
     /**
-     * Entity 
+     * Entity
      * @var \app\Entities\Entity
      */
 	protected $oEntity;
-	
+
 	/**
 	 * User instance current permissions
 	 * @var \app\Entities\Collection\PermissionCollection
 	 */
 	protected $oPermissions;
-	
+
 	/**
 	 * User instance current role
 	 * @var \app\Entities\Role
 	 */
 	protected $oRole;
-	
+
 	/**
 	 * An array to store already parsed rights
-	 * @todo store directly json objects in cache 
-	 * 
+	 * @todo store directly json objects in cache
+	 *
 	 * @var array
 	 */
 	protected $aRights = array();
-	
+
 	/**
-	 * Availables ressources 
+	 * Availables ressources
 	 * @param \app\Entities\User $oUser
 	 * @throws CoreAclException
 	 */
@@ -56,10 +57,10 @@ abstract class Acl   {
 			$this->oUser = $oUser;
 			$this->loadRole();
 			if ($this->loadPermissions()) {
-				$this->loadRessources();			
+				$this->loadRessources();
 			}
-		} 				
-				
+		}
+
         return;
     }
 
@@ -67,63 +68,63 @@ abstract class Acl   {
     protected function hasCreateAccess($sRessource) {
     	if (
     		!empty($sRessource) &&
-    		( ($oRights = $this->getCRUD($sRessource)) !== NULL) 
+    		( ($oRights = $this->getCRUD($sRessource)) !== NULL)
     	){
-    		return ($oRights->create === 1) ? TRUE : FALSE;
-    	}	
+    		return $oRights->create === 1;
+    	}
 
-		return FALSE;    	
+		return false;
     }
 
     protected function hasReadAccess($sRessource) {
     	if (
     		!empty($sRessource) &&
-    		( ($oRights = $this->getCRUD($sRessource)) !== NULL) 
+    		( ($oRights = $this->getCRUD($sRessource)) !== NULL)
     	){
-    		return ($oRights->read === 1) ? TRUE : FALSE;
-    	}	
+    		return $oRights->read === 1;
+    	}
 
-		return FALSE;    	    	
+		return false;
     }
 
-    protected function hasUpdateAccess($sRessource) {    	
+    protected function hasUpdateAccess($sRessource) {
     	if (
     		!empty($sRessource) &&
-    		( ($oRights = $this->getCRUD($sRessource)) !== NULL) 
+    		( ($oRights = $this->getCRUD($sRessource)) !== NULL)
     	){
-    		return ($oRights->update === 1) ? TRUE : FALSE;
-    	}	
+    		return $oRights->update === 1;
+    	}
 
-		return FALSE;
+		return false;
     }
 
     protected function hasDeleteAccess($sRessource) {
     	if (
     		!empty($sRessource) &&
-    		( ($oRights = $this->getCRUD($sRessource)) !== NULL) 
+    		( ($oRights = $this->getCRUD($sRessource)) !== NULL)
     	){
-    		return ($oRights->delete === 1) ? TRUE : FALSE;
-    	}	
+    		return $oRights->delete === 1;
+    	}
 
-		return FALSE;    	
+		return false;
     }
 
     protected function getCRUD($sRessource)
     {
-    	if (!empty($sRessource) && $this->oRole->isLoaded() && $this->oPermissions->count() > 0) {	    	
+    	if (!empty($sRessource) && $this->oRole->isLoaded() && $this->oPermissions->count() > 0) {
     		if ( ($oRessource = $this->oRessources->search('name', $sRessource)) !== NULL ) {
     			if ( ($oPermission = $this->oPermissions->search('ressources_idressource', $oRessource->idressource)) !== NULL) {
     				return json_decode($oPermission->permission);
-    			}    			
+    			}
     		}
     	}
-    	
-    	return NULL;    	
+
+    	return NULL;
     }
-    
+
     /**
      * Load current user instance role
-     * 
+     *
      * @return boolean
      * @throws CoreAclException
      */
@@ -133,19 +134,19 @@ abstract class Acl   {
     	try {
 	    	$this->oRole->loadByParameters(array(
 	    		'idrole' => $this->oUser->role_idrole
-	    	));    		
+	    	));
     	} catch (CoreEntityException $oException) {
-    		throw new CoreAclException('Error: No role found for user');    		
+    		throw new CoreAclException('Error: No role found for user');
     	}
     	return $this->oRole->isLoaded();
     }
-    
+
     /**
      * Load user instances current permission
-     * 
+     *
      * @return boolean
      */
-    private function loadPermissions() 
+    private function loadPermissions()
     {
     	assert('$this->oRole->isLoaded()');
 
@@ -155,12 +156,12 @@ abstract class Acl   {
 		    	'role_idrole' => $this->oRole->idrole
 		    ));
     	} catch (CoreEntityException $oException) {}
-    	return ($this->oPermissions->count() > 0) ? TRUE : FALSE;
-    }    
-    
+    	return ($this->oPermissions->count() > 0) ? true : false;
+    }
+
     /**
      * Load current user available ressources
-     * 
+     *
      * @throws CoreAclException
      */
     private function loadRessources()
@@ -170,16 +171,16 @@ abstract class Acl   {
 		$this->oRessources = new \app\Entities\Collection\RessourceCollection();
     	$aAvailableRessources = array();
     	foreach ($this->oPermissions as $oPermission) {
-    		$aAvailableRessources[] = (int)$oPermission->ressources_idressource;
-    	}    	
+    		$aAvailableRessources[] = $oPermission->getId();
+    	}
     	if (count($aAvailableRessources) > 0) {
 	    	try {
-		    	$this->oRessources->loadByIds($aAvailableRessources);    		
+		    	$this->oRessources->loadByIds($aAvailableRessources);
 	    	} catch (CoreEntityException $oException) {}
     	}
-		
+
     	return $this->oRessources->count() > 0;
-    }        
+    }
 }
 
 class CoreAclException extends \Exception {}

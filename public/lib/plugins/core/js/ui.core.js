@@ -202,10 +202,13 @@
                     	$.fn.editable.defaults.mode = 'inline';
                     	
                     	$('.ui-editable').each(function() {
-                    		
                     		if (!$(this).data('ui-editable-fired')) {
                     			$(this).data('ui-editable-fired', true);                            	
                     			$(this).editable({
+                    				params: function(aParams) {
+                    					aParams.entity = $(this).data('entity');
+                    			        return aParams;
+                    			    },
                     				success: function(rep) {
                     					switch(rep.status) {
                     					case 1:

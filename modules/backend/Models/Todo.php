@@ -3,21 +3,21 @@
 namespace modules\backend\Models;
 
 class Todo {
-	
+
 	/**
-	 * Current user instance 
-	 * 
+	 * Current user instance
+	 *
 	 * @var \app\Entities\User
 	 */
 	private $oUser;
-	
+
 	/**
 	 * Todos collection
-	 * 
+	 *
 	 * @var \app\Entities\Collection\TodoCollection
 	 */
 	private $oTodos;
-	
+
 	/**
 	 * Instance constructor
 	 */
@@ -26,30 +26,39 @@ class Todo {
 		if (! $oUser->isLoaded()) {
 			throw new TodoModelException('Todo need a valid user instance, not user provided.');
 		}
-		
+
 		$this->oUser = $oUser;
+		$this->oTodos = new \app\Entities\Collection\TodoCollection();
 	}
-	
+
     /**
      * Load todos from a given user
-     * 
-     * @param int $iUserId
+     *
      * @return bool
      */
     public function loadByUserId() {
-        
+
     	assert('$this->oUser->isLoaded()');
-    	
-        return $this->loadByParameters(
+        $this->oTodos->loadByParameters(
         	array(
-            	'users_iduser' => $this->oUser->iduser
-            ), 
+            	'user_iduser' => $this->oUser->getId()
+			),
             array(
-            	'idtodo' => 'DESC'
+            	'lastupdate' => 'DESC'
             ),
-            	array(0,10)
-            );            
-        return false;
+            array(0,10)
+        );
+        return ($this->oTodos->count() > 0);
+    }
+
+    /**
+     *
+     * @return \app\Entities\Collection\TodoCollection
+     */
+    public function getTodos() {
+
+    	assert('$this->oUser->isLoaded()');
+    	return $this->oTodos;
     }
 }
 

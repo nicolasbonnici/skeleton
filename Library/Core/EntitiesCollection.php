@@ -171,7 +171,6 @@ abstract class EntitiesCollection extends Collection {
             $sQuery .= ' LIMIT ' . $aLimit[0] . ', ' . $aLimit[1];
         }
         $this->loadByQuery($sQuery, $aBindedValues);
-
     }
 
     /**

@@ -14,7 +14,7 @@
 	
 		<div class="item {{sItemType}} col-md-12 well ui-shadow">
 			<h4>
-				<a href="{{oItem.permalink}}">{{oItem.title|safe}}</a>				
+				<a target="_blank" href="{{oItem.permalink}}">{{oItem.title|safe}}</a>				
 			</h4>
 			
 			{% if aSession|Exists %}

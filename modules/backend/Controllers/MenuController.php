@@ -8,23 +8,23 @@ namespace modules\backend\Controllers;
  * @author info
  */
 class MenuController extends \Library\Core\AuthController {
-  
+
     public function __preDispatch() {
 
-    }    
-  
-    public function __postDispatch() {
-        
-    }   
-
-    public function indexAction() {                  
-    	$aControllers = array();       
-    	$this->_view['sModule'] = $this->_module;
-    	$this->_view['aControllers'] = $this->buildControllers($this->_module);    	
-    	$this->_view['aFrontControllers'] = $this->buildControllers('frontend');
-        $this->render('menu/index.tpl');
     }
-    
+
+    public function __postDispatch() {
+
+    }
+
+    public function indexAction() {
+//     	$aControllers = array();
+//     	$this->_view['sModule'] = $this->_module;
+//     	$this->_view['aControllers'] = $this->buildControllers($this->_module);
+//     	$this->_view['aFrontControllers'] = $this->buildControllers('frontend');
+//         $this->render('menu/index.tpl');
+    }
+
 }
 
 ?>

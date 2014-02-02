@@ -62,7 +62,7 @@
 				 {#<button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-center"></em> Center</button>#} 
 			</div>					
 
-			<table class="table table-hover">
+			<table class="table">
 				<thead>
 					<tr>
 						<th>
@@ -79,7 +79,7 @@
 						</th>
 					</tr>
 				</thead>
-				<tbody class="ui-loadable" data-module="backend" data-controller="todo" data-action="list">
+				<tbody id="todoList" class="ui-loadable" data-module="backend" data-controller="todo" data-action="list">
 
 				</tbody>
 			</table>

@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="{{lang|Substr: "0,2"|lower}}">
+<html lang="{{lang|Substr: '0,2'|lower}}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        
         <title>{% block meta_title %}Core{% endblock %}</title>
-        
+
+        <!-- Fav and touch icons -->
+        <link rel="shortcut icon" href="/lib/img/favicon.gif">              
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/lib/img/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/lib/img/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/lib/img/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/lib/img/apple-touch-icon-57-precomposed.png">
+
         <meta name="description" content="{% block meta_description %}{% endblock %}" />
         <meta name="keywords" content="{% block meta_keyword %}{% endblock %}" />
         <meta name="application-name" content="{% block meta_app %}sociableCore{% endblock %}" />
@@ -20,13 +26,6 @@
           <script src="js/html5shiv.js"></script>
         <![endif]-->
 
-        <!-- Fav and touch icons -->
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/lib/img/apple-touch-icon-144-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/lib/img/apple-touch-icon-114-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/lib/img/apple-touch-icon-72-precomposed.png">
-        <link rel="apple-touch-icon-precomposed" href="/lib/img/apple-touch-icon-57-precomposed.png">
-        <link rel="shortcut icon" href="/lib/img/favicon.gif">              
-
         <link href="/lib/plugins/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
         <link href="/lib/plugins/bootstrap3/css/bootstrap-theme.min.css" rel="stylesheet">
         <link href="/lib/plugins/core/css/core.classes.css" rel="stylesheet">
@@ -34,7 +33,7 @@
         <link href="/lib/plugins/pnotify/css/jquery.pnotify.default.icons.css" rel="stylesheet">
         <link href="/lib/plugins/core/css/core.ui.css" rel="stylesheet">        
         <link href="/lib/css/style.css" rel="stylesheet">        
-                
+               
         {% block css %}{% endblock %}            
     </head>
     <body class="layout">
@@ -161,14 +160,13 @@
 							</button>
 						</form>
 	
-						<div id="ui-menu" class="ui-loadable" data-module="{{sModule}}" data-controller="menu" data-action="index"></div>
+						<div id="ui-menu" class="" data-module="{{sModule}}" data-controller="menu" data-action="index"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	
 		<div class="ui-layout-center ui-scrollable">
-	
 			<div class="ui-layout-content transparentBg ui-loadscroll">		
 				<div class="container">
 					{% block main %}{% endblock %}
@@ -176,9 +174,17 @@
 			</div>
 		</div>
 	
-		<div class="ui-layout-east transparentBlackBg ui-scrollable">
-			<div class="ui-layout-content">
-				<p>modules list</p>
+		<div class="ui-layout-east ui-scrollable">
+			<div class="ui-layout-content transparentBlackBg">
+                <div class="container">
+                <div class="col-md-12 column">
+                    <div class="page-header">
+                        <h1>
+                            Example page header <small>Subtext for header</small>
+                        </h1>
+                    </div>
+                </div>
+                </div>
 			</div>
 		</div>
 	

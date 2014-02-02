@@ -8,7 +8,8 @@ namespace Library\Core;
  * @author infradmin
  */
 class Session {
-    //put your code here
+//@todo ajouter une couche d'abstraction des sessions users qui s'instancie via le cookie setter au login
+
 }
 
 ?>
