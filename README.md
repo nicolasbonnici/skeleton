@@ -3,6 +3,8 @@ sociableCore
 
 Ultra lightweight flexible full stack framework wrote in PHP5 (5.4)
 
+Demo project here http://dev.nbonnici.info/
+
 - On the fly ORM
 - Connect to any relational SGBD structure and scaffold your business logic objects from it 
 - Scaffold forms, views and also translations
