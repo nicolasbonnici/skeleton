@@ -72,6 +72,7 @@
 									</li>									
 								</ul>
 								<ul class="nav navbar-nav navbar-right">
+								{# @todo faire un filtre haanga pour s assurer de l integrite de la session #}
 									{% if aSession|Exists %}
 									<li class="dropdown">
 										<a data-toggle="dropdown" class="dropdown-toggle" href="#">

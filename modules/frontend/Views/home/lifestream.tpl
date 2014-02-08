@@ -37,6 +37,7 @@ $(document).ready(function() {
 {% block main %}
 
 			<div class="row">
+					{% if aSession|Exists %}
 					<div class="col-md-12 column">
 					    <div class="col-md-9 transparentBlackBg rounded well text-left ui-shadow">
 		        			{% if oFeeds|Exists %}
@@ -69,7 +70,8 @@ $(document).ready(function() {
 	                        </a>
 						</div>
 					</div>
-	
+	                {% endif %}
+	                  
 					<div id="lifestream" class="col-md-12 column ui-loadable ui-scroll-loadable ui-grid" data-module="frontend" data-controller="home" data-action="list">
 					</div>
 					

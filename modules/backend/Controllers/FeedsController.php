@@ -74,7 +74,7 @@ class FeedsController extends \Library\Core\Auth {
             		$this->_params['name'],
             		$this->_params['value'],
             		$oFeed->{$this->_params['name']}
-            		)
+            	)
             ) {
             	$oFeed->{$this->_params['name']} = $this->_params['value'];
 	            $oFeed->lastupdate = time();
