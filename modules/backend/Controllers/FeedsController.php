@@ -8,7 +8,7 @@ namespace modules\backend\Controllers;
  * @author info
  */
 
-class FeedsController extends \Library\Core\AuthController {
+class FeedsController extends \Library\Core\Auth {
 
     public function __preDispatch() {
 
@@ -20,12 +20,17 @@ class FeedsController extends \Library\Core\AuthController {
 
     public function indexAction() {
 
+    	if (isset($this->_params['iparsefeed']) && (int)$this->_params['iparsefeed'] > 0 ) {
+    		// try load then parse feed
+    	}
     	$oFeeds = new \app\Entities\Collection\FeedCollection();
     	$oFeeds->loadByParameters(array('status' => 1));
 
     	$this->_view['oFeeds'] = $oFeeds;
         $this->render('feeds/index.tpl');
     }
+
+
 
     /**
      *     ***************************************  @todo move to CrudController

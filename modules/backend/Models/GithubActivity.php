@@ -2,7 +2,7 @@
 
 namespace modules\backend\Models;
 
-class GithubActivity {
+class GithubActivity implements \Library\Core\Feed {
 
 	/**
 	 * Github setup

@@ -7,7 +7,7 @@ namespace modules\backend\Controllers;
  *
  * @author info
  */
-class MenuController extends \Library\Core\AuthController {
+class MenuController extends \Library\Core\Auth {
 
     public function __preDispatch() {
 

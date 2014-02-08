@@ -2,7 +2,7 @@
 
 namespace modules\backend\Models;
 
-class TwitterActivity {
+class TwitterActivity implements \Library\Core\Feed {
 
 	/**
 	 * Twitter setup
@@ -14,28 +14,16 @@ class TwitterActivity {
 	const TWITTER_OAUTH_CONSUMER_SECRET		= 'hSmfX9oOWBBYJyQmxSvyI0aUMqoac3xze4utWunyrE';
 
 	/**
-	 * Twitter feed instance
-	 * @var \app\Entities\Feed
-	 */
-	protected $oTwitterFeed;
-
-	/**
-	 * Twitter feed items
-	 * @var \app\Entities\Collection\FeedItemCollection
-	 */
-	protected $oTwitterFeedItems;
-
-	/**
 	 * Instance constructor
 	 */
 	public function __construct(\app\Entities\Feed $oTwitterFeed)
 	{
-		if (! $oTwitterFeed->isLoaded()) {
+		if (! $oFeed->isLoaded()) {
 			throw new TwitterActivityException('Twitter Activity feed entity is empty. You need to hydratate instance!');
 		}
 
-		$this->oTwitterFeedItems = new \app\Entities\Collection\FeedItemCollection();
-		$this->oTwitterFeed = $oTwitterFeed;
+		$this->oFeedItems = new \app\Entities\Collection\FeedItemCollection();
+		$this->oFeed = $oTwitterFeed;
 	}
 
 	/**
@@ -50,7 +38,7 @@ class TwitterActivity {
 
 		assert('\Library\Core\Validator::integer($iDelta, 0, 500) === \Library\Core\Validator::STATUS_OK');
 		assert('$this->oTwitterFeed->isLoaded()');
-		assert('$this->oTwitterFeedItems->isLoaded()');
+		assert('$this->oFeedItems->isLoaded()');
 
 		// @see loader les derniers enregistrements de la db pour persister le diff des nouvelles activités
 		if ($bSaveNewActivities) {
@@ -108,7 +96,7 @@ class TwitterActivity {
 
 			}
 
-			$this->oTwitterFeedItems->add($this->oTwitterFeedItems->count()+1, $oFeedItem);
+			$this->oFeedItems->add($this->oFeedItems->count()+1, $oFeedItem);
 		}
 
 		if (isset($oAddedFeedActivities) && ($oAddedFeedActivities->count() > 0)) {
@@ -119,7 +107,7 @@ class TwitterActivity {
 
 	public function getFeedItems()
 	{
-		return $this->oTwitterFeedItems;
+		return $this->oFeedItems;
 	}
 }
 

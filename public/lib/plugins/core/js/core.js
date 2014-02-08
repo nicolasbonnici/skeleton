@@ -276,7 +276,6 @@ $(document).ready(function() {
 	
     // Envoyer des formulaires en asynchrone
     $('.ui-reload').on('click', function() {	
-    	console.log($(this).data('sreloadtarget'));
     	if (typeof($(this).data('sreloadtarget')) !== 'undefined') {
     		core.reload($($(this).data('sreloadtarget')));		
     	}
@@ -295,6 +294,25 @@ $(document).ready(function() {
         }
         return false;
     });    
+    
+    // Tooltip
+    $('body').on('mouseenter', '[title]', function() {
+    	$('#ui-tip').append('<p><span class="glyphicon glyphicon-info-sign"></span> ' + $(this).attr('title') + '</p>').show();
+    	$(this).data('sTooltip', $(this).attr('title')).attr('title', '');
+    });
+    $('body').on('mouseleave', '[title]', function() {
+    	$('#ui-tip').empty().hide();
+    	$(this).attr('title', $(this).data('sTooltip'));
+    });
+    $(document).mousemove(function(event) {
+    	console.log($('#ui-tip').offset().top);
+    	if (!$('#ui-tip').hasClass('ui-tip-top') && event.pageY >= $('#ui-tip').offset().top) {
+    		$('#ui-tip').addClass('ui-tip-top');
+    	} else {
+    		$('#ui-tip').removeClass('ui-tip-top');
+    	}
+	});
+
 
 	$('.ui-login-popover').popover({
 		container: 'body', 

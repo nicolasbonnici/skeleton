@@ -295,9 +295,6 @@
                     // init timestamps to date
                     this.formatTimestamps();
                     
-                    // init tooltip
-                    $('[title]').tooltip({container:'body'});
-                    
                     // Init bootstrap editable elements
                     this.initEditableElements();
                                                            

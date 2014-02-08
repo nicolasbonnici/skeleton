@@ -7,7 +7,7 @@ namespace modules\backend\Controllers;
  *
  * @author info
  */
-class TodoController extends \Library\Core\AuthController {
+class TodoController extends \Library\Core\Auth {
 
     public function __preDispatch() {
 

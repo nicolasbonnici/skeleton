@@ -7,7 +7,7 @@ namespace Library\Core;
  *
  * @author infradmin
  */
-class AuthController extends Controller {
+class Auth extends Controller {
 
 	/**
 	 * Currently logged user instance

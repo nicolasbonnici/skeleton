@@ -38,7 +38,7 @@
         {% block css %}{% endblock %}            
     </head>
     <body class="layout">
-			
+    
 		<div class="ui-layout-north ui-shadow">
 			<div class="ui-layout-content noOverflow">
 				<div class="row clearfix">
@@ -169,7 +169,7 @@
 	
 		<div class="ui-layout-center ui-scrollable">
 			<div class="ui-layout-content transparentBg ui-loadscroll">		
-				<div class="container">
+				<div class="container">				
 					{% block main %}{% endblock %}
 				</div>
 			</div>
@@ -193,16 +193,18 @@
 			</div>
 		</div>
 	
-		{% block modal %}{% endblock %}   	
-	
+		{% block modal %}{% endblock %}
+			
+		<div id="ui-tip" class="transparentBlackBg blackTextShadow GPUrender ui-shadow"></div>
+		
 		<script	type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script	type="text/javascript" src="/lib/plugins/layout/js/jquery.layout.min.js"></script>
 		<script type="text/javascript" src="/lib/plugins/bootstrap3/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/lib/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 		<script type="text/javascript" src="/lib/plugins/pnotify/js/jquery.pnotify.js"></script>
-		{% block js %}{% endblock %}
 		<script type="text/javascript" src="/lib/plugins/core/js/ui.core.js"></script>
 		<script type="text/javascript" src="/lib/plugins/core/js/core.js"></script>
+		{% block js %}{% endblock %}
 	
 	</body>
 </html>

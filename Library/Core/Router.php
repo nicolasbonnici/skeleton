@@ -62,6 +62,11 @@ class Router extends Singleton {
     					'module'    => 'frontend',
     					'controller' => 'home',
     					'action'    => 'contact'
+    			),
+    			'/todo/:param/' => array(
+    					'module'    	=> 'backend',
+    					'controller' 	=> 'todo',
+    					'action'    	=> 'index'
     			)
     	);
 
