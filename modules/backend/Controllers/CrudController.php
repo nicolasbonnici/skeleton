@@ -7,7 +7,15 @@ use Library\Core\CoreEntityException;
 class CrudController extends \Library\Core\Auth {
 
 	public function __preDispatch() {
-
+		if (
+			! isset(
+				$this->_session['iduser'],
+				$this->_session['token'],
+				$this->_session['mail']
+			)
+		) {
+			throw new CrudControllerException('No valid session found. ', CrudControllerException::ERROR_UNAUTHORIZED_ACCESS);
+		}
 	}
 
 	public function __postDispatch() {

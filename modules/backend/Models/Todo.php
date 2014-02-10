@@ -12,6 +12,13 @@ class Todo {
 	private $oUser;
 
 	/**
+	 *
+	 *
+	 * @var \app\Entities\Todo
+	 */
+	private $oTodo;
+
+	/**
 	 * Todos collection
 	 *
 	 * @var \app\Entities\Collection\TodoCollection
@@ -36,8 +43,8 @@ class Todo {
      *
      * @return bool
      */
-    public function loadByUserId() {
-
+    public function loadByUserId()
+    {
     	assert('$this->oUser->isLoaded()');
         $this->oTodos->loadByParameters(
         	array(
@@ -52,13 +59,45 @@ class Todo {
     }
 
     /**
+     * Get a todo by his primary key (restricted to current user)
+     *
+     * @param integer $iTodoId
+     */
+    public function loadByTodoId($iTodoId)
+    {
+    	try {
+    		$this->oTodo = new \app\Entities\Todo();
+    		$this->oTodo->loadByParameters(
+    				array(
+    						'idtodo' 		=> $iTodoId,
+    						'user_iduser' 	=> $this->oUser->getId()
+    				)
+    		);
+    		if ($this->oTodo->isLoaded()) {
+    			return $this->oTodo;
+    		}
+    	} catch (\Library\Core\EntityException $oException) {}
+		return null;
+    }
+
+    /**
      *
      * @return \app\Entities\Collection\TodoCollection
      */
-    public function getTodos() {
-
+    public function getTodos()
+    {
     	assert('$this->oUser->isLoaded()');
     	return $this->oTodos;
+    }
+
+    /**
+     *
+     * @return \app\Entities\Collection\TodoCollection
+     */
+    public function getTodo()
+    {
+    	assert('$this->oUser->isLoaded()');
+    	return $this->oTodo;
     }
 }
 

@@ -75,6 +75,12 @@ abstract class Entity extends Database  {
     protected $aLinkedEntities = array();
 
     /**
+     * Whether row in database may be deleted or not
+     * @var boolean
+     */
+    protected $bIsDeletable = false;
+
+    /**
      * Constructor
      * @param mixed $mPrimaryKey Primary key. If left empty, blank object will be instanciated
      * @throws EntityException
@@ -312,6 +318,31 @@ abstract class Entity extends Database  {
     }
 
     /**
+     * Delete row corresponding to current instance in database and reset instance
+     * @throws EntityException
+     * @return boolean TRUE if deletion was successful, otherwise FALSE
+     */
+    public function delete()
+    {
+    	if (!$this->bIsDeletable) {
+    		throw new EntityException('Cannot delete object of type "' . get_called_class() . '", this type of object is not deletable');
+    	}
+
+    	if (!$this->bIsLoaded) {
+    		throw new EntityException('Cannot delete entry, object not loaded properly');
+    	}
+
+    	try {
+    		$oStatement = \Library\Core\Database::dbQuery('DELETE FROM `' . static::TABLE_NAME . '` WHERE `' . static::PRIMARY_KEY . '` = ?', array($this->{static::PRIMARY_KEY}));
+    		$this->reset();
+    	} catch (\PDOException $oException) {
+    		return false;
+    	}
+
+    	return true;
+    }
+
+    /**
      * Refresh object data from database
      * @return boolean TRUE if object was successfully refreshed, otherwise FALSE
      */
@@ -421,6 +452,27 @@ abstract class Entity extends Database  {
 			}
     	}
 		return $sDataType;
+    }
+
+    /**
+     * Reset current instance to blank state
+     */
+    public function reset()
+    {
+    	$aOriginProperties = array();
+    	$oReflection = new \ReflectionClass($this);
+
+    	foreach ($oReflection->getProperties() as $oRelectionProperty) {
+    		$aOriginProperties[] = $oRelectionProperty->getName();
+    	}
+
+    	foreach ($this as $sKey => $mValue) {
+    		if (!in_array($sKey, $aOriginProperties)) {
+    			unset($this->$sKey);
+    		}
+    	}
+
+    	$this->bIsLoaded = false;
     }
 
 	/**

@@ -5,21 +5,17 @@
 	                {{oTodo.idtodo}}
 	            </td>
                 <td>
-                    <a href="#" class="ui-editable" data-entity="Todo" data-pk="{{oTodo.idtodo}}" data-module="backend" data-controller="crud" data-action="update">
-                       {{oTodo.label|safe}}
-                    </a>
+                    {{oTodo.label|safe}}
                 </td>
 	            <td>
 					<div class="btn-group">
-					  <a href="#" class="btn btn-info" title="{{tr['view']}}"><span class="glyphicon glyphicon-zoom-in"></span></a>
-					  <a href="#" class="btn btn-warning" title="{{tr['edit']}}"><span class="glyphicon glyphicon-pencil"></span></a>
-					  <a href="#" class="btn btn-danger ui-confirm" title="{{tr['delete']}}"><span class="glyphicon glyphicon-trash"></span></a>
+					  <a href="#modal-todo" class="ui-sendxhr btn btn-info" data-url="/backend/todo/read/idtodo/{{oTodo.idtodo}}" data-selector="#modal-todo-content" data-toggle="modal" data-idtodo="{{oTodo.idtodo}}" title="{{tr['view']}}"><span class="glyphicon glyphicon-zoom-in"></span></a>
+					  <a href="#modal-todo" class="ui-sendxhr btn btn-warning" data-url="/backend/todo/update/idtodo/{{oTodo.idtodo}}" data-selector="#modal-todo-content" data-toggle="modal" data-idtodo="{{oTodo.idtodo}}" title="{{tr['edit']}}"><span class="glyphicon glyphicon-pencil"></span></a>
+					  <a href="#modal-todo" class="ui-sendxhr btn btn-danger ui-confirm" data-url="/backend/todo/delete/idtodo/{{oTodo.idtodo}}" data-selector="#modal-todo-content" data-toggle="modal" data-idtodo="{{oTodo.idtodo}}" title="{{tr['delete']}}"><span class="glyphicon glyphicon-trash"></span></a>
 					</div>
 	            </td>
 	            <td>
-                    <a href="#" class="ui-editable ui-editable-date" data-type="date" data-entity="Todo" data-pk="{{oTodo.idtodo}}" data-module="backend" data-controller="crud" data-action="update">	            
-	                   <span class="ui-timestamp" data-timestamp="{{oTodo.deadline}} "></span>
-                    </a>
+	               <span class="ui-timestamp" data-timestamp="{{oTodo.deadline}} "></span>
 	            </td>
 	            <td>
 	                {{tr['last_edited']}}&nbsp;{{oTodo.lastupdate}} 

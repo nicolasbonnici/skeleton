@@ -23,13 +23,14 @@
                     core.hideNotif();		
                 },
 
-
-                // @todo
                 sendXHR: function(obj) {
 
                     var sUrl = obj.attr('data-url');
                     var $domTarget = $(obj.attr('data-selector'));				
-
+                    if (typeof($domTarget) === 'undefined') {
+                    	$domTarget = $(obj.attr('href'));
+                    }
+                    
                     $.ajax({
                         type: 'POST',
                         url: sUrl,
@@ -89,18 +90,20 @@
                 // Envoyer un formulaire en asynchrone
                 sendForm: function(obj) {
 
-                    var sFormSelector = obj.attr('data-form');
+                    var sFormSelector = obj.data('form');
+                    if (typeof(sFormSelector) === 'undefined') {
+                    	sFormSelector = obj.attr('href');
+                    }
                     var $formTarget = $(sFormSelector);
                     var $domTarget = $(sFormSelector).parent();
 
                     // Serialiser les forms inputs
                     var data = $formTarget.serialize();
-                    if($(sFormSelector+' .ui-editor').size() != 0) {
+                    if($(sFormSelector+' div[contenteditable=true]').size() != 0) {
                         $(sFormSelector+' .ui-editor').each(function() {
-                            data += '&'+$(this).attr('data-name')+'='+$(this).html();
+                            data += '&'+$(this).data('name')+'='+$(this).parent().find('div[contenteditable=true]:first').html();
                         });
                     }					
-
 
                     $.ajax({
                         type: 'POST',
@@ -259,17 +262,15 @@ $(document).ready(function() {
     // ---------------------------- Asynchrone request
 
     // Envoyer une requete XHR lors d'un clic ou d'un change sur un select
-    $('.ui-sendxhr').on('click', function(){
+    $('body').on('click', '.ui-sendxhr', function(){
         core.sendXHR($(this));
-        return false;	
     });
-    $('.sendXHROnChange').on('change',  function(){
+    $('body').on('change', '.sendXHROnChange', function(){
         core.sendXHR($(this));
-        return false;	
     });
     
     // Envoyer des formulaires en asynchrone
-    $('.ui-sendform').on('click', function() {		
+    $('body').on('click', '.ui-sendform', function() {		
     	core.sendForm($(this));		
     	return false;	
     });        
@@ -279,7 +280,6 @@ $(document).ready(function() {
     	if (typeof($(this).data('sreloadtarget')) !== 'undefined') {
     		core.reload($($(this).data('sreloadtarget')));		
     	}
-        return false;	
     });        
     
     // load on scroll
@@ -295,25 +295,13 @@ $(document).ready(function() {
         return false;
     });    
     
-    // Tooltip
-    $('body').on('mouseenter', '[title]', function() {
-    	$('#ui-tip').append('<p><span class="glyphicon glyphicon-info-sign"></span> ' + $(this).attr('title') + '</p>').show();
-    	$(this).data('sTooltip', $(this).attr('title')).attr('title', '');
-    });
-    $('body').on('mouseleave', '[title]', function() {
-    	$('#ui-tip').empty().hide();
-    	$(this).attr('title', $(this).data('sTooltip'));
-    });
-    $(document).mousemove(function(event) {
-    	console.log($('#ui-tip').offset().top);
-    	if (!$('#ui-tip').hasClass('ui-tip-top') && event.pageY >= $('#ui-tip').offset().top) {
-    		$('#ui-tip').addClass('ui-tip-top');
-    	} else {
-    		$('#ui-tip').removeClass('ui-tip-top');
+    $('body').on('click', '.ui-confirm', function() {
+    	if (!confirm('Etes vous sure?')) {
+    		return false;
     	}
-	});
-
-
+    });
+    
+    // Login popover
 	$('.ui-login-popover').popover({
 		container: 'body', 
         placement : 'auto', 

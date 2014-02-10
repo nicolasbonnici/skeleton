@@ -16,34 +16,33 @@
 {% endblock %}
 
 {% block modal %}
-<div class="modal fade" id="modal-container-275600" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-create-todo" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header">
-				 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				<h4 class="modal-title" id="myModalLabel">
-					New todo
-				</h4>
-			</div>
-			<div class="modal-body">
-				<form role="form" id="newTodoForm" action="" method="post">
-					<div class="form-group">
-						 <label for="todoTitle">Title </label><input type="text" class="form-control" placeholder="Input a title for your todo" id="todoTitle" />
-					</div>
-					<div class="form-group">
-						<label for="exampleInputFile">File input</label><div class="ui-editor"></div>
-						<p class="help-block">
-							Vous pouvez mettre en form votre todo à l'aide de la barre d'outils de mise en forme
-						</p>
-					</div>
-				</form>							
-			</div>
-			<div class="modal-footer">
-				 <button type="button" class="btn btn-default" data-dismiss="modal">{{tr['cancel']}}</button>
-				 &nbsp;<button type="button" class="btn btn-primary">{{tr['save']}}</button>
-			</div>
+
+		    <div class="modal-header">
+		         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		        <h4 class="modal-title" id="myModalLabel">
+		            Nouveau Todo!
+		        </h4>
+		    </div>
+		    
+		    <div id="modal-create-content" class="modal-body">
+		    
+		    </div> 
+
+		    <div class="modal-footer">
+		         <button type="button" class="btn btn-default" data-dismiss="modal">{{tr['cancel']}}</button>
+		         &nbsp;<button type="button" class="ui-sendform btn btn-primary" data-form="#newTodoForm" title="Enregistrer ce todo">{{tr['save']}}</button>
+		    </div>     
 		</div>
-		
+	</div>				
+</div>
+<div class="modal fade" id="modal-todo" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content" id="modal-todo-content">
+            <p>&nbsp;</p>
+		</div>
 	</div>				
 </div>
 {% endblock %}
@@ -72,7 +71,7 @@
 				    <li><a href="#">Separated link</a></li>
 				  </ul>
 				</div>				
-				 <button class="btn btn-lg btn-info" type="button"id="modal-275600" href="#modal-container-275600" role="button" data-toggle="modal">
+				 <button  href="#modal-create-todo" type="button" class="btn btn-lg btn-info ui-sendxhr" data-url="/backend/todo/create/" data-selector="#modal-create-content" role="button" data-toggle="modal">
 				    <span class="glyphicon glyphicon-file"></span> New todo!
 				 </button> 
 			</div>					

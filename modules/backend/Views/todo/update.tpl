@@ -1,35 +1,31 @@
-{% if update|Exists %}
-    {% if update %}
-		<div class="alert alert-success"">
-			 <button type="button" class="close" data-dismiss="alert">×</button>
-			<h4>{{tr['update_success']}}</h4>
-		</div>    
-    {% else %}
-		<div class="alert alert-error"">
-			 <button type="button" class="close" data-dismiss="alert">×</button>
-			<h4>{{tr['update_error']}}</h4>
-		</div>    
-    {% endif %}
-{% endif %}
-{% if oTodo.idtodo|Exists %}
+{% if oTodo|Exists %}
+    <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title" id="myModalLabel">
+	        <a href="#" class="ui-editable" data-entity="Todo" data-name="label" data-pk="{{oTodo.idtodo}}" data-module="backend" data-controller="crud" data-action="update">
+	           {{oTodo.label|safe}}
+	        </a>          
+        </h4>
+    </div>
+    <div class="modal-body">
+        <form role="form" id="newTodoForm" action="" method="post">
+            <div class="form-group">
+                <div class="ui-editor">
+                {{oTodo.content}}
+                </div>
+                <p class="help-block">
+                    Vous pouvez mettre en form votre todo à l'aide de la barre d'outils de mise en forme
+                </p>
+            </div>
+        </form>                         
+    </div>
+    <div class="modal-footer">
+         <button type="button" class="btn btn-default" data-dismiss="modal">{{tr['cancel']}}</button>
+         &nbsp;<button type="button" class="btn btn-primary">{{tr['save']}}</button>
+    </div>	    
 
-	<form id="update-todo{{oTodo.idtodo}}" action="/backend/todo/update/id/{{oTodo.idtodo}}" method="post">
-		<input type="text" name="label" value="{{oTodo.label}}" />
-		
-		<div class="ui-editor" data-name="content" id="ui-editor-{{oTodo.idtodo}}">
-			{{oTodo.content|safe}}
-		</div>                                
-		          
-		<div class="text-right">
-			<input type="submit" value="{{tr['update']}}" data-form="#update-todo{{oTodo.idtodo}}" class="ui-sendform btn btn-large btn-primary" />
-			<a class="btn btn-large">{{tr['cancel']}}</a>
-		</div>		          
-		                                
-	</form>
-	
-{% else %}	
-		<div class="alert alert-error"">
-			 <button type="button" class="close" data-dismiss="alert">×</button>
-			<h4>{{tr['access_denied']}}</h4>
-		</div>    
+{% else %}
+    <div class="alert alert-warning">
+      <strong>Warning!</strong> Your role doesn't allow you to edit this todo
+    </div>  
 {% endif %}

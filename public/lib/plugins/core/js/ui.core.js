@@ -47,7 +47,7 @@
                                             size: 90,
                                             togglerLength_closed: "100%",                                    
                                             togglerLength_open: 50,
-                                            initClosed:	false,
+                                            initClosed:	true,
                                             onopen_end: function() {
                                                 return false;
                                             },
@@ -273,6 +273,31 @@
                 	});
                 },
                 
+                initTooltip: function() {
+                	if (! $('body').data('tooltip-fired')) {
+                		$('body').data('tooltip-fired', true);
+	                    // Tooltip
+	                    if ($('#ui-tip').size() === 0) {
+	                    	$('body').append('<div id="ui-tip" class="transparentBlackBg blackTextShadow GPUrender ui-shadow"></div>');
+	                    }
+	                    $('body').on('mouseenter', '[title]', function() {
+	                    	$('#ui-tip').append('<p><span class="glyphicon glyphicon-info-sign"></span> ' + $(this).attr('title') + '</p>').show();
+	                    	$(this).data('sTooltip', $(this).attr('title')).attr('title', '');
+	                    });
+	                    $('body').on('mouseleave', '[title]', function() {
+	                    	$('#ui-tip').empty().hide();
+	                    	$(this).attr('title', $(this).data('sTooltip'));
+	                    });
+	                    $(document).mousemove(function(event) {
+	                    	if (!$('#ui-tip').hasClass('ui-tip-top') && event.pageY >= $('#ui-tip').offset().top) {
+	                    		$('#ui-tip').addClass('ui-tip-top');
+	                    	} else {
+	                    		$('#ui-tip').removeClass('ui-tip-top');
+	                    	}
+	                	});
+                	}
+                },
+                
                 initUi: function() {
 
                 	// Aide lors d'un focus sur input placehorder
@@ -297,17 +322,22 @@
                     
                     // Init bootstrap editable elements
                     this.initEditableElements();
-                                                           
+
+                    // Init tooltip
+                    this.initTooltip();
+                    
                     // Move all modals directly on the body (bugfix pour le layout)
                     $('.ui-modal').appendTo("body");  
                     
                     this.initCheckbox();
                     
                     // init carousel
-                    $('.ui-carousel').carousel({
-                    	  interval: 2000,
-                    	  duration: 50
-                    });
+                    if ($('.ui-carousel').size() > 0) {
+                    	$('.ui-carousel').carousel({
+                    		interval: 2000,
+                    		duration: 50
+                    	});
+                    }
 
                 }
             }
