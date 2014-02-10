@@ -23,40 +23,6 @@
                     core.hideNotif();		
                 },
 
-                sendXHR: function(obj) {
-
-                    var sUrl = obj.attr('data-url');
-                    var $domTarget = $(obj.attr('data-selector'));				
-                    if (typeof($domTarget) === 'undefined') {
-                    	$domTarget = $(obj.attr('href'));
-                    }
-                    
-                    $.ajax({
-                        type: 'POST',
-                        url: sUrl,
-                        beforeSend : function(preload) {
-                            // Mettre en cache et vider l'objet qui contiendra la reponse
-                            $domTarget.data('initialContent', $domTarget.html());		                        	
-                        	$domTarget.empty();                                                            
-                        },
-                        success: function(rep){
-                        	if (rep.status == 1) { // @see if XHR_STATUS_OK
-                            	$domTarget.append(rep.content);            
-                        		$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		                            	
-                        	}
-                        },
-                        error: function(err){                            
-                            // Restore cached content
-                        	$domTarget.append($domTarget.data('initialContent'));    
-                    		$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		
-                        	
-                        },
-                        complete: function(){
-                        	$domTarget.removeData('initialContent');
-                        }
-                    });
-                },
-
                 loadScroll: function($obj) {
 
             		var sSelector = '#'+$obj.attr('id');                			
@@ -86,6 +52,52 @@
                         }
                     });    
                 },
+
+                sendXHR: function(oHandler) {
+
+                    var sUrl = '';
+                    if (
+                		typeof(oHandler.data('module')) !== 'undefined' && 
+                		typeof(oHandler.data('controller')) !== 'undefined' && 
+                		typeof(oHandler.data('action')) !== 'undefined' 
+                    ) {
+                    	sUrl = '/'+oHandler.data('module')+'/'+oHandler.data('controller')+'/'+oHandler.data('action');
+                    } else if (typeof(oHandler.data('url')) !== 'undefined') {
+                    	sUrl = oHandler.data('url');
+                    } else {
+                    	sUrl = oHandler.attr('href');
+                    }
+
+                    var $domTarget = $(oHandler.attr('data-selector'));
+                    if (typeof($domTarget) === 'undefined') {
+                    	$domTarget = $(oHandler.attr('href'));
+                    }
+                    
+                    $.ajax({
+                        type: 'POST',
+                        url: sUrl,
+                        beforeSend : function(preload) {
+                            // Mettre en cache et vider l'objet qui contiendra la reponse
+                            $domTarget.data('initialContent', $domTarget.html());		                        	
+                        	$domTarget.empty();                                                            
+                        },
+                        success: function(rep){
+                        	if (rep.status == 1) { // @see if XHR_STATUS_OK
+                            	$domTarget.append(rep.content);            
+                        		$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		                            	
+                        	}
+                        },
+                        error: function(err){                            
+                            // Restore cached content
+                        	$domTarget.append($domTarget.data('initialContent'));    
+                    		$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		
+                        	
+                        },
+                        complete: function(){
+                        	$domTarget.removeData('initialContent');
+                        }
+                    });
+                },
                 
                 // Envoyer un formulaire en asynchrone
                 sendForm: function(obj) {
@@ -101,7 +113,7 @@
                     var data = $formTarget.serialize();
                     if($(sFormSelector+' div[contenteditable=true]').size() != 0) {
                         $(sFormSelector+' .ui-editor').each(function() {
-                            data += '&'+$(this).data('name')+'='+$(this).parent().find('div[contenteditable=true]:first').html();
+                            data += '&'+oHandler.data('name')+'='+oHandler.parent().find('div[contenteditable=true]:first').html();
                         });
                     }					
 
@@ -117,6 +129,9 @@
                         success: function(rep){
                         	if (rep.status == 1) { // @see if XHR_STATUS_OK
                             	$domTarget.append(rep.content);                        		
+                        	}
+                        	if (obj.hasClass('refreshOnCallback')) {
+                        		core.loadView();
                         	}
                         },
                         error: function(err){                            
@@ -134,53 +149,47 @@
                 	if ($('.ui-loadable').size() > 0) {
                 		
                 		$('.ui-loadable').each(function() {
-                			
-                			if (!$(this).data('ui-loaded')) {
-                				
-                				$(this).data('ui-loaded', true);
-                				
-                                var sUrlTarget = '';
-                                if (
-                            		typeof($(this).data('module')) !== 'undefined' && 
-                            		typeof($(this).data('controller')) !== 'undefined' && 
-                            		typeof($(this).data('action')) !== 'undefined' 
-                                ) {
-                                	sUrlTarget = '/'+$(this).data('module')+'/'+$(this).data('controller')+'/'+$(this).data('action');
-                                } else if (typeof($(this).data('url')) !== 'undefined') {
-                                	sUrlTarget = $(this).data('url');
-                                } else {
-                                	ui.sendNotification('Error', 'No url specified to load ui-loadable div #' + $(this).attr('id'), 'error', 'glyphicon glyphicon-warning', false);
-                                	return false;
+
+                            var sUrlTarget = '';
+                            if (
+                        		typeof($(this).data('module')) !== 'undefined' && 
+                        		typeof($(this).data('controller')) !== 'undefined' && 
+                        		typeof($(this).data('action')) !== 'undefined' 
+                            ) {
+                            	sUrlTarget = '/'+$(this).data('module')+'/'+$(this).data('controller')+'/'+$(this).data('action');
+                            } else if (typeof($(this).data('url')) !== 'undefined') {
+                            	sUrlTarget = $(this).data('url');
+                            } else {
+                            	ui.sendNotification('Error', 'No url specified to load ui-loadable div #' + $(this).attr('id'), 'error', 'glyphicon glyphicon-warning', false);
+                            	return false;
+                            }
+
+                            var sSelector = '#'+$(this).attr('id');
+
+                            var aData = $(sSelector).data();
+                            $.ajax({
+                                type: 'POST',
+                                url: sUrlTarget,
+                                data: aData,
+                                beforeSend : function(preload) {
+                                	// Mettre en cache et vider l'objet qui contiendra la reponse
+                                	$(this).data('initialContent', $(this).html());	                                 
+                                	$(sSelector).empty();                                                            
+                                },
+                                success: function(rep){
+                                	if (rep.status === 1) { // @see if XHR_STATUS_OK                                               		                                    		
+                                		$(sSelector).append(rep.content);                                              
+                                		$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		
+                                	}
+                                },
+                                error: function(err){                            
+                                    // Restore cached content
+                                	$(sSelector).append($(sSelector).data('initialContent'));                            
+                                },
+                                complete: function(){
+                                	$(sSelector).removeData('initialContent');
                                 }
-
-                                var sSelector = '#'+$(this).attr('id');
-
-                                var aData = $(sSelector).data();
-                                $.ajax({
-                                    type: 'POST',
-                                    url: sUrlTarget,
-                                    data: aData,
-                                    beforeSend : function(preload) {
-                                    	// Mettre en cache et vider l'objet qui contiendra la reponse
-                                    	$(this).data('initialContent', $(this).html());	                                 
-                                    	$(sSelector).empty();                                                            
-                                    },
-                                    success: function(rep){
-                                    	if (rep.status === 1) { // @see if XHR_STATUS_OK                                               		                                    		
-                                    		$(sSelector).append(rep.content);                                              
-                                    		$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		
-                                    	}
-                                    },
-                                    error: function(err){                            
-                                        // Restore cached content
-                                    	$(sSelector).append($(sSelector).data('initialContent'));                            
-                                    },
-                                    complete: function(){
-                                    	$(sSelector).removeData('initialContent');
-                                    }
-                                });             				
-                			}
-                			
+                            });             				
                 		});
                 		
                 	}
@@ -295,9 +304,21 @@ $(document).ready(function() {
         return false;
     });    
     
+    // ui confirm @todo afficher une modale au lieu des dialogs natifs
     $('body').on('click', '.ui-confirm', function() {
     	if (!confirm('Etes vous sure?')) {
     		return false;
+    	}
+    });
+    
+    // @todo bug incomprehensible!!!!!!!!!!!!!!!
+    $('body').on('click', '.ui-select-all', function() {
+    	var sContainerSelector = $(this).data('container');
+    	if (typeof(sContainerSelector) !== 'undefined') {
+     		$(sContainerSelector + ' .ui-select').each(function(index, bChecked) {
+    			$(this).attr('checked', $(sContainerSelector).find('.ui-select-all').is(':checked'));
+    			console.log($(sContainerSelector).find('.ui-select-all').is(':checked'));
+    		});
     	}
     });
     

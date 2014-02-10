@@ -33,7 +33,7 @@
 
 		    <div class="modal-footer">
 		         <button type="button" class="btn btn-default" data-dismiss="modal">{{tr['cancel']}}</button>
-		         &nbsp;<button type="button" class="ui-sendform btn btn-primary" data-form="#newTodoForm" title="Enregistrer ce todo">{{tr['save']}}</button>
+		         &nbsp;<button type="button" class="ui-sendform refreshOnCallback btn btn-primary" data-form="#newTodoForm" title="Enregistrer ce todo">{{tr['save']}}</button>
 		    </div>     
 		</div>
 	</div>				
@@ -59,28 +59,22 @@
 
 		<div class="col-md-12 column">
 			<div class="btn-group btn-group-lg">
-				<div class="btn-group">
-				  <button type="button" class="btn btn-lg btn-default dropdown-toggle" data-toggle="dropdown">
-				     <span class="glyphicon glyphicon-filter"></span> Filter
-				  </button>
-				  <ul class="dropdown-menu" role="menu">
-				    <li><a href="#">Action</a></li>
-				    <li><a href="#">Another action</a></li>
-				    <li><a href="#">Something else here</a></li>
-				    <li class="divider"></li>
-				    <li><a href="#">Separated link</a></li>
-				  </ul>
-				</div>				
+                 <button type="button" class="btn btn-lg btn-default">
+                     <span class="glyphicon glyphicon-refresh"></span> Raffraichir
+                 </button>
+				 <button  href="#modal-create-todo" type="button" class="hidden btn btn-lg btn-danger ui-sendxhr" data-url="/backend/todo/create/" data-selector="#modal-create-content" role="button" data-toggle="modal">
+				    <span class="glyphicon glyphicon-trash"></span> Supprimer
+				 </button> 
 				 <button  href="#modal-create-todo" type="button" class="btn btn-lg btn-info ui-sendxhr" data-url="/backend/todo/create/" data-selector="#modal-create-content" role="button" data-toggle="modal">
 				    <span class="glyphicon glyphicon-file"></span> New todo!
 				 </button> 
 			</div>					
 
-			<table class="table table-responsive">
+			<table id="todo-last-items" class="table table-responsive">
 				<thead>
 					<tr>
 						<th>
-							#
+							<input type="checkbox" class="ui-select-all" data-container="#todo-last-items" />
 						</th>
 						<th>
 							Title

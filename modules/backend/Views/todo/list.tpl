@@ -2,7 +2,7 @@
 	{% for oTodo in oTodos %}
 	        <tr{% if oTodo.deadline > current_timestamp %} class="danger blackFontColor"{% endif %}>
 	            <td>
-	                {{oTodo.idtodo}}
+	                <input type="checkbox" class="ui-select" name="idtodo" value="{{oTodo.idtodo}}" />
 	            </td>
                 <td>
                     {{oTodo.label|safe}}
@@ -15,10 +15,10 @@
 					</div>
 	            </td>
 	            <td>
-	               <span class="ui-timestamp" data-timestamp="{{oTodo.deadline}} "></span>
+	               <span class="ui-timestamp" data-timestamp="{{oTodo.deadline}}"></span>
 	            </td>
 	            <td>
-	                {{tr['last_edited']}}&nbsp;{{oTodo.lastupdate}} 
+	                {{tr['last_edited']}}&nbsp;<span class="ui-timestamp" data-timestamp="{{oTodo.lastupdate}}"></span> 
 	            </td>
 	        </tr>
 	{% endfor %}

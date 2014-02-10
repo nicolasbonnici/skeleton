@@ -195,6 +195,7 @@
                 
                 /**
                  * @dependancy bootstrap-editable plugin
+                 * @todo debugger et passer proprement les params en fonctions des differents types d'instance du plugin
                  */
                 initEditableElements: function() {
                     if ($('.ui-editable').size() > 0 && typeof($.fn.editable) !== 'undefined') {
@@ -203,9 +204,39 @@
                     	$.fn.editable.defaults.mode = 'inline';
                     	
                     	$('.ui-editable').each(function() {
+                            var sUrl = '';
+                            if (
+                        		typeof($(this).data('module')) !== 'undefined' && 
+                        		typeof($(this).data('controller')) !== 'undefined' && 
+                        		typeof($(this).data('action')) !== 'undefined' 
+                            ) {
+                            	sUrl = '/'+$(this).data('module')+'/'+$(this).data('controller')+'/'+$(this).data('action');
+                            } else if (typeof($(this).data('url')) !== 'undefined') {
+                            	sUrl = $(this).data('url');
+                            } else {
+                            	sUrl = $(this).attr('href');
+                            }
+                            
                     		var oOpts = {
+                    				url: sUrl,
                     				title: 'Editer ce champs',
-                    				placeholder: $(this).attr('placeholder')
+                    				placeholder: $(this).attr('placeholder'),
+                    				success: function(rep) {
+                    					switch(rep.status) {
+                    					case 1:
+                    						ui.sendNotification('Success', rep.content, 'success', 'glyphicon glyphicon-ok', false);
+                    						break;
+                    					case 2:
+                    						ui.sendNotification('Error', rep.content, 'error', 'glyphicon glyphicon-exclamation-sign', false);
+                    						break;
+                    					case 3:
+                    						ui.sendNotification('Warning', rep.content, 'warning', 'glyphicon glyphicon-time', false);
+                    						break;
+                    					default:
+                    						ui.sendNotification('Info', rep.content, 'info', 'glyphicon glyphicon-info', true);
+                    					break;	                            				
+                    					}
+                    				}                    				
                     		};
 							if ($(this).hasClass('ui-editable-date')) {
 								var oOpts = {
@@ -218,23 +249,7 @@
 							}                    		
                     		
                 			$(this).editable({
-                				params: oOpts,
-                				success: function(rep) {
-                					switch(rep.status) {
-                					case 1:
-                						ui.sendNotification('Success', rep.content, 'success', 'glyphicon glyphicon-ok', false);
-                						break;
-                					case 2:
-                						ui.sendNotification('Error', rep.content, 'error', 'glyphicon glyphicon-exclamation-sign', false);
-                						break;
-                					case 3:
-                						ui.sendNotification('Warning', rep.content, 'warning', 'glyphicon glyphicon-time', false);
-                						break;
-                					default:
-                						ui.sendNotification('Info', rep.content, 'info', 'glyphicon glyphicon-info', true);
-                					break;	                            				
-                					}
-                				}
+                				params: oOpts
                 			});
                     		
                     	});
