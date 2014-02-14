@@ -7,11 +7,12 @@ Demo project here http://dev.nbonnici.info/
 
 - On the fly ORM
 - Connect to any relational SGBD structure and scaffold your business logic objects from it 
-- Scaffold forms, views and also translations
+- Scaffold models, controllers, forms, views and also translations
 - Autocast every SGBD data types and auto validate data integrity of your objects attributes on CRUD actions
 - Flexible ACL managment
 - Namespaces
 - MVC pattern, modules enabled with a common couch to each layers
+- Full flexible UX based on Twitter bootstrap and jQuery 1.10+
 - Lightweight render engine (Haanga), this framework can render pages that fetch a hundred objects under 0.002 secs 
 
 Dependancy
