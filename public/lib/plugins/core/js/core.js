@@ -322,12 +322,23 @@ $(document).ready(function() {
     	}
     });
     
+    // popover
+	$('.ui-toggle-popover').popover({
+		container: 'body', 
+        placement : 'auto', 
+        html: true, 
+        animation: true,
+        content : function() {
+        	return $($(this).data('popover')).html();
+        }
+	});
+    
     // Login popover
 	$('.ui-login-popover').popover({
 		container: 'body', 
         placement : 'auto', 
         title : '<h4>Login</h4>',
-        html: 'true', 
+        html: true, 
         animation: true,
         
         content : $('#login-popover').html()

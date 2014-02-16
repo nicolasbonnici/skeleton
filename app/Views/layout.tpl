@@ -58,22 +58,32 @@
 									<li{% if sAction|Exists && sAction == 'contactAction' %} class="active"{% endif %}>
 										<a href="/contact" title="{{tr['contact_tip']}}"><span class="glyphicon glyphicon-envelope"></span> {{tr['contact']}}</a>
 									</li>
-									<li class="dropdown{% if sAction|Exists && sAction == 'homepage' %} active{% endif %}">
-										<a href="#" title="{{tr['search_tip']}}" class="dropdown-toggle" data-toggle="dropdown">
+									<li>
+                                        <a href="#" title="Mes applications" class="ui-pane-toggle" data-pane="east">
+                                            <span class="glyphicon glyphicon-cloud-download"></span> Apps
+                                        </a>                                    
+									</li>
+									<li>
+										<a href="#" title="{{tr['search_tip']}}" class="ui-toggle-popover" data-popover="#searchPopover">
 											<span class="glyphicon glyphicon-search"></span> {{tr['search']}}
 										</a>									
-										<ul class="dropdown-menu">
-											<form class="navbar-form navbar-left" role="search">
-												<div class="form-group">
-													<input type="text" class="form-control" placeholder="{{tr['search_helper']}}" />
-												</div> 
-											</form>	
-										</ul>
+
+                                        <div id="searchPopover" class="hide">
+                                            <div class="row clearfix">
+                                                <div class="col-md-12 column">
+		                                            <form class="well" role="search">
+		                                                <div class="form-group">
+		                                                   <input type="text" class="form-control" placeholder="{{tr['search_helper']}}" />
+		                                                </div> 
+		                                            </form> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        										
 									</li>									
 								</ul>
 								<ul class="nav navbar-nav navbar-right">
-								{# @todo faire un filtre haanga pour s assurer de l integrite de la session #}
-									{% if aSession|Exists %}
+                                    {% if aSession|Exists %}
 									<li class="dropdown">
 										<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 											<img src="{{sGravatarSrc16}}" class="ui-nav-avatar" alt="Avatar" />{{aSession['firstname']}} {{aSession['lastname']}} <strong class="caret"></strong>
@@ -150,18 +160,10 @@
 			</div>
 		</div>
 	
-		<div class="ui-layout-west whiteBg ui-scrollable">
-			<div class="ui-layout-content">
+		<div class="ui-layout-west ui-scrollable">
+			<div class="ui-layout-content transparentBlackBg">
 				<div class="row">
 					<div class="col-md-12">
-						<form class="form-search padding">
-							<input type="text" class="input-medium search-query"
-								placeholder="{{tr['input_search']}}" />
-							<button type="submit" class="btn">
-								<em class="icon-search"></em>&nbsp;Search
-							</button>
-						</form>
-	
 						<div id="ui-menu" class="" data-module="{{sModule}}" data-controller="menu" data-action="index"></div>
 					</div>
 				</div>

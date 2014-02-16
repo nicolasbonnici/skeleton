@@ -56,7 +56,7 @@
                                             }                                    
                                     },
                                     east: {
-                                            size:  50,
+                                            size:  150,
                                             applyDefaultStyles: false,
                                             initClosed: true,
                                             togglerLength_closed: 0,
@@ -64,10 +64,10 @@
                                             spacing_open: 0,
                                             spacing_closed: 0,
                                             onopen_end: function() {
-                                                return false;
+                                            	$('.ui-layout-east').addClass('ui-shadow');
                                             },
                                             onclose_end: function() {
-                                                return false;
+                                            	$(this).removeClass('ui-shadow');                                            	
                                             }
                                     },
                                     west: {
@@ -80,7 +80,7 @@
                                             slideTrigger_close: 'mouseout',
                                             slideTrigger_open: 'mouseover',                                             
                                             onopen_end: function() {
-                                            	$('.ui-layout-west').addClass('ui-transition ui-shadow');
+                                            	$('.ui-layout-west').addClass('ui-shadow');
                                             },
                                             onclose_end: function() {
                                             	$(this).removeClass('ui-shadow');                                            	

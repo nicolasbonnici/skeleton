@@ -68,7 +68,7 @@
 				 <button  href="#modal-create-todo" type="button" class="btn btn-lg btn-info ui-sendxhr" data-url="/backend/todo/create/" data-selector="#modal-create-content" role="button" data-toggle="modal">
 				    <span class="glyphicon glyphicon-file"></span> New todo!
 				 </button> 
-			</div>					
+			</div>
 
 			<table id="todo-last-items" class="table table-responsive">
 				<thead>
@@ -79,12 +79,12 @@
 						<th>
 							Title
 						</th>
-                        <th>
-                            Actions
-                        </th>
 						<th>
 							Deadline
 						</th>
+                        <th>
+                            Actions
+                        </th>
 						<th>
 							Last edited
 						</th>
