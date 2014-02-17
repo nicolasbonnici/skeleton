@@ -64,7 +64,7 @@ class CrudController extends \Library\Core\Auth {
 				if (isset($oEntity, $oEntity->{$this->_params['name']}))  {
 					// Only check ACL, no need to check data type integrity \Core\Entity check it before updating object
 					if (
-							$this->hasUpdateAccess($this->_params['entity'])
+							$this->hasUpdateAccess(strtolower($this->_params['entity']))
 					) {
 						$oEntity->{$this->_params['name']} = $this->_params['value'];
 

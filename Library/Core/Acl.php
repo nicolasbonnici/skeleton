@@ -113,7 +113,7 @@ abstract class Acl   {
     {
     	if (!empty($sRessource) && $this->oRole->isLoaded() && $this->oPermissions->count() > 0) {
     		if ( ($oRessource = $this->oRessources->search('name', $sRessource)) !== NULL ) {
-    			if ( ($oPermission = $this->oPermissions->search('ressources_idressource', $oRessource->idressource)) !== NULL) {
+    			if ( ($oPermission = $this->oPermissions->search('ressource_idressource', $oRessource->idressource)) !== NULL) {
     				return json_decode($oPermission->permission);
     			}
     		}
