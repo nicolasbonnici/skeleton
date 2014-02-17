@@ -27,7 +27,7 @@
 
 	<div class="row clearfix">
 		<div class="col-md-12 column">
-        	<form class="form-horizontal well ui-shadow ui-rounded" role="form" method="POST" action="/frontend/auth/">
+        	<form class="form-horizontal well ui-shadow ui-rounded" role="form" method="POST" action="/frontend/auth/index/{% if redirect|Exists %}redirect/{{redirect}}/{% endif %}">
 			
 				<div class="alert alert-info">
 					<p>{{tr['login_helper']}}</p>

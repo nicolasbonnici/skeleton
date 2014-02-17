@@ -8,42 +8,44 @@ namespace modules\frontend\Controllers;
  * @author info
  */
 class AuthController extends \Library\Core\Controller {
-  
+
     public function __preDispatch() {
-		    	
-    }    
-  
+
+    }
+
     public function __postDispatch() {
-        
-    }   
+
+    }
 
     // @todo virer si session loggué
-    public function indexAction() {  
+    public function indexAction() {
 
         if (isset($this->_params['email']) && isset($this->_params['password'])) {
-                    
+
             if($this->login()) {
-                
-                \Library\Core\Router::redirect('/backend/'); // @todo dynamiser ce param 
-                
+            	$sRedirectUrl = '/backend/';
+            	if (isset($this->_params['redirect']) && !empty($this->_params['redirect'])) {
+            		$sRedirectUrl = str_replace('*', '/', urldecode($this->_params['redirect']));
+            	}
+                \Library\Core\Router::redirect($sRedirectUrl);
             }// @todo gestion erreur de login
-            
+
         }
-        
+
         $this->render('auth/index.tpl');
     }
-    
+
     public function logoutAction() {
-        
+
         $oCookie = new \Library\Core\Cookie();
         //die(var_dump($oCookie->getCookieVar('PHPSESSID')));
-        
+
         session_destroy();
         \Library\Core\Router::redirect('/');
-    }    
-    
+    }
+
     protected function login() {
-            $oUser = new \app\Entities\User();           
+            $oUser = new \app\Entities\User();
 
             if (
                 $oUser->loadByParameters(array(
@@ -61,7 +63,7 @@ class AuthController extends \Library\Core\Controller {
 
             return false;
     }
-    
+
 }
 
 ?>

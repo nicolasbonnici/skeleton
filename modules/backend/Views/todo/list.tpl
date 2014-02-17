@@ -14,7 +14,7 @@
 					<div class="btn-group">
 					  <a href="#modal-todo" class="ui-sendxhr btn btn-info" data-url="/backend/todo/read/idtodo/{{oTodo.idtodo}}" data-selector="#modal-todo-content" data-toggle="modal" data-idtodo="{{oTodo.idtodo}}" title="{{tr['view']}}"><span class="glyphicon glyphicon-zoom-in"></span></a>
 					  <a href="#modal-todo" class="ui-sendxhr btn btn-warning" data-url="/backend/todo/update/idtodo/{{oTodo.idtodo}}" data-selector="#modal-todo-content" data-toggle="modal" data-idtodo="{{oTodo.idtodo}}" title="{{tr['edit']}}"><span class="glyphicon glyphicon-pencil"></span></a>
-					  <a href="#modal-todo" class="ui-sendxhr btn btn-danger ui-confirm" data-url="/backend/todo/delete/idtodo/{{oTodo.idtodo}}" data-selector="#modal-todo-content" data-toggle="modal" data-idtodo="{{oTodo.idtodo}}" title="{{tr['delete']}}"><span class="glyphicon glyphicon-trash"></span></a>
+					  <a href="#modal-todo" class="ui-sendxhr btn btn-danger" data-url="/backend/todo/delete/idtodo/{{oTodo.idtodo}}" data-selector="#modal-todo-content" data-toggle="modal" data-idtodo="{{oTodo.idtodo}}" title="{{tr['delete']}}"><span class="glyphicon glyphicon-trash"></span></a>
 					</div>
 	            </td>
 	            <td>

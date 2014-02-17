@@ -11,7 +11,8 @@ class Controller extends Acl {
 
     const XHR_STATUS_OK                 = 1;
     const XHR_STATUS_ERROR              = 2;
-    const XHR_STATUS_SESSION_EXPIRED    = 3;
+    const XHR_STATUS_ACCESS_DENIED		= 3;
+    const XHR_STATUS_SESSION_EXPIRED    = 4;
 
     protected $_config;
     protected $_module;

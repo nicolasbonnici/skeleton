@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  *	Portfolio perso
  */
 
@@ -18,14 +18,14 @@ $tr['your_message'] = 'Entrez votre message et cliquez sur envoyer.';
 $tr['your_message_error'] = 'Vous devez entrer un message!';
 $tr['contact_tip'] = 'Me contacter directement par email';
 $tr['search_helper'] = 'Entrez votre recherche et appuyez sur entrée';
-/** 
+/**
  *	Portfolio perso
  */
 
 $tr['welcome'] = 'Bienvenue';
 $tr['hello'] = 'Bonjour';
 
-/* 
+/*
  * auth
  */
 $tr['your_fullname'] = 'Votre nom complet';
@@ -37,7 +37,7 @@ $tr['login'] = 'Connection';
 $tr['logout'] = 'Déconnection';
 $tr['login_helper'] = 'Entrez les identifiants que vous avez fournit lors de votre inscription.';
 
-/* 
+/*
  * user/profile
  */
 $tr['my_account'] = 'Mon compte';
@@ -54,8 +54,10 @@ $tr['password_update_success'] = "Mot de passe changer avec succès!";
 $tr['password_update_error'] = "Une erreur est survenue lors de la modification de votre mot de passe...";
 $tr['update_password'] = "Mettre à jour le mot de passe";
 
-
-
+/**
+ *
+ * Actions
+ */
 $tr['view'] = 'Voir';
 $tr['send'] = 'Envoyer';
 $tr['fill'] = 'Remplir ce champs';
@@ -66,6 +68,18 @@ $tr['edit'] = 'Modifier';
 $tr['update'] = 'Mettre à jour';
 $tr['delete'] = 'Supprimer';
 $tr['cancel'] = 'Annuler';
+$tr['close'] = 'Fermer';
+
+/**
+ *
+ * Crud actions
+ */
+
+$tr['update_success'] = 'Enregistrement correctement mis à jour';
+$tr['update_error'] = 'Une erreur est survenue lors de la mis à jour';
+$tr['update_error_access_denied'] = 'Vos droits ne vous permettent pas cette action';
+$tr['update_error_session_expired'] = 'Votre session est expiré, merci de vous connecter à nouveau';
+
 
 $tr['toggle_menu'] = 'Menu';
 $tr['toggle_menu_tip'] = 'Ouvrir le menu';
@@ -74,8 +88,6 @@ $tr['input_search'] = 'Entrez votre recherche';
 $tr['last_edited'] = 'Dernière édition le ';
 $tr['empty'] = 'Vide';
 
-$tr['update_success'] = 'Enregistrement correctement mis à jour';
-$tr['update_error'] = 'Une erreur est survenue lors de la mis à jour';
 
 $tr['access_denied'] = 'Veuillez verifier vos permissions';
 

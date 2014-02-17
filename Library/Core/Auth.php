@@ -30,7 +30,7 @@ class Auth extends Controller {
         ) {
             parent::__construct($this->oUser);
         } else {
-            Router::redirect('/login/');
+        	Router::redirect('/frontend/auth/index/redirect/' . urlencode(str_replace('/', '*', '/' . Router::getModule() . '/' . Router::getController() . '/' . Router::getAction())));
         }
 
     }

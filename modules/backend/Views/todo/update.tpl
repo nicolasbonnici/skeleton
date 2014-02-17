@@ -8,9 +8,12 @@
         </h4>
     </div>
     <div class="modal-body">
-        <form role="form" id="newTodoForm" action="" method="post">
+        <form role="form" id="updateTodoForm" action="/backend/crud/update/" method="post">
             <div class="form-group">
-                <div class="ui-editor">
+                <input type="hidden" name="entity" value="Todo" />
+                <input type="hidden" name="pk" value="{{oTodo.idtodo}}" />
+                <input type="hidden" name="name" value="content" />
+                <div class="ui-editor" data-name="value">
                 {{oTodo.content}}
                 </div>
                 <p class="help-block">
@@ -21,7 +24,7 @@
     </div>
     <div class="modal-footer">
          <button type="button" class="btn btn-default" data-dismiss="modal">{{tr['cancel']}}</button>
-         &nbsp;<button type="button" class="btn btn-primary">{{tr['save']}}</button>
+         <button type="button" class="ui-sendform refreshOnCallback sendNotificationOnCallback btn btn-primary" data-form="#updateTodoForm">{{tr['save']}}</button>
     </div>	    
 
 {% else %}

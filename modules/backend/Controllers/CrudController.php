@@ -32,6 +32,7 @@ class CrudController extends \Library\Core\Auth {
 	 */
 	public function updateAction()
 	{
+		$this->_view['iStatus'] = self::XHR_STATUS_OK;
 		if (
 				isset(
 						$this->_params['pk'],
@@ -41,12 +42,12 @@ class CrudController extends \Library\Core\Auth {
 				)
 		) {
 			// load then update entity and send bool to the view
-			$sEntity = '\App\Entities\\' . $this->_params['entity'];
+			$sEntity = '\app\Entities\\' . $this->_params['entity'];
 			if(class_exists($sEntity))  {
 				try{
 					$oUser = new \App\Entities\User($this->_session['iduser']);
 				} catch (\Library\Core\EntityException $oException) {
-					throw new CrudControllerException($oException);
+					$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
 				}
 				try{
 					$oEntity = new $sEntity($this->_params['pk']);
@@ -58,7 +59,7 @@ class CrudController extends \Library\Core\Auth {
 						}
 					}
 				} catch (\Library\Core\EntityException $oException) {
-					throw new CrudControllerException($oException);
+					$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
 				}
 				if (isset($oEntity, $oEntity->{$this->_params['name']}))  {
 					// Only check ACL, no need to check data type integrity \Core\Entity check it before updating object
@@ -73,13 +74,18 @@ class CrudController extends \Library\Core\Auth {
 
 						// Return flag to the view
 						$this->_view['oEntity'] = $oEntity;
-						$this->_view['update'] = $oEntity->update();
+						if ($oEntity->update()) {
+							$this->_view['bUpdateFlag'] = true;
+						}
+					} else {
+						$this->_view['iStatus'] = self::XHR_STATUS_ACCESS_DENIED;
+						$this->_view['update'] = false;
 					}
 				}
 			}
 		}
 
-		$this->render('crud/update.tpl');
+		$this->render('crud/update.tpl', $this->_view['iStatus']);
 	}
 }
 

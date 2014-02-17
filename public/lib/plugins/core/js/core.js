@@ -113,7 +113,7 @@
                     var data = $formTarget.serialize();
                     if($(sFormSelector+' div[contenteditable=true]').size() != 0) {
                         $(sFormSelector+' .ui-editor').each(function() {
-                            data += '&'+oHandler.data('name')+'='+oHandler.parent().find('div[contenteditable=true]:first').html();
+                            data += '&'+$(this).data('name')+'='+$(this).parent().find('div[contenteditable=true]:first').html();
                         });
                     }					
 
@@ -123,12 +123,30 @@
                         data: data,
                         beforeSend : function(preload) {
                         	// Mettre en cache et vider l'objet qui contiendra la reponse
-                        	$domTarget.data('initialContent', $domTarget.html());			
-                        	$domTarget.empty();                                                            
+                        	if (!obj.hasClass('sendNotificationOnCallback')) {
+                        		$domTarget.data('initialContent', $domTarget.html());	
+                        		$domTarget.empty();
+                        	}
                         },
                         success: function(rep){
-                        	if (rep.status == 1) { // @see if XHR_STATUS_OK
-                            	$domTarget.append(rep.content);                        		
+                    		if (!obj.hasClass('sendNotificationOnCallback')) {
+                    			$domTarget.append(rep.content);
+                    		} else {
+                    			switch(rep.status) {
+                    				case 1:
+                    					ui.sendNotification('Success!', rep.content, 'success', 'glyphicon glyphicon-check');
+                    					break;
+                    				case 2:
+                    					ui.sendNotification('Error...', rep.content, 'error', 'glyphicon glyphicon-warning-sign');
+                    					break;
+                    				case 3:
+                    					ui.sendNotification('Access denied!', rep.content, 'error', 'glyphicon glyphicon-warning-sign');
+                    					break;
+                    				case 4:
+                    					ui.sendNotification('Session expired', rep.content, 'info', 'glyphicon glyphicon-warning-sign');
+                    					break;
+                    					
+                    			}
                         	}
                         	if (obj.hasClass('refreshOnCallback')) {
                         		core.loadView();
