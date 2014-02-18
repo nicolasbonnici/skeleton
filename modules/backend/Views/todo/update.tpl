@@ -14,7 +14,7 @@
                 <input type="hidden" name="pk" value="{{oTodo.idtodo}}" />
                 <input type="hidden" name="name" value="content" />
                 <div class="ui-editor" data-name="value">
-                {{oTodo.content}}
+                {{oTodo.content|safe}}
                 </div>
                 <p class="help-block">
                     Vous pouvez mettre en form votre todo à l'aide de la barre d'outils de mise en forme

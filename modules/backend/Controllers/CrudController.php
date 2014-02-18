@@ -32,7 +32,7 @@ class CrudController extends \Library\Core\Auth {
 	 */
 	public function updateAction()
 	{
-		$this->_view['iStatus'] = self::XHR_STATUS_OK;
+		$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
 		if (
 				isset(
 						$this->_params['pk'],
@@ -73,8 +73,9 @@ class CrudController extends \Library\Core\Auth {
 						}
 
 						// Return flag to the view
-						$this->_view['oEntity'] = $oEntity;
 						if ($oEntity->update()) {
+							$this->_view['iStatus'] = self::XHR_STATUS_OK;
+							$this->_view['oEntity'] = $oEntity;
 							$this->_view['bUpdateFlag'] = true;
 						}
 					} else {
