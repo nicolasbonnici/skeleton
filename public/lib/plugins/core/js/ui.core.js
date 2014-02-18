@@ -282,7 +282,7 @@
 
                 load: function(repWrap, request) {
                     $(repWrap).fadeOut(300).empty().load('/'+request['controller']+'/'+request['action']).fadeIn(150);
-                    core.hideNotif();		
+                    this.hideNotif();		
                 },
 
                 loadScroll: function($obj) {
@@ -411,7 +411,7 @@
                     			}
                         	}
                         	if (obj.hasClass('refreshOnCallback')) {
-                        		core.loadView();
+                        		ui.loadView();
                         	}
                         },
                         error: function(err){                            
