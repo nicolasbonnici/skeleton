@@ -240,7 +240,7 @@ abstract class Object
         if (!isset($aObject) || $aObject === false || !is_array($aObject)) {
             $bRefreshCache = true;
 
-            if (($oStatement = \core\DB::query($sQuery, $aBindedValues)) === false) {
+            if (($oStatement = \core\DB::query($sQuery, $aBindedValues, ! $bUseCache)) === false) {
                 throw new ObjectException('Unable to construct object of class ' . $this->sClassName . ' with query ' . $sQuery);
             }
 
@@ -282,6 +282,9 @@ abstract class Object
         try {
             $sQuery = 'INSERT ' . ($this->bIgnoreOnInsert ? 'IGNORE' : '') . ' INTO ' . static::TABLE_NAME . '(`' . implode('`,`', $aInsertedFields) . '`) VALUES (?' . str_repeat(',?', count($aInsertedValues) -1) . ')';
             $oStatement = \core\DB::query($sQuery, $aInsertedValues);
+            if ($oStatement === false) {
+                throw new \core\ObjectException('Object creation failed: ' . $sQuery . ' // "' . implode('" - "', $aInsertedValues) . '"');
+            }
             if ($oStatement->rowCount() === 0) {
                 trigger_error('Trying to insert existing element: ' . $sQuery . ' // "' . implode('" - "', $aInsertedValues) . '"', E_USER_WARNING);
                 return false;
@@ -357,6 +360,7 @@ abstract class Object
 
         try {
             $oStatement = \core\DB::query('DELETE FROM `' . static::TABLE_NAME . '` WHERE `' . static::PRIMARY_KEY . '` = ?', array($this->{static::PRIMARY_KEY}));
+            \core\Cache::delete(self::getCacheKey($this->{static::PRIMARY_KEY}));
             $this->reset();
         } catch (\PDOException $oException) {
             return false;

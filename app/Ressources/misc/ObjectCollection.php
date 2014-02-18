@@ -109,12 +109,12 @@ abstract class ObjectCollection extends \core\BaseCollection
      * Load collection regarding values and ordering parameters
      * @param array $aParameters List of parameters name/value
      * @param array $aOrderFields List of order fields/direction
-     * @param integer $iLimit Maximum number of rows
+     * @param string $sLimit Maximum number of rows
      * @throws \core\ObjectException
      */
-    public function loadByParameters(array $aParameters, array $aOrderFields = array(), $iLimit = null)
+    public function loadByParameters(array $aParameters, array $aOrderFields = array(), $sLimit = null)
     {
-        assert('is_null($iLimit) || \\core\\Validator::integer($iLimit, 1) === \\core\\Validator::STATUS_OK');
+        assert('is_null($sLimit) || \\core\\Validator::integer($sLimit, 1) === \\core\\Validator::STATUS_OK || \\core\\Validator::string($sLimit, 1) === \\core\\Validator::STATUS_OK');
 
         if (empty($aParameters)) {
             throw new ObjectException('No parameter provided for loading collection of type ' . $this->sChildClass);
@@ -162,9 +162,10 @@ abstract class ObjectCollection extends \core\BaseCollection
             $sQuery = trim($sQuery, ', ');
         }
 
-        if (!is_null($iLimit)) {
-            $sQuery .= ' LIMIT ' . $iLimit;
+        if (!is_null($sLimit)) {
+            $sQuery .= ' LIMIT ' . $sLimit;
         }
+
         $this->loadByQuery($sQuery, $aBindedValues);
     }
 
