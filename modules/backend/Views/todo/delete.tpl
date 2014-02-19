@@ -1,11 +1,15 @@
 {% if bTodoDelete|Exists %}
 	{% if bTodoDelete %}
         <div class="alert alert-success">
-          <strong>Suppression réussie!</strong> Votre todo à correctement été supprimé
+          <h4>Suppression réussie!</h4>
+          <p>Votre todo à correctement été supprimé</p>
+          <p><button type="button" class="btn btn-primary" data-dismiss="modal">Fermer cette fenêtre</button></p>
         </div>
 	{% else %}
 	    <div class="alert alert-error">
-	      <strong>Une erreur est survenue!</strong> Impossible de supprimer le todo
+	      <h4>Une erreur est survenue!</h4>
+	      <p>Impossible de supprimer le todo.</p>
+          <p><button type="button" class="btn btn-primary" data-dismiss="modal">Fermer cette fenêtre</button></p>
 	    </div>  
 	{% endif %}
 {% else %}
