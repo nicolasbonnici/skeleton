@@ -1,14 +1,14 @@
 $(document).ready(function() {
     
-    var ui = $.fn.userInterface();
+    var ux = $.fn.userExperience();
     
     // load asynch content
-    ui.loadView();    
+    ux.loadView();    
     
     // Fire UI
-    ui.initUi();    
+    ux.initUi();    
     $(document).ajaxStop(function() {
-        ui.initUi();        
+        ux.initUi();        
     });
 
     
@@ -18,22 +18,22 @@ $(document).ready(function() {
 
     // Envoyer une requete XHR lors d'un clic ou d'un change sur un select
     $('body').on('click', '.ui-sendxhr', function(){
-        ui.sendXHR($(this));
+        ux.sendXHR($(this));
     });
     $('body').on('change', '.sendXHROnChange', function(){
-        ui.sendXHR($(this));
+        ux.sendXHR($(this));
     });
     
     // Envoyer des formulaires en asynchrone
     $('body').on('click', '.ui-sendform', function() {		
-    	ui.sendForm($(this));		
+    	ux.sendForm($(this));		
     	return false;	
     });        
 	
     // Envoyer des formulaires en asynchrone
     $('.ui-reload').on('click', function() {	
     	if (typeof($(this).data('sreloadtarget')) !== 'undefined') {
-    		ui.reload($($(this).data('sreloadtarget')));		
+    		ux.reload($($(this).data('sreloadtarget')));		
     	}
     });        
     
@@ -42,8 +42,8 @@ $(document).ready(function() {
         if ($(this).scrollTop() === ($(this).prop('scrollHeight') - $(this).outerHeight())){
         	if ($(this).find('.ui-scroll-loadable')) {
         		$('.ui-scroll-loadable').each(function() {
-        			ui.sendNotification('Information', 'loading', 'info', 'glyphicon glyphicon-cog');
-        			ui.loadScroll($(this));        		        			
+        			ux.sendNotification('Information', 'loading', 'info', 'glyphicon glyphicon-cog');
+        			ux.loadScroll($(this));        		        			
         		});
         	}
         }

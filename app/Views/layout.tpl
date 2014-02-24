@@ -73,15 +73,15 @@
                                                 <div class="col-md-12 column well">
 		                                            <form class="" role="search">
 		                                                <div class="form-group">
-		                                                   <input type="text" class="form-control" placeholder="{{tr['search_helper']}}" />
+		                                                   <input type="text" class="form-control input-lg" placeholder="{{tr['search_helper']}}" />
 		                                                </div> 
 		                                                <div class="form-group text-right">
-		                                                   <input type="submit" vlaue="search">
-		                                                </div> 
+		                                                   <button type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
+		                                                </div>                                                 
 		                                            </form>
                                                 </div>
                                                 <div class="col-md-12 column">
-                                                
+                                                    <p>Résultats</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -215,7 +215,7 @@
 		<script type="text/javascript" src="/lib/plugins/bootstrap3/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/lib/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
 		<script type="text/javascript" src="/lib/plugins/pnotify/js/jquery.pnotify.js"></script>
-		<script type="text/javascript" src="/lib/plugins/core/js/ui.core.js"></script>
+		<script type="text/javascript" src="/lib/plugins/core/js/ux.core.js"></script>
 		<script type="text/javascript" src="/lib/plugins/core/js/core.js"></script>
 		{% block js %}{% endblock %}
 	

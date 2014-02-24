@@ -21,7 +21,7 @@ class PostController extends \Library\Core\Auth {
 
 	public function indexAction()
 	{
-		$this->render('todo/index.tpl');
+		$this->render('post/index.tpl');
 	}
 
 	public function createAction()
@@ -44,7 +44,7 @@ class PostController extends \Library\Core\Auth {
 				$this->_view['content'] = $this->_params['content'];
 			}
 		}
-		$this->render('todo/create.tpl');
+		$this->render('post/create.tpl');
 	}
 
 	public function readAction()
@@ -57,7 +57,7 @@ class PostController extends \Library\Core\Auth {
 			}
 
 		}
-		$this->render('todo/read.tpl');
+		$this->render('post/read.tpl');
 	}
 
 	public function updateAction()
@@ -70,7 +70,7 @@ class PostController extends \Library\Core\Auth {
 			}
 
 		}
-		$this->render('todo/update.tpl');
+		$this->render('post/update.tpl');
 	}
 
 	public function deleteAction()
@@ -90,7 +90,7 @@ class PostController extends \Library\Core\Auth {
 			}
 
 		}
-		$this->render('todo/delete.tpl');
+		$this->render('post/delete.tpl');
 	}
 
 	public function listAction()
@@ -100,7 +100,7 @@ class PostController extends \Library\Core\Auth {
 			$this->_view['oTodos']  = $oTodos->getTodos();
 		}
 
-		$this->render('todo/list.tpl');
+		$this->render('post/list.tpl');
 	}
 }
 

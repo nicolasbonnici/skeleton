@@ -1,7 +1,7 @@
 (function($) {
-        $.fn.userInterface = function(params) {
+        $.fn.userExperience = function(params) {
 
-                var ui = {
+                var ux = {
 
                     initLayout: function() {
                         //*************************************************** @layout *************************************************
@@ -92,7 +92,7 @@
                             	$('.ui-pane-toggle').on('click', function() {
                             		
                             		if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                            			ui.layout.toggle($(this).attr('data-pane'));
+                            			ux.layout.toggle($(this).attr('data-pane'));
                             		}
                             		
                             		return false;
@@ -103,7 +103,7 @@
                             	$('.ui-pane-open').on('click', function() {
                             		
                             		if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                            			ui.layout.open($(this).attr('data-pane'));
+                            			ux.layout.open($(this).attr('data-pane'));
                             		}
                             		
                             		return false;
@@ -114,7 +114,7 @@
                             	$('.ui-pane-close').on('click', function() {
                             		
                             		if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                            			ui.layout.close($(this).attr('data-pane'));
+                            			ux.layout.close($(this).attr('data-pane'));
                             		}
                             		
                             		return false;
@@ -125,7 +125,7 @@
                             	$('.ui-pane-show').on('click', function() {
                             		
                             		if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                            			ui.layout.show($(this).attr('data-pane'), false); //@see second parameter to just slide but not open
+                            			ux.layout.show($(this).attr('data-pane'), false); //@see second parameter to just slide but not open
                             		}
                             		
                             		return false;
@@ -231,22 +231,22 @@
                     				success: function(rep) {
                     					switch(rep.status) {
 	                    					case 1:
-	                    						ui.sendNotification('Success', rep.content, 'success', 'glyphicon glyphicon-ok', false);
+	                    						ux.sendNotification('Success', rep.content, 'success', 'glyphicon glyphicon-ok', false);
 	                    						break;
 	                    					case 2:
-	                    						ui.sendNotification('Error', rep.content, 'error', 'glyphicon glyphicon-exclamation-sign', false);
+	                    						ux.sendNotification('Error', rep.content, 'error', 'glyphicon glyphicon-exclamation-sign', false);
 	                    						break;
 	                    					case 3:
-	                    						ui.sendNotification('Warning', rep.content, 'warning', 'glyphicon glyphicon-time', false);
+	                    						ux.sendNotification('Warning', rep.content, 'warning', 'glyphicon glyphicon-time', false);
 	                    						break;
 	                    					default:
-	                    						ui.sendNotification('Info', rep.content, 'info', 'glyphicon glyphicon-info', true);
+	                    						ux.sendNotification('Info', rep.content, 'info', 'glyphicon glyphicon-info', true);
 	                    					break;	                            				
                     					}
-                    					ui.loadView();
+                    					ux.loadView();
                     				},
                                     error: function() {
-                						ui.sendNotification('Error', 'Unable to reach server...', 'error', 'glyphicon glyphicon-exclamation-sign', false);
+                						ux.sendNotification('Error', 'Unable to reach server...', 'error', 'glyphicon glyphicon-exclamation-sign', false);
                                     }
                     		};
                     		
@@ -396,22 +396,22 @@
                     		} else {
                     			switch(rep.status) {
                     				case 1:
-                    					ui.sendNotification('Success!', rep.content, 'success', 'glyphicon glyphicon-check');
+                    					ux.sendNotification('Success!', rep.content, 'success', 'glyphicon glyphicon-check');
                     					break;
                     				case 2:
-                    					ui.sendNotification('Error...', rep.content, 'error', 'glyphicon glyphicon-warning-sign');
+                    					ux.sendNotification('Error...', rep.content, 'error', 'glyphicon glyphicon-warning-sign');
                     					break;
                     				case 3:
-                    					ui.sendNotification('Access denied!', rep.content, 'error', 'glyphicon glyphicon-warning-sign');
+                    					ux.sendNotification('Access denied!', rep.content, 'error', 'glyphicon glyphicon-warning-sign');
                     					break;
                     				case 4:
-                    					ui.sendNotification('Session expired', rep.content, 'info', 'glyphicon glyphicon-warning-sign');
+                    					ux.sendNotification('Session expired', rep.content, 'info', 'glyphicon glyphicon-warning-sign');
                     					break;
                     					
                     			}
                         	}
                         	if (obj.hasClass('refreshOnCallback')) {
-                        		ui.loadView();
+                        		ux.loadView();
                         	}
                         },
                         error: function(err){                            
@@ -440,7 +440,7 @@
                             } else if (typeof($(this).data('url')) !== 'undefined') {
                             	sUrlTarget = $(this).data('url');
                             } else {
-                            	ui.sendNotification('Error', 'No url specified to load ui-loadable div #' + $(this).attr('id'), 'error', 'glyphicon glyphicon-warning', false);
+                            	ux.sendNotification('Error', 'No url specified to load ui-loadable div #' + $(this).attr('id'), 'error', 'glyphicon glyphicon-warning', false);
                             	return false;
                             }
 
@@ -487,7 +487,7 @@
                 	} else if (typeof(oItem.data('url')) !== 'undefined') {
                 		sUrlTarget = oItem.data('url');
                 	} else {
-                		ui.sendNotification('Error', 'No url specified to load ui-loadable div #' + oItem.attr('id'), 'error', 'glyphicon glyphicon-warning', false);
+                		ux.sendNotification('Error', 'No url specified to load ui-loadable div #' + oItem.attr('id'), 'error', 'glyphicon glyphicon-warning', false);
                 		return false;
                 	}
                 	
@@ -504,7 +504,7 @@
                         	oItem.data('initialContent', oItem.html());	                   			
                 			$(sSelector).empty();
                 			$container.data('grid-loaded', false);
-                			ui.sendNotification('Information', 'Chargement en cours...', 'info', 'glyphicon glyphicon-info-sign');
+                			ux.sendNotification('Information', 'Chargement en cours...', 'info', 'glyphicon glyphicon-info-sign');
                 		},
                 		success: function(rep){
                 			if (rep.status === 1) { // @see if XHR_STATUS_OK                                               		                                    		
@@ -518,7 +518,7 @@
                 		},
                 		complete: function(){
                 			$(sSelector).removeData('initialContent');
-                			ui.hideNotifications();
+                			ux.hideNotifications();
                 		}
                 	});                   	
                 },
@@ -584,10 +584,10 @@
 
                 	// Aide lors d'un focus sur input placehorder
                 	$('[placeholder]').on('focus', function() {
-                		ui.sendNotification('Information', $(this).attr('placeholder'), 'info', 'glyphicon glyphicon-info-sign');
+                		ux.sendNotification('Information', $(this).attr('placeholder'), 'info', 'glyphicon glyphicon-info-sign');
                 	});              	                	
                 	$('[placeholder]').on('blur', function() {
-                		ui.hideNotifications();
+                		ux.hideNotifications();
                 	});              	                	
                 	
                     // Fire app layout
@@ -625,7 +625,7 @@
             }
 
             //~ // Permettre le chainage par jQuery
-            return ui;
+            return ux;
         };
 })(jQuery);
 

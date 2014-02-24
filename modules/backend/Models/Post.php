@@ -5,11 +5,32 @@ namespace modules\backend\Models;
 class Posts {
 
 	/**
-	 * Posts collection
+	 * Post available status
+	 */
+	const STATUS_PUBLISHED		= 'published';
+	const STATUS_UNPUBLISHED	= 'unpublished';
+	const STATUS_NEED_AUTH		= 'needauth';
+
+	/**
+	 * Current user instance
+	 *
+	 * @var \app\Entities\User
+	 */
+	private $oUser;
+
+	/**
+	 * Post attribute
+	 *
+	 * @var \app\Entities\Post
+	 */
+	private $oPost;
+
+	/**
+	 * Posts collection attribute
 	 *
 	 * @var \app\Entities\Collection\PostCollection
 	 */
-	private $oTodos;
+	private $oPosts;
 
 	/**
 	 * Instance constructor
@@ -20,8 +41,16 @@ class Posts {
 
 		if ($mUser instanceof \app\Entities\User && $mUser->isLoaded()) {
 			$this->oUser = $oUser;
+		} elseif (is_int($mUser) && intval($mUser) > 0) {
+			try {
+				$this->oUser = new \app\Entities\User($mUser);
+			} catch (\Library\Core\EntitiesException $oException) {}
+		} else {
+			$this->oUser = null;
 		}
-		$this->oTodos = new \app\Entities\Collection\TodoCollection();
+
+		$this->oPosts = new \app\Entities\Collection\PostCollection();
+		$this->oPost = new \app\Entities\Post();
 	}
 
     /**
@@ -29,12 +58,11 @@ class Posts {
      *
      * @return bool
      */
-    public function loadByUserId()
+    public function loadLatest()
     {
-    	assert('$this->oUser->isLoaded()');
-        $this->oTodos->loadByParameters(
+        $this->oPosts->loadByParameters(
         	array(
-            	'user_iduser' => $this->oUser->getId()
+            	'status' => self::STATUS_PUBLISH
 			),
             array(
             	'lastupdate' => 'DESC'
@@ -49,35 +77,38 @@ class Posts {
      *
      * @param integer $iTodoId
      */
-    public function loadByTodoId($iTodoId)
+    public function loadByPostId($iTodoId)
     {
     	try {
-    		$this->oTodo = new \app\Entities\Todo();
-    		$this->oTodo->loadByParameters(
+    		$this->oPost = new \app\Entities\Post();
+    		$this->oPost->loadByParameters(
     				array(
-    						'idtodo' 		=> $iTodoId,
-    						'user_iduser' 	=> $this->oUser->getId()
+    						'idpost' 		=> $iTodoId
     				)
     		);
-    		if ($this->oTodo->isLoaded()) {
-    			return $this->oTodo;
+    		if ($this->oPost->isLoaded()) {
+    			return $this->oPost;
     		}
-    	} catch (\Library\Core\EntityException $oException) {}
-		return null;
+    	} catch (\Library\Core\EntityException $oException) {
+			return null;
+    	}
     }
 
+    /*
+     * @todo
+     */
     public function createByUser($sLabel, $sContent)
     {
     	try {
-    		$oTodo = new \app\Entities\Todo();
-    		$oTodo->label 		= $sLabel;
-    		$oTodo->content 	= $sContent;
-    		$oTodo->deadline 	= time();
-    		$oTodo->lastupdate 	= time();
-    		$oTodo->created 	= time();
-    		$oTodo->user_iduser	= $this->oUser->getId();
-    		//$oTodo->deadline 	= $this->_params['deadline'];
-    		return $oTodo->add();
+    		$oPost = new \app\Entities\Todo();
+    		$oPost->label 		= $sLabel;
+    		$oPost->content 	= $sContent;
+    		$oPost->deadline 	= time();
+    		$oPost->lastupdate 	= time();
+    		$oPost->created 	= time();
+    		$oPost->user_iduser	= $this->oUser->getId();
+    		//$oPost->deadline 	= $this->_params['deadline'];
+    		return $oPost->add();
     	} catch (\Library\Core\EntityException $oException) {
     		return false;
     	}
@@ -87,20 +118,18 @@ class Posts {
      *
      * @return \app\Entities\Collection\TodoCollection
      */
-    public function getTodos()
+    public function getPosts()
     {
-    	assert('$this->oUser->isLoaded()');
-    	return $this->oTodos;
+    	return $this->oPosts;
     }
 
     /**
      *
      * @return \app\Entities\Collection\TodoCollection
      */
-    public function getTodo()
+    public function getPost()
     {
-    	assert('$this->oUser->isLoaded()');
-    	return $this->oTodo;
+    	return $this->oPost;
     }
 }
 

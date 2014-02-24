@@ -46,7 +46,7 @@
 		<script type="text/javascript" src="/lib/plugins/bootstrap3/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/lib/plugins/pnotify/js/jquery.pnotify.js"></script>
 		{% block js %}{% endblock %}
-		<script type="text/javascript" src="/lib/plugins/core/js/ui.core.js"></script>
+		<script type="text/javascript" src="/lib/plugins/core/js/ux.core.js"></script>
 		<script type="text/javascript" src="/lib/plugins/core/js/core.js"></script>
     </body>
 </html>

@@ -52,7 +52,7 @@
 		<div class="col-md-12 column">
 			<div class="page-header">
 				<h1 class="showOnHover">
-					Blogging app! <small class="targetToShow">A simple but powerfull blogging app - Version 1.0</small>
+					Blogging app! <small class="targetToShow">Version 1.0</small>
 				</h1>
 			</div>
 		</div>
