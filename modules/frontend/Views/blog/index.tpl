@@ -12,5 +12,5 @@
 {% endblock %}
 
 {% block main %}
-<p>{{ tr['hello'] }} blog (custom route)</p>
+
 {% endblock %}

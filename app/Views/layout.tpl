@@ -70,12 +70,18 @@
 
                                         <div id="searchPopover" class="hide">
                                             <div class="row clearfix">
-                                                <div class="col-md-12 column">
-		                                            <form class="well" role="search">
+                                                <div class="col-md-12 column well">
+		                                            <form class="" role="search">
 		                                                <div class="form-group">
 		                                                   <input type="text" class="form-control" placeholder="{{tr['search_helper']}}" />
 		                                                </div> 
-		                                            </form> 
+		                                                <div class="form-group text-right">
+		                                                   <input type="submit" vlaue="search">
+		                                                </div> 
+		                                            </form>
+                                                </div>
+                                                <div class="col-md-12 column">
+                                                
                                                 </div>
                                             </div>
                                         </div>
@@ -85,33 +91,39 @@
 								<ul class="nav navbar-nav navbar-right">
                                     {% if aSession|Exists %}
 									<li class="dropdown">
-										<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+										<a href="#" data-popover="#user-menu" class="ui-toggle-popover" title="Menu utilisateur">
 											<img src="{{sGravatarSrc16}}" class="ui-nav-avatar" alt="Avatar" />{{aSession['firstname']}} {{aSession['lastname']}} <strong class="caret"></strong>
 										</a>
-										<ul class="dropdown-menu">
-											<li>
-												<a href="/profile"><span class="glyphicon glyphicon-user"></span> {{tr['my_account']}}</a>
-											</li>
-											<li>
-												<a href="/backend/setup/"><span class="glyphicon glyphicon-cog"></span> {{tr['administration']}}</a>
-											</li>
-											<li>
-												<a class="ui-pane-pin" data-pane="west" title="{{tr['toggle_menu_tip']}}">									
-													<span class="glyphicon glyphicon-log-in"></span> {{tr['toggle_menu']}}
-												</a>
-											</li>
-											<li class="divider"></li>
-											<li>
-												<a href="/logout">{{tr['logout']}}</a>
-												<div id="login-popover" class="hide">
-													<div class="row clearfix">
-														<div class="col-md-12 column">
-											            	<a href="/logout" class="btn btn-danger" data-loading-text="Loading...">{{tr['logout']}}</a>	
-														</div>
-													</div>
-												</div>												
-											</li>
-										</ul>
+                                        <div id="user-menu" class="hide">
+                                            <div class="row clearfix">
+                                                <div class="col-md-12 column">
+			                                        <ul class="nav nav-pills nav-stacked text-left">
+			                                            <li>
+			                                                <a href="/profile"><span class="glyphicon glyphicon-user"></span> {{tr['my_account']}}</a>
+			                                            </li>
+			                                            <li>
+			                                                <a href="/backend/setup/"><span class="glyphicon glyphicon-cog"></span> {{tr['administration']}}</a>
+			                                            </li>
+			                                            <li>
+			                                                <a class="ui-pane-pin" data-pane="west" title="{{tr['toggle_menu_tip']}}">                                  
+			                                                    <span class="glyphicon glyphicon-log-in"></span> {{tr['toggle_menu']}}
+			                                                </a>
+			                                            </li>
+			                                            <li class="divider"></li>
+			                                            <li>
+			                                                <a href="/logout">{{tr['logout']}}</a>
+			                                                <div id="login-popover" class="hide">
+			                                                    <div class="row clearfix">
+			                                                        <div class="col-md-12 column">
+			                                                            <a href="/logout" class="btn btn-danger" data-loading-text="Loading...">{{tr['logout']}}</a>    
+			                                                        </div>
+			                                                    </div>
+			                                                </div>                                              
+			                                            </li>
+			                                        </ul>
+                                                </div>
+                                            </div>
+                                        </div>
 									</li> 
 									{% else %}
 									<li class="">

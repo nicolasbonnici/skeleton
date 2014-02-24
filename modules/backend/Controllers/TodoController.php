@@ -36,25 +36,10 @@ class TodoController extends \Library\Core\Auth {
     				\Library\Core\Validator::string($this->_params['content'], 3) === \Library\Core\Validator::STATUS_OK
     				//! empty($this->_params['deadline'])
     		) {
-	    		// @todo migrer dans la couche model
-				try {
-					$oTodo = new \app\Entities\Todo();
-					$oTodo->label 		= $this->_params['label'];
-					$oTodo->content 	= $this->_params['content'];
-					$oTodo->deadline 	= time();
-					$oTodo->lastupdate 	= time();
-					$oTodo->created 	= time();
-					$oTodo->user_iduser	= $this->_session['iduser'];
-					//$oTodo->deadline 	= $this->_params['deadline'];
-					if ($oTodo->add()) {
-						$this->_view['bCreateNewTodo'] = true;
-						$this->_view['oTodo'] = $oTodo;
-					}
-				} catch (\Library\Core\EntityException $oException) {
-					$this->view['bCreateNewTodo'] = false;
-					$this->_view['label'] = $this->_params['label'];
-					$this->_view['content'] = $this->_params['content'];
-				}
+				$oTodoModel = new \modules\backend\Models\Todo(new \app\Entities\User($this->_session['iduser']));
+				$this->view['bCreateNewTodo'] = $oTodoModel->createByUser($this->_params['label'], $this->_params['content']);
+				$this->_view['label'] = $this->_params['label'];
+				$this->_view['content'] = $this->_params['content'];
     		}
     	}
     	$this->render('todo/create.tpl');

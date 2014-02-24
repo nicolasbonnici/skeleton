@@ -2,39 +2,25 @@
 
 namespace modules\backend\Models;
 
-class Todo {
+class Posts {
 
 	/**
-	 * Current user instance
+	 * Posts collection
 	 *
-	 * @var \app\Entities\User
-	 */
-	private $oUser;
-
-	/**
-	 *
-	 *
-	 * @var \app\Entities\Todo
-	 */
-	private $oTodo;
-
-	/**
-	 * Todos collection
-	 *
-	 * @var \app\Entities\Collection\TodoCollection
+	 * @var \app\Entities\Collection\PostCollection
 	 */
 	private $oTodos;
 
 	/**
 	 * Instance constructor
 	 */
-	public function __construct(\app\Entities\User $oUser)
+	public function __construct($mUser = null)
 	{
-		if (! $oUser->isLoaded()) {
-			throw new TodoModelException('Todo need a valid user instance, not user provided.');
-		}
+		assert('is_null($mUser) || $mUser instanceof \app\Entities\User && $mUser->isLoaded() || is_int($mUser) && intval($mUser) > 0');
 
-		$this->oUser = $oUser;
+		if ($mUser instanceof \app\Entities\User && $mUser->isLoaded()) {
+			$this->oUser = $oUser;
+		}
 		$this->oTodos = new \app\Entities\Collection\TodoCollection();
 	}
 

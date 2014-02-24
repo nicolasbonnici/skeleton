@@ -17,7 +17,7 @@ class Post extends \Library\Core\Entity {
      * Object caching duration in seconds
      * @var integer
      */
-    protected $iCacheDuration = 50;    
+    protected $iCacheDuration = 50;
 
     protected $aLinkedEntities = array(
         'category' => array(
@@ -25,8 +25,14 @@ class Post extends \Library\Core\Entity {
             'relationship' => 'oneToOne', // @see oneToOne|manyToOne|manyToMany
     		'entity' => 'Category',
     		'mappedByField' => 'category_idcategory'
+        ),
+        'tags' => array(
+            'loadByDefault' => false,
+            'relationship' => 'oneToMany', // @see oneToOne|manyToOne|manyToMany
+    		'entity' => 'Tags',
+    		'mappedByField' => 'category_idcategory'
         )
-    );    
+    );
 }
 
 ?>

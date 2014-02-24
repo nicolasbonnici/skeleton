@@ -8,22 +8,20 @@ namespace modules\frontend\Controllers;
  * @author info
  */
 class BlogController extends \Library\Core\Controller {
-  
+
     public function __preDispatch() {
 
-    }    
-  
+    }
+
     public function __postDispatch() {
 
-    }   
+    }
 
     public function indexAction() {
-        
-        $this->_view['foo'] = 'bar';
-        
+
         $this->render('blog/index.tpl');
     }
-    
+
 }
 
 ?>
