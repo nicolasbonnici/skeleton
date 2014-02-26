@@ -40,7 +40,7 @@ class Posts {
 		assert('is_null($mUser) || $mUser instanceof \app\Entities\User && $mUser->isLoaded() || is_int($mUser) && intval($mUser) > 0');
 
 		if ($mUser instanceof \app\Entities\User && $mUser->isLoaded()) {
-			$this->oUser = $oUser;
+			$this->oUser = $mUser;
 		} elseif (is_int($mUser) && intval($mUser) > 0) {
 			try {
 				$this->oUser = new \app\Entities\User($mUser);

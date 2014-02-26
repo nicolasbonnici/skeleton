@@ -97,21 +97,21 @@
                                         <div id="user-menu" class="hide">
                                             <div class="row clearfix">
                                                 <div class="col-md-12 column">
-			                                        <ul class="nav nav-pills nav-stacked text-left">
+			                                        <ul class="nav nav-pills nav-stacked">
 			                                            <li>
-			                                                <a href="/profile"><span class="glyphicon glyphicon-user"></span> {{tr['my_account']}}</a>
+			                                                <a href="/profile" class="btn btn-lg btn-link"><span class="glyphicon glyphicon-user"></span> {{tr['my_account']}}</a>
 			                                            </li>
 			                                            <li>
-			                                                <a href="/backend/setup/"><span class="glyphicon glyphicon-cog"></span> {{tr['administration']}}</a>
+			                                                <a href="/backend/setup/" class="btn btn-lg btn-link"><span class="glyphicon glyphicon-cog"></span> {{tr['administration']}}</a>
 			                                            </li>
 			                                            <li>
-			                                                <a class="ui-pane-pin" data-pane="west" title="{{tr['toggle_menu_tip']}}">                                  
+			                                                <a class="btn btn-lg btn-link ui-pane-pin" data-pane="west" title="{{tr['toggle_menu_tip']}}">                                  
 			                                                    <span class="glyphicon glyphicon-log-in"></span> {{tr['toggle_menu']}}
 			                                                </a>
 			                                            </li>
 			                                            <li class="divider"></li>
 			                                            <li>
-			                                                <a href="/logout">{{tr['logout']}}</a>
+			                                                <a href="/logout" class="btn btn-lg btn-link" title="Se déconnecter">{{tr['logout']}}</a>
 			                                                <div id="login-popover" class="hide">
 			                                                    <div class="row clearfix">
 			                                                        <div class="col-md-12 column">

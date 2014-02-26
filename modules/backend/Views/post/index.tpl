@@ -62,10 +62,10 @@
                  <button type="button" class="btn btn-lg btn-default">
                      <span class="glyphicon glyphicon-refresh"></span> Raffraichir
                  </button>
-				 <button  href="#modal-create-todo" type="button" class="hidden btn btn-lg btn-danger ui-sendxhr" data-url="/backend/todo/create/" data-selector="#modal-create-content" role="button" data-toggle="modal">
+				 <button  href="#modal-create-todo" type="button" class="hidden btn btn-lg btn-danger ui-sendxhr" data-url="/backend/post/create/" data-selector="#modal-create-content" role="button" data-toggle="modal">
 				    <span class="glyphicon glyphicon-trash"></span> Supprimer
 				 </button> 
-				 <button  href="#modal-create-todo" type="button" class="btn btn-lg btn-info ui-sendxhr" data-url="/backend/todo/create/" data-selector="#modal-create-content" role="button" data-toggle="modal">
+				 <button  href="#modal-create-todo" type="button" class="btn btn-lg btn-info ui-sendxhr" data-url="/backend/post/create/" data-selector="#modal-create-content" role="button" data-toggle="modal">
 				    <span class="glyphicon glyphicon-file"></span> New post!
 				 </button> 
 			</div>

@@ -27,16 +27,16 @@ class PostController extends \Library\Core\Auth {
 	public function createAction()
 	{
 		if (
-		isset(
+			isset(
 				$this->_params['label'],
 				$this->_params['content']
-		)
+			)
 		) {
 
 			if (
-			\Library\Core\Validator::string($this->_params['label'], 3, 96) === \Library\Core\Validator::STATUS_OK &&
-			\Library\Core\Validator::string($this->_params['content'], 3) === \Library\Core\Validator::STATUS_OK
-			//! empty($this->_params['deadline'])
+				\Library\Core\Validator::string($this->_params['label'], 3, 96) === \Library\Core\Validator::STATUS_OK &&
+				\Library\Core\Validator::string($this->_params['content'], 3) === \Library\Core\Validator::STATUS_OK
+				//! empty($this->_params['deadline'])
 			) {
 				$oTodoModel = new \modules\backend\Models\Todo(new \app\Entities\User($this->_session['iduser']));
 				$this->view['bCreateNewTodo'] = $oTodoModel->createByUser($this->_params['label'], $this->_params['content']);
@@ -76,12 +76,12 @@ class PostController extends \Library\Core\Auth {
 	public function deleteAction()
 	{
 		if (
-		isset(
+			isset(
 				$this->_params['idtodo'],
 				$this->_params['bconfirm']
-		) &&
-		intval($this->_params['idtodo']) > 0 &&
-		intval($this->_params['bconfirm']) === 1
+			) &&
+			intval($this->_params['idtodo']) > 0 &&
+			intval($this->_params['bconfirm']) === 1
 		) {
 			$oTodoModel = new \modules\backend\Models\Todo(new \app\Entities\User($this->_session['iduser']));
 			$oTodo = $oTodoModel->loadByTodoId((int)$this->_params['idtodo']);

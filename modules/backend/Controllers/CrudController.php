@@ -6,7 +6,8 @@ use Library\Core\CoreEntityException;
 
 class CrudController extends \Library\Core\Auth {
 
-	public function __preDispatch() {
+	public function __preDispatch()
+	{
 		if (
 			! isset(
 				$this->_session['iduser'],
@@ -18,27 +19,50 @@ class CrudController extends \Library\Core\Auth {
 		}
 	}
 
-	public function __postDispatch() {
+	public function __postDispatch() {}
 
-	}
-
-	public function indexAction() {
-
+	public function indexAction()
+	{
+		$oCrudModel = new \modules\backend\Models\Crud('Todo', 5, $this->oUser);
 	}
 
 	/**
-	 * Update an entity
+	 * Create an \app\Entities entity object
+	 */
+	public function createAction()
+	{
+		if (
+			isset(
+				$this->_params['skey'],
+				$this->_params['mvalue']
+			)
+		) {
 
+			if (
+				\Library\Core\Validator::string($this->_params['label'], 3, 96) === \Library\Core\Validator::STATUS_OK &&
+				\Library\Core\Validator::string($this->_params['content'], 3) === \Library\Core\Validator::STATUS_OK
+				//! empty($this->_params['deadline'])
+			) {
+				$oTodoModel = new \modules\backend\Models\Todo(new \app\Entities\User($this->_session['iduser']));
+				$this->view['bCreateNewTodo'] = $oTodoModel->createByUser($this->_params['label'], $this->_params['content']);
+				$this->_view['label'] = $this->_params['label'];
+				$this->_view['content'] = $this->_params['content'];
+			}
+		}
+	}
+
+	/**
+	 * Update an \app\Entities entity object
 	 */
 	public function updateAction()
 	{
 		$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
 		if (
 				isset(
-						$this->_params['pk'],
-						$this->_params['name'],
-						$this->_params['value'],
-						$this->_params['entity']
+					$this->_params['pk'],
+					$this->_params['name'],
+					$this->_params['value'],
+					$this->_params['entity']
 				)
 		) {
 			// load then update entity and send bool to the view
