@@ -11,13 +11,16 @@ class Crud {
 	const ENTITIES_NAMESPACE = '\app\Entities\\';
 
 	/**
+	 * Exceptions error code
 	 * @var integer
 	 */
 	const ERROR_ENTITY_EXISTS	  			= 400;
-	const ERROR_ENTITY_NOT_LOADED 			= 404;
-	const ERROR_USER_INVALID			 	= 401;
+	const ERROR_ENTITY_NOT_LOADED			= 402;
+	const ERROR_ENTITY_NOT_LOADABLE			= 404;
+	const ERROR_USER_INVALID				= 401;
 	const ERROR_ENTITY_NOT_OWNED_BY_USER 	= 403;
 	const ERROR_ENTITY_NOT_MAPPED_TO_USERS 	= 405;
+	const ERROR_FORBIDDEN_BY_ACL		 	= 406;
 
 	/**
 	 * Current user instance
@@ -43,11 +46,11 @@ class Crud {
 	/**
 	 * Instance constructor
 	 */
-	public function __construct($sEntityClassName, $iPrimaryKey, $mUser = null)
+	public function __construct($sEntityClassName, $iPrimaryKey = 0, $mUser = null)
 	{
 		assert('is_null($mUser) || $mUser instanceof \app\Entities\User && $mUser->isLoaded() || is_int($mUser) && intval($mUser) > 0');
 		assert('!empty($sEntityClassName) || !class_exists(self::ENTITIES_NAMESPACE . $sEntityClassName)');
-		assert('intval($iPrimaryKey) > 0');
+		assert('intval($iPrimaryKey) === 0 || intval($iPrimaryKey) > 0');
 
 		if (empty($sEntityClassName) || !class_exists(self::ENTITIES_NAMESPACE . $sEntityClassName)) {
 			throw new CrudModelException("Entity requested not found, you need to create manually or scaffold his \app\Entities class.", self::ERROR_ENTITY_EXISTS);
@@ -70,57 +73,153 @@ class Crud {
 				throw new CrudModelException('Invalid user instance provided', self::ERROR_USER_INVALID);
  			}
 
-			$sEntityClassName = self::ENTITIES_NAMESPACE . $sEntityClassName;
-			$this->oEntity = new $sEntityClassName($iPrimaryKey);
-
-			if (isset($this->oEntity->user_iduser) && $this->oUser->getId() != $this->oEntity->user_iduser) {
-				throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
+ 			try {
+				$sEntityClassName = self::ENTITIES_NAMESPACE . $sEntityClassName;
+				$this->oEntity = new $sEntityClassName(((intval($iPrimaryKey) > 0) ? $iPrimaryKey : null));
+			} catch (\Library\Core\EntityException $oException) {
+				throw new CrudModelException('Invalid user instance provided', self::ERROR_ENTITY_NOT_LOADABLE);
 			}
+
 		}
 
 	}
 
-	public function create() {} // @todo check session integrité
+	/**
+	 * Create an entity
+	 *
+	 * @param array $aParameters
+	 * @throws CrudModelException
+	 * @return boolean
+	 */
+	public function create(array $aParameters = array()) {
+		assert('$aParameters->count() > 0');
+		assert('!is_null($this->oEntity)');
+
+		try {
+			$oEntity = clone $this->oEntity;
+
+			foreach ($aParameters as $aParameter) {
+				if (($sParameterName = $aParameter[0]) && isset($this->oEntity->{$aParameter[0]}) && !empty($aParameter[1])) {
+					$oEntity->{$sParameterName} = $aParameter[1];
+				}
+			}
+
+			return $oEntity->add();
+		} catch (\Library\Core\EntityException $oException) {
+			return false;
+		}
+	}
 
 	/*
 	 * Create new entity
 	*
-	* @param array $aParameters		A one dimensional array: attribute name => value
+	* @param array $aParameters			A one dimensional array: attribute name => value
 	* @throws CrudModelException		If the currently loaded user session is different than the ne entity one
 	* @return boolean
 	*/
 	public function createByUser(array $aParameters = array())
 	{
-		assert('$this->oUser->isLoaded()');
 		assert('$aParameters->count() > 0');
+		assert('!is_null($this->oEntity)');
 
-		if ($this->oUser->isLoaded()) {
-			try {
-				$oEntity = clone $this->oEntity;
+		if (!$this->oUser->isLoaded()) {
+			throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
+		} else {
 
-				if (isset($aParameter['user_iduser']) && $aParameter['user_iduser'] != $this->oUser->getId()) {
-					throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
-				}
-
-				foreach ($aParameters as $aParameter) {
-					if (($sParameterName = $aParameter[0]) && isset($this->oEntity->{$aParameter[0]}) && !empty($aParameter[1])) {
-						$oEntity->{$sParameterName} = $aParameter[1];
-					}
-				}
-
-				return $oEntity->add();
-			} catch (\Library\Core\EntityException $oException) {
-				return false;
+			// Check for user bypass attempt
+			if (isset($aParameter['user_iduser']) && $this->oUser->getId() !== intval($aParameter['user_iduser'])) {
+				throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
 			}
+
+			return $this->create($aParameters);
 		}
-		return false;
 	}
 
-	public function read() {}
-	public function update() {} // @todo check for no user_iduser attr
-	public function updateByUser() {}
-	public function delete() {} // @todo check for no user_iduser attr
-	public function deleteByUser() {}
+	/**
+	 * Update an entity
+	 *
+	 * @param array $aParameters
+	 * @throws CrudModelException
+	 * @return boolean
+	 */
+	public function update(array $aParameters = array())
+	{
+		assert('$aParameters->count() > 0');
+
+		if (!$this->oEntities->isLoaded()) {
+			throw new CrudModelException('Cannot update an unloaded entity.', self::ERROR_ENTITY_NOT_LOADED);
+		} else {
+
+			foreach ($aParameters as $aParameter) {
+				if (($sParameterName = $aParameter[0]) && isset($this->oEntity->{$aParameter[0]}) && !empty($aParameter[1])) {
+					$this->oEntity->{$sParameterName} = $aParameter[1];
+				}
+			}
+
+			if (isset($this->oEntity->lastupdate)) {
+				$this->oEntity->lastupdate = time();
+			}
+
+			return $this->oEntity->update();
+		}
+	}
+
+	/**
+	 * Update an entity restricted to instanciate user scope
+	 *
+	 * @throws CrudModelException
+	 * @return boolean
+	 */
+	public function updateByUser() {
+		assert('$aParameters->count() > 0');
+		assert('!is_null($this->oEntity)');
+
+		if (!$this->oUser->isLoaded()) {
+			throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
+		} else {
+
+			// Check for user bypass attempt
+			if (isset($aParameter['user_iduser']) && $this->oUser->getId() !== intval($aParameter['user_iduser'])) {
+				throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
+			}
+
+			return $this->update($aParameters);
+		}
+	}
+
+	/**
+	 * Delete an entity
+	 *
+	 * @throws CrudModelException
+	 * @return boolean
+	 */
+	public function delete()
+	{
+		if (!$this->oEntity->isLoaded()) {
+			throw new CrudModelException('Cannot delete an unloaded entity.', self::ERROR_ENTITY_NOT_LOADED);
+		} else {
+			return $this->oEntity->delete();
+		}
+	}
+
+	/**
+	 * Delete an entity restricted to user scope
+	 *
+	 * @throws CrudModelException
+	 * @return boolean
+	 */
+	public function deleteByUser() {
+		if (!$this->oUser->isLoaded()) {
+			throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
+		} else {
+			// Check for user bypass attempt
+			if (isset($this->oUser->user_iduser) && $this->oUser->getId() !== intval($this->oUser->user_iduser)) {
+				throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
+			}
+
+			return $this->delete();
+		}
+	}
 
     /**
      * Load latest entities
@@ -137,7 +236,7 @@ class Crud {
     }
 
     /**
-     * Get user's entities
+     * Load user's entities
      *
      * @param array $aParameters
      * @param array $aOrderBy
