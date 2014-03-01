@@ -1,57 +1,77 @@
 <?php
+
 /**
- * Boostrap app
+ * Boostrap components and initialise framework
  */
 class Bootstrap {
 
-	// @todo namecast et comment
-    protected static $_instance;
+	/**
+	 * @var Bootstrap Instance
+	 */
+    private static $oInstance;
 
-    protected static $_env;
+    /**
+     * Config multi dimensional array parsed from .ini files
+     * @var array
+     */
+    private static $aConfig;
 
-    protected static $_paths;
+    /**
+     * Http request
+     *
+     * @var array
+     */
+    private static $aRequest;
 
-    protected static $_config;
+    /**
+     * Loaded classes for debug
+     * @var array
+     */
+    private static $aLoadedClass = array();
 
-    protected static $_reporting;
+    /**
+     * An array of ip
+     * @todo passer en config
+     * @var array
+     */
+    private static $aDevelopmentEnvironments = array('core.local', 'dev.nbonnici.info');
 
-    protected static $_logs;
 
-    protected static $_request;
-
-    protected static $_view;
-
-    protected static $_loadedClass = array();
-
-    private function __construct() {
-        self::initComponents();
-        return;
+    public function __construct() {
+    	return self::initComponents();
     }
 
-    private function __clone() {
-        return;
-    }
+    private final function __clone() {}
 
     public static function getInstance() {
-        if (! self::$_instance instanceof self) {
-            self::$_instance = new self();
-        }
-
-        return self::$_instance;
+    	if (! self::$oInstance instanceof self) {
+    		self::$oInstance = new self();
+    	}
+    	return self::$oInstance;
     }
 
-    public static function initComponents() {
+    public static function initComponents()
+    {
+    	/**
+    	 *  @see register class autoloader
+    	 */
+		spl_autoload_register('Bootstrap::classLoader');
+
+		/**
+		 * @see paths
+		 */
+		self::initPaths();
+
+		/**
+		 * Init config
+		 */
+        self::initConfig();
 
         /**
          *  @see init environment
          */
-        self::initEnv($_SERVER['REMOTE_ADDR']);
+        self::initEnv($_SERVER['SERVER_NAME']);
 
-        /**
-         * @see load config
-         */
-        self::initPaths();
-        self::initConfig();
 
         /**
          * @see Errors and reporting
@@ -72,7 +92,7 @@ class Bootstrap {
         /**
          * @see Parse request
          */
-        self::$_request = self::initRouter();
+        self::$aRequest = self::initRouter();
 
         /**
          * @see bootstrap application controller
@@ -100,7 +120,7 @@ class Bootstrap {
         $sFileName .= str_replace('_', DIRECTORY_SEPARATOR, $sClassName) . '.php';
 
         if (ENV === 'dev') {
-            self::$_loadedClass[] = $sFileName;
+            self::$aLoadedClass[] = $sFileName;
         }
 
         if (is_file(ROOT_PATH . $sFileName)) {
@@ -114,7 +134,7 @@ class Bootstrap {
      *
      * @throws CoreException
      */
-    private function initController() {
+    private static function initController() {
         $_controller = 'modules\\' . \Library\Core\Router::getModule() . '\Controllers\\' . ucfirst(\Library\Core\Router::getController()) . 'Controller';
         if (class_exists($_controller)) {
 
@@ -123,7 +143,7 @@ class Bootstrap {
         } else {
 
             if (ENV === 'dev') {
-                self::$_loadedClass[] = $_controller;
+                self::$aLoadedClass[] = $_controller;
             }
 
             \Library\Core\Router::redirect('/'); //@todo handle 404 errors here
@@ -159,17 +179,29 @@ class Bootstrap {
     /**
      * Init environement
      *
+     * @todo
+     *
      * @param string $sIp
      */
-    private function initEnv($sIp) {
-        // @see env info
-        define('ENV', ('127.0.0.1' === $sIp) ? 'dev' : 'prod'); // @see env dev|prod
-        return;
-    }
+    private static function initEnv($sIp)
+    {
+        define(
+        	'ENV',
+        	(
+        		(in_array($sIp, self::$aDevelopmentEnvironments) &&
+        		self::$aConfig['env']['prod'] !== $sIp)
+        		? 'dev' : 'prod'
+        	)
+        ); // set environment dev|prod
+	}
 
-    private function initConfig() {
+    /**
+     *
+     * @throws Exception
+     */
+    private static function initConfig() {
         if (is_file(APP_PATH . 'config/config.ini')) {
-            self::$_config = parse_ini_file(APP_PATH . 'config/config.ini', true);
+            self::$aConfig = parse_ini_file(APP_PATH . 'config/config.ini', true);
         } else {
             throw new Exception('Unable to load locales...');
         }
@@ -180,9 +212,9 @@ class Bootstrap {
     /**
      * Init cache based on memcached
      */
-    private function initCache() {
-        define('CACHE_HOST', self::$_config['cache']['host']);
-        define('CACHE_PORT', self::$_config['cache']['port']);
+    private static function initCache() {
+        define('CACHE_HOST', self::$aConfig['cache']['host']);
+        define('CACHE_PORT', self::$aConfig['cache']['port']);
 
         return;
     }
@@ -191,7 +223,7 @@ class Bootstrap {
     /**
      * Init errors and notices reporting
      */
-    private function initReporting() {
+    private static function initReporting() {
         // @ see init logs and errors reporting
         error_reporting( (ENV === 'dev') ? E_ALL : 0 );
         ini_set('display_errors', (ENV === 'dev') ? 'On' : 'Off');
@@ -203,7 +235,7 @@ class Bootstrap {
     /**
      * Init log file
      */
-    private function initLogs() {
+    private static function initLogs() {
 
         $sLogFile = LOG_PATH . DEFAULT_MODULE . '/errors.log';
         if (!is_file($sLogFile)) {
@@ -227,7 +259,7 @@ class Bootstrap {
     /**
      * Build all paths
      */
-    private function initPaths() {
+    private static function initPaths() {
         // @see paths info
         define('ROOT_PATH', __DIR__ . '/../');
         define('APP_PATH', __DIR__ . '/../app/');
@@ -254,7 +286,7 @@ class Bootstrap {
      *
      * @return array
      */
-    private function initRouter() {
+    private static function initRouter() {
         $oRouter = Library\Core\Router::getInstance();
         $oRouter->init();
 
@@ -272,7 +304,7 @@ class Bootstrap {
      *
      * @return string   Current local on 2 caracters
      */
-    private function initLocales() {
+    private static function initLocales() {
 
         /**
          * @see regenerer les locales
@@ -293,7 +325,7 @@ class Bootstrap {
             putenv('LC_ALL='.$sLocale . '.' . strtolower(str_replace('-', '', DEFAULT_ENCODING)));
             setlocale(LC_ALL, $sLocale . '.' . strtolower(str_replace('-', '', DEFAULT_ENCODING)));
 
-//          @see gettext init (on utilise juste des array pour le moment)
+//          @see gettext init (on utilise juste des array pour le moment c'est chiant de tout recompiler)
 //            bindtextdomain($sFilename, DEFAULT_MODULES_PATH . DEFAULT_MODULE . '/Translations/');
 //
 //            bind_textdomain_codeset($sFilename, DEFAULT_ENCODING);
@@ -306,64 +338,24 @@ class Bootstrap {
         }
     }
 
-    public static function getEnv() {
-        return self::$_env;
-    }
-
-    public static function setEnv($env) {
-        self::$_env = $env;
-    }
-
-    public static function getPaths() {
-        return self::$_paths;
-    }
-
-    public static function setPaths($paths) {
-        self::$_paths = $paths;
-    }
-
     public static function getConfig() {
-        return self::$_config;
+        return self::$aConfig;
     }
 
     public static function setConfig($config) {
-        self::$_config = $config;
-    }
-
-    public static function getReporting() {
-        return self::$_reporting;
-    }
-
-    public static function setReporting($reporting) {
-        self::$_reporting = $reporting;
-    }
-
-    public static function getLogs() {
-        return self::$_logs;
-    }
-
-    public static function setLogs($logs) {
-        self::$_logs = $logs;
+        self::$aConfig = $config;
     }
 
     public static function getRequest() {
-        return self::$_request;
+        return self::$aRequest;
     }
 
     public static function setRequest($request) {
-        self::$_request = $request;
-    }
-
-    public static function getView() {
-        return self::$_view;
-    }
-
-    public static function setView($view) {
-        self::$_view = $view;
+        self::$aRequest = $request;
     }
 
     public static function getLoadedClass() {
-        return self::$_loadedClass;
+        return self::$aLoadedClass;
     }
 
 }

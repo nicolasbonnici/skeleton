@@ -4,8 +4,6 @@ namespace Library\Core;
 
 /**
  * Singleton design pattern implementation class
- * @author Antoine <nicolasbonnici@gmail.com>
- * @version 1.0.0 - 2013-07-29 - Nicolas BONNICI <nicolasbonnici@gmail.com>
  */
 abstract class Singleton
 {
@@ -49,6 +47,8 @@ abstract class Singleton
         return isset(self::$aInstances[get_called_class()]);
     }
 
-    //to prevent loop hole in PHP so that the class cannot be cloned
+    /**
+     * to prevent loop hole in PHP so that the class cannot be cloned
+     */
     final private function __clone() {}
 }

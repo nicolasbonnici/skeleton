@@ -23,7 +23,7 @@ class Router extends Singleton {
 
     	// @todo retrieve from db
     	self::$aRules = array(
-    			'/login/:module/:[module]/:controller/:[controller]/:action/:[action]/' => array(
+    			'/login' => array(
     					'module'    => 'frontend',
     					'controller' => 'auth',
     					'action'    => 'index'
@@ -38,32 +38,27 @@ class Router extends Singleton {
     					'controller' => 'user',
     					'action'    => 'profile'
     			),
-    			'/profile/update/:id/:[id]/' => array(
-    					'module'    => 'backend',
-    					'controller' => 'user',
-    					'action'    => 'update'
-    			),
-    			'/blog/:param/' => array(
+    			'/blog' => array(
     					'module'    => 'frontend',
     					'controller' => 'blog',
     					'action'    => 'index'
     			),
-    			'/portfolio/:param/' => array(
+    			'/portfolio' => array(
     					'module'    => 'frontend',
     					'controller' => 'home',
     					'action'    => 'portfolio'
     			),
-    			'/lifestream/:param/' => array(
+    			'/lifestream' => array(
     					'module'    => 'frontend',
     					'controller' => 'home',
     					'action'    => 'lifestream'
     			),
-    			'/contact/:param/' => array(
+    			'/contact' => array(
     					'module'    => 'frontend',
     					'controller' => 'home',
     					'action'    => 'contact'
     			),
-    			'/todo/:param/' => array(
+    			'/todo' => array(
     					'module'    	=> 'backend',
     					'controller' 	=> 'todo',
     					'action'    	=> 'index'

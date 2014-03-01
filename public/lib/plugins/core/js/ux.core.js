@@ -147,6 +147,15 @@
                         
                 },
                 
+                /**
+                 * Send a notification
+                 * 
+                 * @param string sTitle		Notification title
+                 * @param string sText		Notification content
+                 * @param string sType		info|warning|error|success
+                 * @param string sIcon		Icon class
+                 * @param bCustom
+                 */
                 sendNotification: function(sTitle, sText, sType, sIcon, bCustom) {
                 	var sClass = '';
                 	if (bCustom === true) {
@@ -170,6 +179,10 @@
                 	$.pnotify_remove_all();
                 },
                 
+                /**
+                 * Format timestamp to date dynamicaly
+                 * @todo i18n support
+                 */
                 formatTimestamps: function() {
                 	$('.ui-timestamp').each(function() {   
                 		if (!$(this).data('formatTimestampFired')) {
@@ -525,6 +538,7 @@
                 
                 /**
                  * Faire un plugin de ca
+                 * @todo ne pas recalculer tout systematiquement uniquement les item ajoutés via xhr
                  */
                 initGrids: function() {
                 	$('.ui-grid').each(function() {
@@ -546,6 +560,9 @@
                 	});
                 },
                 
+                /**
+                 * Toggle button
+                 */
                 initCheckbox: function() {
                 	$('.ui-checkbox').each(function() {
                 		if (!$(this).data('ui-checkbox-fired')) {
@@ -555,6 +572,9 @@
                 	});
                 },
                 
+                /**
+                 * Tooltip helper on title attribute
+                 */
                 initTooltip: function() {
                 	if (! $('body').data('tooltip-fired')) {
                 		$('body').data('tooltip-fired', true);
@@ -580,6 +600,9 @@
                 	}
                 },
                 
+                /**
+                 * Fire all ux components
+                 */
                 initUi: function() {
 
                 	// Aide lors d'un focus sur input placehorder
@@ -607,9 +630,6 @@
 
                     // Init tooltip
                     this.initTooltip();
-                    
-                    // Move all modals directly on the body (bugfix pour le layout)
-                    $('.ui-modal').appendTo("body");  
                     
                     this.initCheckbox();
                     

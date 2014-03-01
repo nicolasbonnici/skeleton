@@ -83,13 +83,13 @@ class Crud {
 
 	}
 
-	/*
+	/**
 	 * Create new entity
-	*
-	* @param array $aParameters			A one dimensional array: attribute name => value
-	* @throws CrudModelException		If the currently loaded user session is different than the ne entity one
-	* @return boolean|Library\Core\EntityException
-	*/
+	 *
+	 * @param array $aParameters			A one dimensional array: attribute name => value
+	 * @throws CrudModelException		If the currently loaded user session is different than the ne entity one
+	 * @return boolean|Library\Core\EntityException
+	 */
 	public function create(array $aParameters = array())
 	{
 		assert('$aParameters->count() > 0');

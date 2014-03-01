@@ -12,10 +12,11 @@ $(document).ready(function() {
     });
 
     
-    // ************* Bindings ****************
+    /**
+     * ************* Bindings ****************
+     * Asynchrone request
+     */ 
     
-    // ---------------------------- Asynchrone request
-
     // Envoyer une requete XHR lors d'un clic ou d'un change sur un select
     $('body').on('click', '.ui-sendxhr', function(){
         ux.sendXHR($(this));
@@ -57,6 +58,9 @@ $(document).ready(function() {
     	}
     });
     
+    /**
+     * Ux bindings
+     */
     // @todo bug incomprehensible!!!!!!!!!!!!!!!
     $('body').on('click', '.ui-select-all', function() {
     	var sContainerSelector = $(this).data('container');
