@@ -115,6 +115,16 @@ class Validator
     }
 
     /**
+     * Check and cast a timestamp value
+     * @param integer|mixed $iTimestamp
+     * @return integer Check status
+     */
+    static public function timestamp(&$iTimestamp)
+    {
+    	return ((($iTimestamp = intval($iTimestamp)) && $iTimestamp > 0) ? self::STATUS_OK : self::STATUS_INVALID);
+    }
+
+    /**
      * Check that given argument is a valid MD5 hash
      * @param string $sMD5 String to check
      * @return integer Check status
