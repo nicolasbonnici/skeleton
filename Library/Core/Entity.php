@@ -228,7 +228,7 @@ abstract class Entity extends Database  {
      * @param   integer $iId Instance ID (primary key of table)
      * @return  boolean TRUE if instance is in cache, otherwise false
      */
-    public function getCached($iId)
+    public static function getCached($iId)
     {
         return \Library\Core\Cache::get(self::getCacheKey($iId));
     }

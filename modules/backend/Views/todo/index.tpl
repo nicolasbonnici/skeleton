@@ -90,7 +90,7 @@
 						</th>
 					</tr>
 				</thead>
-				<tbody id="todoList" class="ui-loadable" data-module="backend" data-controller="todo" data-action="list">
+				<tbody id="todoList" class="ui-loadable" data-entity="Todo" data-view="todo/list.tpl" data-parameters="" data-module="backend" data-controller="crud" data-action="listByUser">
 
 				</tbody>
 			</table>

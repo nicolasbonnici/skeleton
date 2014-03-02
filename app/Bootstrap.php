@@ -70,7 +70,7 @@ class Bootstrap {
         /**
          *  @see init environment
          */
-        self::initEnv($_SERVER['SERVER_NAME']);
+        self::initEnv();
 
 
         /**
@@ -177,26 +177,23 @@ class Bootstrap {
     }
 
     /**
-     * Init environement
-     *
-     * @todo
-     *
-     * @param string $sIp
+     * Init current environement under a ENV constant [dev|test|preprod|prod]
+     * @see config.ini
      */
-    private static function initEnv($sIp)
+    private static function initEnv()
     {
-        define(
-        	'ENV',
-        	(
-        		(in_array($sIp, self::$aDevelopmentEnvironments) &&
-        		self::$aConfig['env']['prod'] !== $sIp)
-        		? 'dev' : 'prod'
-        	)
-        ); // set environment dev|prod
+    	$sEnv = 'prod';
+    	if (
+    		in_array($_SERVER['SERVER_NAME'], self::$aDevelopmentEnvironments) &&
+        	self::$aConfig['env']['prod'] !== $_SERVER['SERVER_NAME']
+        ) {
+			$sEnv = 'dev';
+    	}
+        define('ENV', $sEnv);
 	}
 
     /**
-     *
+     * Parse config from a .ini file under app/config/
      * @throws Exception
      */
     private static function initConfig() {
@@ -205,8 +202,6 @@ class Bootstrap {
         } else {
             throw new Exception('Unable to load locales...');
         }
-
-        return;
     }
 
     /**
@@ -215,8 +210,6 @@ class Bootstrap {
     private static function initCache() {
         define('CACHE_HOST', self::$aConfig['cache']['host']);
         define('CACHE_PORT', self::$aConfig['cache']['port']);
-
-        return;
     }
 
 
@@ -225,11 +218,9 @@ class Bootstrap {
      */
     private static function initReporting() {
         // @ see init logs and errors reporting
-        error_reporting( (ENV === 'dev') ? E_ALL : 0 );
+        error_reporting( (ENV === 'dev') ? -1 : 0 );
         ini_set('display_errors', (ENV === 'dev') ? 'On' : 'Off');
-        ini_set('log_errors',  (ENV === 'dev') ? 'On' : 'Off');
-
-        return;
+        ini_set('log_errors',  'On');
     }
 
     /**
@@ -237,7 +228,7 @@ class Bootstrap {
      */
     private static function initLogs() {
 
-        $sLogFile = LOG_PATH . DEFAULT_MODULE . '/errors.log';
+        $sLogFile = LOG_PATH . '/errors.log';
         if (!is_file($sLogFile)) {
 
         	if (!is_dir(LOG_PATH)) {
@@ -288,8 +279,7 @@ class Bootstrap {
      */
     private static function initRouter() {
         $oRouter = Library\Core\Router::getInstance();
-        $oRouter->init();
-
+		$oRouter->init();
         return array(
            'module' => $oRouter->getModule(),
            'controller' => $oRouter->getController(),

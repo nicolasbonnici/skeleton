@@ -280,24 +280,40 @@
                     }
                 },
                 
-                preload: function(selector) {
+                /**
+                 * Preload a dom node
+                 * @param string sSelector
+                 */
+                preload: function(sSelector) {
                     if ($.fn.queryLoader2) {
-                        $(selector).queryLoader2({
-                                barColor: "#48acde",
-                                backgroundColor: "#fff",
-                                percentage: true,
-                                barHeight: 50,
-                                completeAnimation: "grow",
-                                deepSearch: true
+                    	if ($(sSelector).size() > 0) {
+                    		sSelector = 'body';
+                    	}
+                        $(sSelector).queryLoader2({
+							barColor: "#000",
+							backgroundColor: "#fff",
+							percentage: true,
+							barHeight: 50,
+							completeAnimation: "grow",
+							deepSearch: true
                         });                              
                     }          
                 },
 
+                /**
+                 * @todo
+                 * @param repWrap
+                 * @param request
+                 */
                 load: function(repWrap, request) {
                     $(repWrap).fadeOut(300).empty().load('/'+request['controller']+'/'+request['action']).fadeIn(150);
                     this.hideNotif();		
                 },
 
+                /**
+                 * Load data as the user sroll down
+                 * @param $obj			scrolled div dom node jQuery object
+                 */
                 loadScroll: function($obj) {
 
             		var sSelector = '#'+$obj.attr('id');                			
@@ -328,6 +344,10 @@
                     });    
                 },
 
+                /**
+                 * A simple XHR request
+                 * @param oHandler			scrolled div dom node jQuery object
+                 */
                 sendXHR: function(oHandler) {
 
                     var sUrl = '';
@@ -470,10 +490,8 @@
                                 	$(sSelector).empty();                                                            
                                 },
                                 success: function(rep){
-                                	if (rep.status === 1) { // @see if XHR_STATUS_OK                                               		                                    		
-                                		$(sSelector).append(rep.content);                                              
-                                		$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		
-                                	}
+                                	$(sSelector).append(rep.content);                                              
+                                	$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		
                                 },
                                 error: function(err){                            
                                     // Restore cached content

@@ -93,7 +93,6 @@ class Router extends Singleton {
             self::$aParams[$key] = $value;
         }
 
-        return;
     }
 
 

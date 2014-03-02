@@ -8,7 +8,8 @@ class Crud {
 	/**
 	 * @var string
 	 */
-	const ENTITIES_NAMESPACE = '\app\Entities\\';
+	const ENTITIES_NAMESPACE 			= '\app\Entities\\';
+	const ENTITIES_COLLECTION_NAMESPACE = '\app\Entities\Collection\\';
 
 	/**
 	 * Exceptions error code
@@ -46,13 +47,13 @@ class Crud {
 	/**
 	 * Instance constructor
 	 */
-	public function __construct($sEntityClassName, $iPrimaryKey = 0, $mUser = null)
+	public function __construct($sEntityName, $iPrimaryKey = 0, $mUser = null)
 	{
 		assert('is_null($mUser) || $mUser instanceof \app\Entities\User && $mUser->isLoaded() || is_int($mUser) && intval($mUser) > 0');
-		assert('!empty($sEntityClassName) || !class_exists(self::ENTITIES_NAMESPACE . $sEntityClassName)');
+		assert('!empty($sEntityName) || !class_exists(self::ENTITIES_NAMESPACE . $sEntityName)');
 		assert('intval($iPrimaryKey) === 0 || intval($iPrimaryKey) > 0');
 
-		if (empty($sEntityClassName) || !class_exists(self::ENTITIES_NAMESPACE . $sEntityClassName)) {
+		if (empty($sEntityName) || !class_exists(self::ENTITIES_NAMESPACE . $sEntityName)) {
 			throw new CrudModelException("Entity requested not found, you need to create manually or scaffold his \app\Entities class.", self::ERROR_ENTITY_EXISTS);
 		} else {
 			try {
@@ -73,8 +74,10 @@ class Crud {
  			}
 
  			try {
-				$sEntityClassName = self::ENTITIES_NAMESPACE . $sEntityClassName;
+				$sEntityClassName = self::ENTITIES_NAMESPACE . $sEntityName;
+				$sEntityCollectionClassName = self::ENTITIES_COLLECTION_NAMESPACE . $sEntityName . 'Collection';
 				$this->oEntity = new $sEntityClassName(((intval($iPrimaryKey) > 0) ? $iPrimaryKey : null));
+				$this->oEntities = new $sEntityCollectionClassName();
 			} catch (\Library\Core\EntityException $oException) {
 				throw new CrudModelException('Invalid user instance provided', self::ERROR_ENTITY_NOT_LOADABLE);
 			}
@@ -240,14 +243,12 @@ class Crud {
      */
     public function loadUserEntities(array $aParameters = array(), array $aOrderBy = array(), array $aLimit = array(0, 10))
     {
-    	if (!isset($this->oEntity->user_iduser)) {
-    		throw new CrudModelException('No foreign key to \app\Entities\User entity found!', self::ERROR_ENTITY_NOT_MAPPED_TO_USERS);
+    	if (is_null($this->oUser)) {
+    		throw new CrudModelException('No \app\Entities\User entity instance found!', self::ERROR_ENTITY_NOT_MAPPED_TO_USERS);
     	}
 
     	if (!isset($aParameters['user_iduser'])) {
     		$aParameters['user_iduser'] = $this->oUser->getId();
-    	} elseif (intval($aParameters['user_iduser']) !== $this->oUser->getId()) {
-    		throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
     	}
 
     	try {

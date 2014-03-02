@@ -6,29 +6,29 @@ namespace Library\Core;
  * Manage SGBD with PDO
  */
 class Database {
-    
+
     /**
      * @var object Library\Core\Database instance
      */
     static private $_instance;
-    
+
     /**
-     * @var object PDO instance 
+     * @var object PDO instance
      */
     static protected $_link;
 
     /**
      * @var string
      */
-    static protected $_driver = '';    
-    static protected $_host = '';    
-    static protected $_name = '';    
-    static protected $_user = '';    
-    static protected $_pass = '';    
-    
-    static protected $_errors = array();    
-    
-    static protected $_sLastLink = array();    
+    static protected $_driver = '';
+    static protected $_host = '';
+    static protected $_name = '';
+    static protected $_user = '';
+    static protected $_pass = '';
+
+    static protected $_errors = array();
+
+    static protected $_sLastLink = array();
     static protected $_aBenchmark = array(
         'master' => array(
             'time'          => 0.0,
@@ -40,7 +40,7 @@ class Database {
             'queries_count' => 0,
             'queries_list'  => array()
         )
-    ); 
+    );
 
 
 
@@ -53,48 +53,48 @@ class Database {
      * @access private
      */
     public function __construct() {
-        
+
         $this->setLink();
-                
+
         return;
     }
 
-    
+
     public function getInstance() {
         if (! self::$_instance instanceof self) {
             self::$_instance = new self();
         }
-        
+
         return self::$_instance;
     }
 
     final public function __clone() {
         return;
     }
-        
-    private function setLink() {
-          
+
+    private static function setLink() {
+
         try {
-    
-            $aConfig = \Bootstrap::getConfig();            
-            
+
+            $aConfig = \Bootstrap::getConfig();
+
             self::$_driver = $aConfig['database']['driver'];
             self::$_host = $aConfig['database']['host'];
             self::$_name = $aConfig['database']['name'];
             self::$_user = $aConfig['database']['user'];
-            self::$_pass = $aConfig['database']['pass'];            
-            
+            self::$_pass = $aConfig['database']['pass'];
+
             self::$_link = new \PDO(self::$_driver.':dbname='.self::$_name.';host='.self::$_host,self::$_user ,self::$_pass);
 
-                        
+
         } catch(Exception $log) {
             throw new DatabaseException($log);
-        } 
-        
+        }
+
         return;
-        
+
     }
-    
+
     /**
      * Execute an SQL query
      * @param   string  $sQuery         SQL query to execute
@@ -136,7 +136,7 @@ class Database {
             if (defined('ENV') && ENV === 'dev') {
                 echo $oException->getMessage();
             }
-            
+
             return false;
         }
     }
@@ -153,7 +153,7 @@ class Database {
         }
         return self::${self::$sLastLink}->lastInsertId();
     }
-    
+
 }
 
 class DatabaseException extends \Exception { }

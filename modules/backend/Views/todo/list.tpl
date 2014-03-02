@@ -1,5 +1,5 @@
-{% if oTodos|Exists %}
-	{% for oTodo in oTodos %}
+{% if oEntities|Exists %}
+	{% for oTodo in oEntities %}
 	        <tr{% if oTodo.deadline > current_timestamp %} class="danger blackFontColor"{% endif %}>
 	            <td>
 	                <input type="checkbox" class="ui-select" name="idtodo" value="{{oTodo.idtodo}}" />

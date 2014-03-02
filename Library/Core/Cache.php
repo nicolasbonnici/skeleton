@@ -47,7 +47,7 @@ class Cache {
         }
     }
 
-    public function get($name)
+    public static function get($name)
     {
         if (isset($_GET['noCache']) && ENV === 'dev') {
             return false;
@@ -69,7 +69,7 @@ class Cache {
         return $ret;
     }
 
-    public function set($name, $value, $flag = false, $expire = 120)
+    public static function set($name, $value, $flag = false, $expire = 120)
     {
         if (self::$connected) {
             self::$res_memcache->set(self::prefix.'-'.$name, $value, false, $expire);
@@ -80,7 +80,7 @@ class Cache {
         }
     }
 
-    public function delete($name, $timeout = 0)
+    public static function delete($name, $timeout = 0)
     {
         if (self::$connected) {
             self::$res_memcache->delete(self::prefix.'-'.$name, $timeout);
@@ -91,7 +91,7 @@ class Cache {
         }
     }
 
-    public function flush($index = '')
+    public static function flush($index = '')
     {
         if (self::$connected) {
             self::$res_memcache->flush();

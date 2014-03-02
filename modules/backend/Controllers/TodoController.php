@@ -3,7 +3,7 @@
 namespace modules\backend\Controllers;
 
 /**
- * Description of HomeController
+ * Description of TodoController
  *
  * @author info
  */
@@ -91,15 +91,6 @@ class TodoController extends \Library\Core\Auth {
     	$this->render('todo/delete.tpl');
     }
 
-    public function listAction()
-    {
-    	$oTodos = new \modules\backend\Models\Todo(new \app\Entities\User($this->_session['iduser']));
-    	if ($oTodos->loadByUserId()) {
-    		$this->_view['oTodos']  = $oTodos->getTodos();
-    	}
-
-    	$this->render('todo/list.tpl');
-    }
 }
 
 class TodoControllerException extends \Exception {}

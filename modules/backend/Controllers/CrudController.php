@@ -303,31 +303,38 @@ class CrudController extends \Library\Core\Auth {
 				$this->_params['entity'],
 				$this->_params['parameters']
 			) &&
-			($sEntityName = $this->_params['entity']) &&
-			strlen($sEntityName) > 0
+			($sEntityClassName = $this->_params['entity']) &&
+			strlen($sEntityClassName) > 0
 		) {
 			// Only check ACL, no need to check data type integrity \Core\Entity check it before updating object
 			if (
-			$this->hasReadAccess(strtolower($sEntityName))
+			$this->hasReadAccess(strtolower($sEntityClassName))
 			) {
-				try {
-					$oCrudModel = new \modules\backend\Models\Crud(ucfirst($sEntityClassName, 0, $this->oUser));
+				//try {
+					$oCrudModel = new \modules\backend\Models\Crud(ucfirst($sEntityClassName), 0, $this->oUser);
 
-					$this->_view['iStatus'] = self::XHR_STATUS_OK;
-					$this->_view['oEntity'] = $oCrudModel->loadUserEntities(); // @todo passer les params
+					if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {
+						$sViewTpl = $this->_params['view'];
+					}
 
-				} catch (\modules\backend\Models\CrudModelException $oException) {
-					$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-					$this->_view['error_message'] = $oException->getMessage();
-					$this->_view['error_code'] = $oException->getCode();
-				}
+					if ($oCrudModel->loadUserEntities()) {
+						$this->_view['iStatus'] = self::XHR_STATUS_OK;
+						$oEntities = $oCrudModel->getEntities();
+						$this->_view['oEntities'] = $oEntities; // @todo passer les params
+					}
+
+// 				} catch (\modules\backend\Models\CrudModelException $oException) {
+// 					$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
+// 					$this->_view['error_message'] = $oException->getMessage();
+// 					$this->_view['error_code'] = $oException->getCode();
+// 				}
 			} else {
 				$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
 				$this->_view['error_message'] = 'Unauthorized by the ACL layer';
 				$this->_view['error_code'] = \modules\backend\Models\Crud::ERROR_FORBIDDEN_BY_ACL;
 			}
 		}
-		$this->render('crud/list.tpl', $this->_view['iStatus']);
+		$this->render($sViewTpl, $this->_view['iStatus']);
 	}
 }
 
