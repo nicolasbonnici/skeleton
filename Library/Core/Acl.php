@@ -109,6 +109,16 @@ abstract class Acl   {
 		return false;
     }
 
+    protected function hasListAccess($sRessource)
+    {
+    	return $this->hasReadAccess($sRessource);
+    }
+
+    protected function hasListByUserAccess($sRessource)
+    {
+    	return $this->hasReadAccess($sRessource);
+    }
+
     protected function getCRUD($sRessource)
     {
     	if (!empty($sRessource) && $this->oRole->isLoaded() && $this->oPermissions->count() > 0) {
