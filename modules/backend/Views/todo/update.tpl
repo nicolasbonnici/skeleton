@@ -8,12 +8,10 @@
         </h4>
     </div>
     <div class="modal-body">
-        <form role="form" id="updateTodoForm" action="/backend/crud/update/" method="post">
+        <form role="form" data-entity="Todo" data-pk=" {{oTodo.idtodo}}" id="updateTodoForm" action="/backend/crud/update/" method="post">
             <div class="form-group">
-                <input type="hidden" name="entity" value="Todo" />
-                <input type="hidden" name="pk" value="{{oTodo.idtodo}}" />
-                <input type="hidden" name="name" value="content" />
-                <div class="ui-editor" data-name="value">
+
+                <div class="ui-editor" data-name="content">
                 {{oTodo.content|safe}}
                 </div>
                 <p class="help-block">

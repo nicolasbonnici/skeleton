@@ -162,7 +162,7 @@ class Crud {
 	 * @return \Library\Core\EntityException
 	 */
 	public function update(array $aParameters = array()) {
-		assert('$aParameters->count() > 0');
+		assert('count($aParameters) > 0');
 
 		if (!is_null($this->oUser)) {
 			throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);

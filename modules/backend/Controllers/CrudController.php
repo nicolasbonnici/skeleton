@@ -25,6 +25,8 @@ class CrudController extends \Library\Core\Auth {
 
 	public function __preDispatch()
 	{
+		$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
+
 		if (
 			count($this->aEntitiesScope) > 0
 			&& !in_array($this->_params['entity'], $this->aEntitiesScope)
@@ -36,16 +38,45 @@ class CrudController extends \Library\Core\Auth {
 			throw new CrudControllerException('User session is invalid', \modules\backend\Models\Crud::ERROR_USER_INVALID);
 		}
 
-		// @todo en fonction des ACL et de l'action demandé lever ou non des exceptions avant même d'appeler la methode demandé
+		if (
+			isset($this->_params['entity']) &&
+			($sEntityName = $this->_params['entity']) &&
+			strlen($sEntityName) > 0 &&
+			($sAction = substr($this->_action, 0, (strlen($sEntityName) - strlen('action')))) &&
+			in_array($sAction, array('create', 'read', 'update', 'delete', 'list', 'listByUser'))
+		) {
+			// Check ACL
+			if (
+				$sCheckMethodName = 'has' . $sAction . 'Access' &&
+				!$this->{$sCheckMethodName}(strtolower($sEntityName))
+			) {
+				$this->_view['bCreateNewEntity'] = false;
+				$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
+				$this->_view['error_message'] = 'Unauthorized by the ACL layer';
+				$this->_view['error_code'] = \modules\backend\Models\Crud::ERROR_FORBIDDEN_BY_ACL;
+				throw new CrudControllerException('Action forbidden by ACL', \modules\backend\Models\Crud::ERROR_FORBIDDEN_BY_ACL);
+			}
 
+
+			try {
+				$iPrimaryKey = 0;
+				if (isset($this->_params['pk']) && intval($this->_params['pk']) > 0) {
+					$iPrimaryKey = intval($this->_params['pk']);
+				}
+				// Check Entity instance with Crud model constructor
+				$oCrudModel = new \modules\backend\Models\Crud(ucfirst($sEntityClassName, $iPrimaryKey, $this->oUser));
+			} catch (\modules\backend\Models\CrudModelException $oException) {
+				throw new CrudControllerException('Invalid Entity requested!', \modules\backend\Models\Crud::ERROR_ENTITY_NOT_LOADABLE);
+			}
+
+		} else {
+			$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
+			$this->_view['error_message'] = 'Invalid or missing parameters';
+			$this->_view['error_code'] = \modules\backend\Models\Crud::ERROR_ENTITY_EXISTS;
+		}
 	}
 
 	public function __postDispatch() {}
-
-	public function indexAction()
-	{
-		$oCrudModel = new \modules\backend\Models\Crud('Todo', 5, $this->oUser);
-	}
 
 	/**
 	 * Create an \app\Entities entity object then pass it to a given view
@@ -54,50 +85,33 @@ class CrudController extends \Library\Core\Auth {
 	 */
 	public function createAction($sViewTpl = 'crud/read.tpl')
 	{
-		$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-		if (
-			isset(
-				$this->_params['entity'],
-				$this->_params['parameters']
-			) &&
-			($sEntityName = $this->_params['entity']) &&
-			strlen($sEntityName) > 0
-		) {
-			// Only check ACL, no need to check data type integrity \Core\Entity check it before updating object
-			if (
-				$this->hasCreateAccess(strtolower($sEntityName))
-			) {
-				// Explode ou json_decode les parametres serialisés en un post parametre
-				$aParameters = array();
+		try {
 
-				try {
-					$oCrudModel = new \modules\backend\Models\Crud(ucfirst($sEntityClassName, 0, $this->oUser));
+			// json_decode les parametres serialisés en un post parametre
+			$aParameters = array();
 
-					if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {
-						$sViewTpl = $this->_params['view'];
-					}
+			// Explode ou json_decode les parametres serialisés en un post parametre
+			$aParameters = json_decode($this->_params['parameters']);
 
-
-					if (($this->_view['bCreateNewEntity'] = $oCrudModel->create($aParameters)) === true) {
-						$this->_view['iStatus'] = self::XHR_STATUS_OK;
-						$this->_view['oEntity'] = $oCrudModel->getEntity();
-					} else {
-						$this->_view['bUpdateEntity'] = false; // clean exception
-					}
-				} catch (\modules\backend\Models\CrudModelException $oException) {
-					$this->_view['bCreateNewEntity'] = false;
-					$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-					$this->_view['error_message'] = $oException->getMessage();
-					$this->_view['error_code'] = $oException->getCode();
-				}
-
-			} else {
-				$this->_view['bCreateNewEntity'] = false;
-				$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-				$this->_view['error_message'] = 'Unauthorized by the ACL layer';
-				$this->_view['error_code'] = \modules\backend\Models\Crud::ERROR_FORBIDDEN_BY_ACL;
+			if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {
+				$sViewTpl = $this->_params['view'];
 			}
+
+
+			if (($this->_view['bCreateNewEntity'] = $oCrudModel->create($aParameters)) === true) {
+				$this->_view['iStatus'] = self::XHR_STATUS_OK;
+				$this->_view['oEntity'] = $oCrudModel->getEntity();
+			} else {
+				$this->_view['bUpdateEntity'] = false; // clean exception
+			}
+
+		} catch (\modules\backend\Models\CrudModelException $oException) {
+			$this->_view['bCreateNewEntity'] = false;
+			$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
+			$this->_view['error_message'] = $oException->getMessage();
+			$this->_view['error_code'] = $oException->getCode();
 		}
+
 		$this->render('crud/create.tpl', $this->_view['iStatus']);
 	}
 
@@ -107,41 +121,21 @@ class CrudController extends \Library\Core\Auth {
 	 * @param string $sViewTpl
 	 */
 	public function readAction($sViewTpl = 'crud/read.tpl') {
-		$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-		if (
-			isset(
-				$this->_params['entity'],
-				$this->_params['parameters']
-			) &&
-			($sEntityName = $this->_params['entity']) &&
-			strlen($sEntityName) > 0
-		) {
-			// Only check ACL, no need to check data type integrity \Core\Entity check it before updating object
-			if (
-				$this->hasReadAccess(strtolower($sEntityName))
-			) {
-				try {
-					$oCrudModel = new \modules\backend\Models\Crud(ucfirst($sEntityClassName, 0, $this->oUser));
 
-					if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {
-						$sViewTpl = $this->_params['view'];
-					}
-
-					$this->_view['iStatus'] = self::XHR_STATUS_OK;
-					$this->_view['oEntity'] = $oCrudModel->read();
-
-				} catch (\modules\backend\Models\CrudModelException $oException) {
-					$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-					$this->_view['error_message'] = $oException->getMessage();
-					$this->_view['error_code'] = $oException->getCode();
-				}
-			} else {
-				$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-				$this->_view['error_message'] = 'Unauthorized by the ACL layer';
-				$this->_view['error_code'] = \modules\backend\Models\Crud::ERROR_FORBIDDEN_BY_ACL;
+		try {
+			if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {
+				$sViewTpl = $this->_params['view'];
 			}
+
+			$this->_view['iStatus'] = self::XHR_STATUS_OK;
+			$this->_view['oEntity'] = $oCrudModel->read();
+
+		} catch (\modules\backend\Models\CrudModelException $oException) {
+			$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
+			$this->_view['error_message'] = $oException->getMessage();
+			$this->_view['error_code'] = $oException->getCode();
 		}
-		$this->render('crud/read.tpl', $this->_view['iStatus']);
+		$this->render($sViewTpl, $this->_view['iStatus']);
 	}
 
 	/**
@@ -149,49 +143,29 @@ class CrudController extends \Library\Core\Auth {
 	 */
 	public function updateAction($sViewTpl = 'crud/read.tpl')
 	{
-		$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-		if (
-			isset(
-				$this->_params['entity'],
-				$this->_params['parameters']
-			) &&
-			($sEntityName = $this->_params['entity']) &&
-			strlen($sEntityName) > 0
-		) {
-			// Only check ACL, no need to check data integrity \Core\Entity check it before updating object
-			if (
-				$this->hasUpdateAccess(strtolower($sEntityName))
-			) {
-				// Explode ou json_decode les parametres serialisés en un post parametre
-				$aParameters = array();
+		try {
+			// Explode ou json_decode les parametres serialisés en un post parametre
+			$aParameters = json_decode($this->_params['parameters']);
 
-				try {
-					$oCrudModel = new \modules\backend\Models\Crud(ucfirst($sEntityClassName, 0, $this->oUser));
-
-					if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {
-						$sViewTpl = $this->_params['view'];
-					}
-
-					if (($this->_view['bUpdateEntity'] = $oCrudModel->update($aParameters)) === true) {
-						$this->_view['iStatus'] = self::XHR_STATUS_OK;
-						$this->_view['oEntity'] = $oCrudModel->getEntity();
-					} else {
-						$this->_view['bUpdateEntity'] = false; // clean exception
-					}
-				} catch (\modules\backend\Models\CrudModelException $oException) {
-					$this->_view['bUpdateEntity'] = false;
-					$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-					$this->_view['error_message'] = $oException->getMessage();
-					$this->_view['error_code'] = $oException->getCode();
-				}
-			} else {
-				$this->_view['bUpdateEntity'] = false;
-				$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-				$this->_view['error_message'] = 'Unauthorized by the ACL layer';
-				$this->_view['error_code'] = \modules\backend\Models\Crud::ERROR_FORBIDDEN_BY_ACL;
+			// Json decode la vue
+			if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {
+				$sViewTpl = $this->_params['view'];
 			}
+
+			if (($this->_view['bUpdateEntity'] = $oCrudModel->update($aParameters)) === true) {
+				$this->_view['iStatus'] = self::XHR_STATUS_OK;
+				$this->_view['oEntity'] = $oCrudModel->getEntity();
+			} else {
+				$this->_view['bUpdateEntity'] = false; // clean exception
+			}
+		} catch (\modules\backend\Models\CrudModelException $oException) {
+			$this->_view['bUpdateEntity'] = false;
+			$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
+			$this->_view['error_message'] = $oException->getMessage();
+			$this->_view['error_code'] = $oException->getCode();
 		}
-		$this->render('crud/update.tpl', $this->_view['iStatus']);
+
+		$this->render($sViewTpl, $this->_view['iStatus']);
 	}
 
 
@@ -200,50 +174,26 @@ class CrudController extends \Library\Core\Auth {
 	 */
 	public function deleteAction()
 	{
-		$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-		if (
-			isset(
-				$this->_params['entity'],
-				$this->_params['parameters']
-			) &&
-			($sEntityName = $this->_params['entity']) &&
-			strlen($sEntityName) > 0
-		) {
-			// Only check ACL, no need to check data type integrity \Core\Entity check it before updating object
-			if (
-				$this->hasDeleteAccess(strtolower($sEntityName))
-			) {
-				// Explode ou json_decode les parametres serialisés en un post parametre
-				$aParameters = array();
-
-				try {
-					$oCrudModel = new \modules\backend\Models\Crud(ucfirst($sEntityClassName));
-
-					if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {
-						$sViewTpl = $this->_params['view'];
-					}
-
-					if ($oCrudModel->delete($aParameters, 0, $this->oUser)) {
-						$this->_view['bDeleteEntity'] = true;
-						$this->_view['iStatus'] = self::XHR_STATUS_OK;
-						$this->_view['oEntity'] = $oCrudModel->getEntity();
-					} else {
-						$this->_view['bDeleteEntity'] = false; // delete exception
-					}
-				} catch (\modules\backend\Models\CrudModelException $oException) {
-					$this->_view['bDeleteEntity'] = false;
-					$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-					$this->_view['error_message'] = $oException->getMessage();
-					$this->_view['error_code'] = $oException->getCode();
-				}
-			} else {
-				$this->_view['bDeleteEntity'] = false;
-				$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-				$this->_view['error_message'] = 'Unauthorized by the ACL layer';
-				$this->_view['error_code'] = \modules\backend\Models\Crud::ERROR_FORBIDDEN_BY_ACL;
+		try {
+			if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {
+				$sViewTpl = $this->_params['view'];
 			}
+
+			if ($oCrudModel->delete($aParameters, 0, $this->oUser)) {
+				$this->_view['bDeleteEntity'] = true;
+				$this->_view['iStatus'] = self::XHR_STATUS_OK;
+				$this->_view['oEntity'] = $oCrudModel->getEntity();
+			} else {
+				$this->_view['bDeleteEntity'] = false; // delete exception
+			}
+		} catch (\modules\backend\Models\CrudModelException $oException) {
+			$this->_view['bDeleteEntity'] = false;
+			$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
+			$this->_view['error_message'] = $oException->getMessage();
+			$this->_view['error_code'] = $oException->getCode();
 		}
-		$this->render('crud/delete.tpl', $this->_view['iStatus']);
+
+		$this->render($sViewTpl, $this->_view['iStatus']);
 	}
 
 	/**
@@ -253,39 +203,21 @@ class CrudController extends \Library\Core\Auth {
 	 */
 	public function listAction($sViewTpl = 'crud/list.tpl')
 	{
-		$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-		if (
-			isset(
-					$this->_params['entity'],
-					$this->_params['parameters']
-			) &&
-			($sEntityName = $this->_params['entity']) &&
-			strlen($sEntityName) > 0
-		) {
-			// Only check ACL, no need to check data type integrity \Core\Entity check it before updating object
-			if (
-			$this->hasReadAccess(strtolower($sEntityName))
-			) {
-				try {
-					$oCrudModel = new \modules\backend\Models\Crud(ucfirst($sEntityClassName, 0, $this->oUser));
-
-					if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {
-						$sViewTpl = $this->_params['view'];
-					}
-
-					$this->_view['iStatus'] = self::XHR_STATUS_OK;
-					$this->_view['oEntity'] = $oCrudModel->loadEntities(); // @todo passer les params
-
-				} catch (\modules\backend\Models\CrudModelException $oException) {
-					$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-					$this->_view['error_message'] = $oException->getMessage();
-					$this->_view['error_code'] = $oException->getCode();
-				}
-			} else {
-				$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-				$this->_view['error_message'] = 'Unauthorized by the ACL layer';
-				$this->_view['error_code'] = \modules\backend\Models\Crud::ERROR_FORBIDDEN_BY_ACL;
+		try {
+			if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {
+				$sViewTpl = $this->_params['view'];
 			}
+
+			if ($oCrudModel->loadEntities()) {
+				$this->_view['iStatus'] = self::XHR_STATUS_OK;
+				$oEntities = $oCrudModel->getEntities(); // @todo Bug si passé directement au moteur de template Haanga
+				$this->_view['oEntities'] = $oEntities;
+			}
+
+		} catch (\modules\backend\Models\CrudModelException $oException) {
+			$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
+			$this->_view['error_message'] = $oException->getMessage();
+			$this->_view['error_code'] = $oException->getCode();
 		}
 		$this->render($sViewTpl, $this->_view['iStatus']);
 	}
@@ -297,43 +229,24 @@ class CrudController extends \Library\Core\Auth {
 	 */
 	public function listByUserAction($sViewTpl = 'crud/list.tpl')
 	{
-		$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-		if (
-			isset(
-				$this->_params['entity'],
-				$this->_params['parameters']
-			) &&
-			($sEntityClassName = $this->_params['entity']) &&
-			strlen($sEntityClassName) > 0
-		) {
-			// Only check ACL, no need to check data type integrity \Core\Entity check it before updating object
-			if (
-			$this->hasReadAccess(strtolower($sEntityClassName))
-			) {
-				//try {
-					$oCrudModel = new \modules\backend\Models\Crud(ucfirst($sEntityClassName), 0, $this->oUser);
+		try {
 
-					if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {
-						$sViewTpl = $this->_params['view'];
-					}
-
-					if ($oCrudModel->loadUserEntities()) {
-						$this->_view['iStatus'] = self::XHR_STATUS_OK;
-						$oEntities = $oCrudModel->getEntities();
-						$this->_view['oEntities'] = $oEntities; // @todo passer les params
-					}
-
-// 				} catch (\modules\backend\Models\CrudModelException $oException) {
-// 					$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-// 					$this->_view['error_message'] = $oException->getMessage();
-// 					$this->_view['error_code'] = $oException->getCode();
-// 				}
-			} else {
-				$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
-				$this->_view['error_message'] = 'Unauthorized by the ACL layer';
-				$this->_view['error_code'] = \modules\backend\Models\Crud::ERROR_FORBIDDEN_BY_ACL;
+			if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {
+				$sViewTpl = $this->_params['view'];
 			}
+
+			if ($oCrudModel->loadUserEntities()) {
+				$this->_view['iStatus'] = self::XHR_STATUS_OK;
+				$oEntities = $oCrudModel->getEntities();// @todo Bug si passé directement au moteur de template Haanga
+				$this->_view['oEntities'] = $oEntities;
+			}
+
+		} catch (\modules\backend\Models\CrudModelException $oException) {
+			$this->_view['iStatus'] = self::XHR_STATUS_ERROR;
+			$this->_view['error_message'] = $oException->getMessage();
+			$this->_view['error_code'] = $oException->getCode();
 		}
+
 		$this->render($sViewTpl, $this->_view['iStatus']);
 	}
 }

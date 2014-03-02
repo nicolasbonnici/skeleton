@@ -404,18 +404,20 @@
                     var $formTarget = $(sFormSelector);
                     var $domTarget = $(sFormSelector).parent();
 
-                    // Serialiser les forms inputs
-                    var data = $formTarget.serialize();
+                    // Serialiser le formulaire, ses attributs data et les contenteditable qu'il contient
+                    var oParams = $formTarget.data();
+                    var aEntityParameters 	= [];
                     if($(sFormSelector+' div[contenteditable=true]').size() != 0) {
                         $(sFormSelector+' .ui-editor').each(function() {
-                            data += '&'+$(this).data('name')+'='+$(this).parent().find('div[contenteditable=true]:first').html();
+                        	aEntityParameters.push(new Array($(this).data('name'), $(this).parent().find('div[contenteditable=true]:first').html()));
                         });
-                    }					
+                    }	
+                    oParams.parameters = JSON.stringify(aEntityParameters);
 
                     $.ajax({
                         type: 'POST',
                         url: $formTarget.attr('action'),
-                        data: data,
+                        data: oParams,
                         beforeSend : function(preload) {
                         	// Mettre en cache et vider l'objet qui contiendra la reponse
                         	if (!obj.hasClass('sendNotificationOnCallback')) {
