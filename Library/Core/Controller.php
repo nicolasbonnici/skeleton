@@ -47,16 +47,33 @@ class Controller extends Acl {
 
             // @see pre dispatch action
             if (method_exists($this, '__preDispatch')) {
-                $this->__preDispatch();
+
+            	try {
+            		$this->__preDispatch();
+            	} catch (Library\Core\ControllerException $oException) {
+            		throw new ControllerException('Pre dispatch action throw an exception: ' . $oException->getMessage(), $oException->getCode());
+            		exit;
+            	}
+
             }
 
-            // Run mothafucka run!
-            $this->{$this->_action}();
+            try {
+	            // Run mothafucka run!
+	            $this->{$this->_action}();
+            } catch (Library\Core\ControllerException $oException) {
+            	throw new ControllerException('Action ' . $this->_action . ' throw an exception: ' . $oException->getMessage(), $oException->getCode());
+            	exit;
+            }
 
             // @see post dispatch action
             if (method_exists($this, '__postDispatch')) {
 
-                $this->__postDispatch();
+                try {
+            		$this->__postDispatch();
+            	} catch (Library\Core\ControllerException $oException) {
+            		throw new ControllerException('Post dispatch action throw an exception: ' . $oException->getMessage(), $oException->getCode());
+            		exit;
+            	}
 
                 if (ENV === 'dev') {
                     //echo 'Execution time: ' . (microtime(true) - FRAMEWORK_STARTED);
@@ -67,7 +84,7 @@ class Controller extends Acl {
 
         } else {
 
-            throw new CoreControllerException(__CLASS__ . ' Error while loading action ' . $this->_action);
+            throw new ControllerException(__CLASS__ . ' Error cannot find action ' . $this->_action);
 
         }
 
@@ -244,6 +261,6 @@ class Controller extends Acl {
 
 }
 
-class CoreControllerException extends \Exception {}
+class ControllerException extends \Exception {}
 
 ?>

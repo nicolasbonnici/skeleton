@@ -150,19 +150,17 @@
                 /**
                  * Send a notification
                  * 
-                 * @param string sTitle		Notification title
                  * @param string sText		Notification content
                  * @param string sType		info|warning|error|success
                  * @param string sIcon		Icon class
                  * @param bCustom
                  */
-                sendNotification: function(sTitle, sText, sType, sIcon, bCustom) {
+                sendNotification: function(sText, sType, sIcon, bCustom) {
                 	var sClass = '';
                 	if (bCustom === true) {
                 		sClass = 'ui-notification';
                 	}
                 	$.pnotify({
-                	    title: sTitle,
                 	    text : sText,
                 	    type : sType,
                 	    icon : sIcon,
@@ -244,22 +242,22 @@
                     				success: function(rep) {
                     					switch(rep.status) {
 	                    					case 1:
-	                    						ux.sendNotification('Success', rep.content, 'success', 'glyphicon glyphicon-ok', false);
+	                    						ux.sendNotification(rep.content, 'success', 'glyphicon glyphicon-ok', false);
 	                    						break;
 	                    					case 2:
-	                    						ux.sendNotification('Error', rep.content, 'error', 'glyphicon glyphicon-exclamation-sign', false);
+	                    						ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-exclamation-sign', false);
 	                    						break;
 	                    					case 3:
-	                    						ux.sendNotification('Warning', rep.content, 'warning', 'glyphicon glyphicon-time', false);
+	                    						ux.sendNotification(rep.content, 'warning', 'glyphicon glyphicon-time', false);
 	                    						break;
 	                    					default:
-	                    						ux.sendNotification('Info', rep.content, 'info', 'glyphicon glyphicon-info', true);
+	                    						ux.sendNotification(rep.content, 'info', 'glyphicon glyphicon-info', true);
 	                    					break;	                            				
                     					}
                     					ux.loadView();
                     				},
                                     error: function() {
-                						ux.sendNotification('Error', 'Unable to reach server...', 'error', 'glyphicon glyphicon-exclamation-sign', false);
+                						ux.sendNotification('Unable to reach server...', 'error', 'glyphicon glyphicon-exclamation-sign', false);
                                     }
                     		};
                     		
@@ -300,6 +298,10 @@
                     }          
                 },
 
+                closeModal: function() {
+                	$('.modal.in').modal('hide');
+                },
+                
                 /**
                  * @todo
                  * @param repWrap
@@ -368,18 +370,41 @@
                     	$domTarget = $(oHandler.attr('href'));
                     }
                     
+                    var oParams = oHandler.data();
+                    
                     $.ajax({
                         type: 'POST',
+                        data: oParams,
                         url: sUrl,
                         beforeSend : function(preload) {
                             // Mettre en cache et vider l'objet qui contiendra la reponse
                             $domTarget.data('initialContent', $domTarget.html());		                        	
-                        	$domTarget.empty();                                                            
+                        	$domTarget.empty();    
+                    		ux.preload($domTarget.attr('id'));
+
                         },
                         success: function(rep){
-                        	if (rep.status == 1) { // @see if XHR_STATUS_OK
-                            	$domTarget.append(rep.content);            
-                        		$('#activityDebug').append(rep.debug);   // @todo selecteur en config                     		                            	
+                    		if (!oHandler.hasClass('sendNotificationOnCallback')) {
+                    			$domTarget.append(rep.content);
+                    		} else {
+                    			switch(rep.status) {
+                    				case 1:
+                    					ux.sendNotification(rep.content, 'success', 'glyphicon glyphicon-check');
+                    					break;
+                    				case 2:
+                    					ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-warning-sign');
+                    					break;
+                    				case 3:
+                    					ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-warning-sign');
+                    					break;
+                    				case 4:
+                    					ux.sendNotification(rep.content, 'info', 'glyphicon glyphicon-warning-sign');
+                    					break;
+                    					
+                    			}
+                        	}
+                        	if (oHandler.hasClass('refreshOnCallback')) {
+                        		ux.loadView();
                         	}
                         },
                         error: function(err){                            
@@ -405,25 +430,25 @@
                     var $domTarget = $(sFormSelector).parent();
 
                     // Serialiser le formulaire, ses attributs data et les contenteditable qu'il contient
-                    var oParams = $formTarget.data();
-                    var aEntityParameters 	= [];
+                    var aFormInputs = $formTarget.serializeArray();
+                    oParams = $.extend($formTarget.data(), obj.data());
                     if($(sFormSelector+' div[contenteditable=true]').size() != 0) {
                         $(sFormSelector+' .ui-editor').each(function() {
-                        	aEntityParameters.push(new Array($(this).data('name'), $(this).parent().find('div[contenteditable=true]:first').html()));
+                        	aFormInputs.push({'name' : $(this).attr('data-name'), 'value' : $(this).parent().find('div[contenteditable=true]:first').html()});
                         });
                     }	
-                    oParams.parameters = JSON.stringify(aEntityParameters);
+ 
+                    oParams.parameters = JSON.stringify(aFormInputs);
 
                     $.ajax({
                         type: 'POST',
                         url: $formTarget.attr('action'),
+                        dataType: 'json',
                         data: oParams,
                         beforeSend : function(preload) {
                         	// Mettre en cache et vider l'objet qui contiendra la reponse
-                        	if (!obj.hasClass('sendNotificationOnCallback')) {
-                        		$domTarget.data('initialContent', $domTarget.html());	
-                        		$domTarget.empty();
-                        	}
+                    		$domTarget.data('initialContent', $domTarget.html());	
+
                         },
                         success: function(rep){
                     		if (!obj.hasClass('sendNotificationOnCallback')) {
@@ -431,22 +456,19 @@
                     		} else {
                     			switch(rep.status) {
                     				case 1:
-                    					ux.sendNotification('Success!', rep.content, 'success', 'glyphicon glyphicon-check');
+                    					ux.sendNotification(rep.content, 'success', 'glyphicon glyphicon-check');
                     					break;
                     				case 2:
-                    					ux.sendNotification('Error...', rep.content, 'error', 'glyphicon glyphicon-warning-sign');
+                    					ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-warning-sign');
                     					break;
                     				case 3:
-                    					ux.sendNotification('Access denied!', rep.content, 'error', 'glyphicon glyphicon-warning-sign');
+                    					ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-warning-sign');
                     					break;
                     				case 4:
-                    					ux.sendNotification('Session expired', rep.content, 'info', 'glyphicon glyphicon-warning-sign');
+                    					ux.sendNotification(rep.content, 'info', 'glyphicon glyphicon-warning-sign');
                     					break;
                     					
                     			}
-                        	}
-                        	if (obj.hasClass('refreshOnCallback')) {
-                        		ux.loadView();
                         	}
                         },
                         error: function(err){                            
@@ -455,6 +477,14 @@
                         },
                         complete: function(){
                         	$domTarget.removeData('initialContent');
+                    		
+                        	if (obj.hasClass('refreshOnCallback')) {
+                    			ux.loadView();
+                    		}
+                    		
+                    		if (obj.hasClass('closeModalOnCallback')) {
+                    			ux.closeModal();
+                    		}
                         }
                     });
                 },
@@ -475,7 +505,7 @@
                             } else if (typeof($(this).data('url')) !== 'undefined') {
                             	sUrlTarget = $(this).data('url');
                             } else {
-                            	ux.sendNotification('Error', 'No url specified to load ui-loadable div #' + $(this).attr('id'), 'error', 'glyphicon glyphicon-warning', false);
+                            	ux.sendNotification('No url specified to load ui-loadable div #' + $(this).attr('id'), 'error', 'glyphicon glyphicon-warning', false);
                             	return false;
                             }
 
@@ -520,7 +550,7 @@
                 	} else if (typeof(oItem.data('url')) !== 'undefined') {
                 		sUrlTarget = oItem.data('url');
                 	} else {
-                		ux.sendNotification('Error', 'No url specified to load ui-loadable div #' + oItem.attr('id'), 'error', 'glyphicon glyphicon-warning', false);
+                		ux.sendNotification('No url specified to load ui-loadable div #' + oItem.attr('id'), 'error', 'glyphicon glyphicon-warning', false);
                 		return false;
                 	}
                 	
@@ -537,7 +567,7 @@
                         	oItem.data('initialContent', oItem.html());	                   			
                 			$(sSelector).empty();
                 			$container.data('grid-loaded', false);
-                			ux.sendNotification('Information', 'Chargement en cours...', 'info', 'glyphicon glyphicon-info-sign');
+                			ux.sendNotification('Chargement en cours...', 'info', 'glyphicon glyphicon-info-sign');
                 		},
                 		success: function(rep){
                 			if (rep.status === 1) { // @see if XHR_STATUS_OK                                               		                                    		
@@ -627,7 +657,7 @@
 
                 	// Aide lors d'un focus sur input placehorder
                 	$('[placeholder]').on('focus', function() {
-                		ux.sendNotification('Information', $(this).attr('placeholder'), 'info', 'glyphicon glyphicon-info-sign');
+                		ux.sendNotification($(this).attr('placeholder'), 'info', 'glyphicon glyphicon-info-sign');
                 	});              	                	
                 	$('[placeholder]').on('blur', function() {
                 		ux.hideNotifications();

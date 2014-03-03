@@ -21,21 +21,23 @@ $(document).ready(function() {
     $('body').on('click', '.ui-sendxhr', function(){
         ux.sendXHR($(this));
     });
-    $('body').on('change', '.sendXHROnChange', function(){
+    $('body').on('change', '.ui-sendxhronchange', function(){
         ux.sendXHR($(this));
     });
     
     // Envoyer des formulaires en asynchrone
     $('body').on('click', '.ui-sendform', function() {		
     	ux.sendForm($(this));		
-    	return false;	
     });        
 	
     // Envoyer des formulaires en asynchrone
     $('.ui-reload').on('click', function() {	
     	if (typeof($(this).data('sreloadtarget')) !== 'undefined') {
-    		ux.reload($($(this).data('sreloadtarget')));		
+    		ux.loadView($($(this).data('sreloadtarget')));		
+    	} else {
+    		ux.loadView();
     	}
+    	return false;
     });        
     
     // load on scroll

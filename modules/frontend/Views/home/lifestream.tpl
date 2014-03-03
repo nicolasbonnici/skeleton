@@ -8,11 +8,10 @@
 {% block js %}
 <script>
 $(document).ready(function() {
-	var core = $.fn.core();
+    var ux = $.fn.userExperience();
 	
 	$('.filterFeed').on('click', function() {
         $(this).toggleClass('btn-success').toggleClass('btn-default');
-        
         return false;
 	});
 	

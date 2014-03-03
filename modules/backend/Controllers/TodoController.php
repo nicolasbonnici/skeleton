@@ -73,20 +73,8 @@ class TodoController extends \Library\Core\Auth {
 
     public function deleteAction()
     {
-    	if (
-    			isset(
-    					$this->_params['idtodo'],
-    					$this->_params['bconfirm']
-    			) &&
-    			intval($this->_params['idtodo']) > 0 &&
-    			intval($this->_params['bconfirm']) === 1
-    	) {
-    		$oTodoModel = new \modules\backend\Models\Todo(new \app\Entities\User($this->_session['iduser']));
-    		$oTodo = $oTodoModel->loadByTodoId((int)$this->_params['idtodo']);
-    		if (! is_null($oTodo) && $oTodo->isLoaded()) {
-    			$this->_view['bTodoDelete'] = $oTodo->delete();
-    		}
-
+    	if (isset($this->_params['pk']) && intval($this->_params['pk']) > 0) {
+    		$this->_view['pk'] = $this->_params['pk'];
     	}
     	$this->render('todo/delete.tpl');
     }

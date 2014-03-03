@@ -95,32 +95,40 @@ class Crud {
 	 */
 	public function create(array $aParameters = array())
 	{
-		assert('$aParameters->count() > 0');
+		assert('count($aParameters) > 0');
 		assert('!is_null($this->oEntity)');
 
 		// Check for user bypass attempt
 		if (
-			!is_null($this->oUser) ||
-			isset($aParameter['user_iduser']) && $this->oUser->getId() !== intval($aParameter['user_iduser'])
+			!is_null($this->oUser) &&
+			(
+				isset($aParameter['user_iduser']) &&
+				$this->oUser->getId() !== intval($aParameter['user_iduser'])
+			) ||
+			(
+				isset($aParameter['iduser']) &&
+				$this->oUser->getId() !== intval($aParameter['iduser'])
+			)
 		) {
 			throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
 		} else {
 			$oEntity = clone $this->oEntity;
-
 			foreach ($aParameters as $aParameter) {
-				if (($sParameterName = $aParameter[0]) && isset($this->oEntity->{$aParameter[0]}) && !empty($aParameter[1])) {
-					$oEntity->{$sParameterName} = $aParameter[1];
-				}
+					if (
+						!empty($aParameter['name']) &&
+						!empty($aParameter['value'])
+					) {
+						$oEntity->{$aParameter['name']} = $aParameter['value'];
+					}
 			}
 
 			if (
-				isset($this->oEntity->created) &&
-				\Library\Core\Validator::integer($this->oEntity->created) !== \Library\Core\Validator::STATUS_OK
+				$oEntity->hasAttribute('created')
 			) {
-				$this->oEntity->created = time();
+				$oEntity->created = time();
 			}
-			try {
 				return $oEntity->add();
+			try {
 			} catch (\Library\Core\EntityException $oException) {
 				return $oException;
 			}
@@ -133,10 +141,10 @@ class Crud {
 	 * Read an entity restricted to user scope
 	 *
 	 * @throws CrudModelException
-	 * @return mixed boolean|\Library\Core\EntityException TRUE is entity is correctly deleted otherwhise the \Library\Core\EntityException
+	 * @return mixed \app\Entities\{Entity}|\Library\Core\EntityException TRUE is entity is correctly deleted otherwhise the \Library\Core\EntityException
 	 */
 	public function read() {
-		if (!is_null($this->oUser)) {
+		if (is_null($this->oUser)) {
 			throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
 		} else {
 			// Check for user bypass attempt
@@ -164,28 +172,39 @@ class Crud {
 	public function update(array $aParameters = array()) {
 		assert('count($aParameters) > 0');
 
-		if (!is_null($this->oUser)) {
+		if (is_null($this->oUser)) {
 			throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
 		} elseif (!$this->oEntity->isLoaded()) {
 			throw new CrudModelException('Cannot update an unloaded enitity.', self::ERROR_ENTITY_NOT_LOADED);
 		} else {
 
 			// Check for user bypass attempt
-			if (isset($aParameter['user_iduser']) && $this->oUser->getId() !== intval($aParameter['user_iduser'])) {
+			if (
+				(
+					isset($aParameters['user_iduser']) &&
+					$this->oUser->getId() !== intval($aParameter['user_iduser'])
+				) ||
+				(
+					isset($aParameters['iduser']) &&
+					$this->oUser->getId() !== intval($aParameter['iduser'])
+				)
+			) {
 				throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
 			}
 
 			foreach ($aParameters as $aParameter) {
-				if (($sParameterName = $aParameter[0]) && isset($this->oEntity->{$aParameter[0]}) && !empty($aParameter[1])) {
-					$this->oEntity->{$sParameterName} = $aParameter[1];
+				if (
+					!empty($aParameter['name']) &&
+					!empty($aParameter['value'])
+				) {
+					$this->oEntity->{$aParameter['name']} = $aParameter['value'];
 				}
 			}
-
 			if (isset($this->oEntity->lastupdate)) {
 				$this->oEntity->lastupdate = time();
 			}
-			try {
 				return $this->oEntity->update();
+			try {
 			} catch (\Library\Core\EntityException $oException) {
 				return $oException;
 			}
@@ -196,14 +215,14 @@ class Crud {
 	 * Delete an entity restricted to user scope
 	 *
 	 * @throws CrudModelException
-	 * @return mixed boolean|\Library\Core\EntityException TRUE is entity is correctly deleted otherwhise the \Library\Core\EntityException
+	 * @return mixed \app\Entities\{Entity}|\Library\Core\EntityException
 	 */
 	public function delete() {
 
 		// Check for user bypass attempt
 		if (
 			isset($this->oEntity->user_iduser) &&
-			(!is_null($this->oUser)) ||
+			(is_null($this->oUser)) ||
 			($this->oUser->getId() !== intval($this->oEntity->user_iduser))
 		) {
 			throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
@@ -256,6 +275,17 @@ class Crud {
     	} catch (\Library\Core\EntityException $oException) {
 			return $oException;
     	}
+    }
+
+
+   /*
+    * Get current instance \app\Entities Entity properties
+    * @return array
+    */
+    public function getEntityAttributes()
+    {
+    	assert('!is_null($this->oEntity)');
+    	return $this->oEntity->getAttributes();
     }
 
     /**

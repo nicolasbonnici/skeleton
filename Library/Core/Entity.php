@@ -424,6 +424,24 @@ abstract class Entity extends Database  {
     }
 
     /**
+     * Attribute query
+     * @return array
+     */
+    public function hasAttribute($sAttributeName)
+    {
+    	return array_key_exists($sAttributeName, $this->aFields);
+    }
+
+    /**
+     * $aFields accessor
+     * @return array
+     */
+    public function getAttributes()
+    {
+    	return $this->aFields;
+    }
+
+    /**
      * Return type of data in function of database field type
      *
      * @param string $sName
