@@ -10,15 +10,12 @@
 	            <td>
 	               <span class="ui-timestamp" data-timestamp="{{oTodo.deadline}}"></span>
 	            </td>
-	            <td>
+	            <td class="text-center">
 					<div class="btn-group">
-					  <a href="#modal-todo" class="ui-sendxhr btn btn-info" data-url="/backend/crud/read/" data-selector="#modal-todo-content" data-entity="Todo" data-view="todo/read.tpl" data-toggle="modal" data-pk="{{oTodo.idtodo}}" title="{{tr['view']}}"><span class="glyphicon glyphicon-zoom-in"></span></a>
-					  <a href="#modal-todo" class="ui-sendxhr btn btn-warning" data-url="/backend/todo/update/" data-selector="#modal-todo-content" data-toggle="modal" data-idtodo="{{oTodo.idtodo}}" title="{{tr['edit']}}"><span class="glyphicon glyphicon-pencil"></span></a>
-					  <a href="#modal-todo" class="ui-sendxhr btn btn-danger" data-url="/backend/todo/delete/" data-selector="#modal-todo-content" data-toggle="modal" data-pk="{{oTodo.idtodo}}" title="{{tr['delete']}}"><span class="glyphicon glyphicon-trash"></span></a>
+					  <a href="#modal-todo" class="ui-sendxhr btn btn-lg btn-info" data-url="/backend/crud/read/" data-selector="#modal-todo-content" data-entity="Todo" data-view="todo/read.tpl" data-toggle="modal" data-pk="{{oTodo.idtodo}}" title="{{tr['view']}}"><span class="glyphicon glyphicon-zoom-in"></span></a>
+					  <a href="#modal-todo" class="ui-sendxhr btn btn-lg btn-warning" data-url="/backend/todo/update/" data-selector="#modal-todo-content" data-toggle="modal" data-idtodo="{{oTodo.idtodo}}" title="{{tr['edit']}}"><span class="glyphicon glyphicon-pencil"></span></a>
+					  <a href="#modal-todo" class="ui-sendxhr btn btn-lg btn-danger" data-url="/backend/todo/delete/" data-selector="#modal-todo-content" data-toggle="modal" data-pk="{{oTodo.idtodo}}" title="{{tr['delete']}}"><span class="glyphicon glyphicon-trash"></span></a>
 					</div>
-	            </td>
-	            <td>
-	                {{tr['last_edited']}}&nbsp;<span class="ui-timestamp" data-timestamp="{{oTodo.lastupdate}}"></span> 
 	            </td>
 	        </tr>
 	{% endfor %}

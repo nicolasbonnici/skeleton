@@ -30,7 +30,7 @@ class CrudController extends \Library\Core\Auth {
 	private $aEntitiesScope = array();
 
 	/**
-	 * Pre dispatch CrudController
+	 * Pre dispatch hook for CrudController's actions
 	 *
 	 * @throws ControllerException
 	 */
@@ -76,6 +76,9 @@ class CrudController extends \Library\Core\Auth {
 		}
 	}
 
+	/**
+	 * Post dispatch hook
+	 */
 	public function __postDispatch() {}
 
 	/**
@@ -83,7 +86,7 @@ class CrudController extends \Library\Core\Auth {
 	 *
 	 * @param string $sViewTpl
 	 */
-	public function createAction($sViewTpl = 'crud/read.tpl')
+	public function createAction($sViewTpl = 'crud/create.tpl')
 	{
 		try {
 			// Toutes les données du formulaire en JSON
@@ -117,7 +120,8 @@ class CrudController extends \Library\Core\Auth {
 	 *
 	 * @param string $sViewTpl
 	 */
-	public function readAction($sViewTpl = 'crud/read.tpl') {
+	public function readAction($sViewTpl = 'crud/read.tpl')
+	{
 		assert('($oEntity = $this->oCrudModel->getEntity()) && $oEntity->isLoaded()');
 		try {
 			if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {
@@ -140,7 +144,7 @@ class CrudController extends \Library\Core\Auth {
 	 *
 	 * @param unknown $sViewTpl
 	 */
-	public function updateAction($sViewTpl = 'crud/read.tpl')
+	public function updateAction($sViewTpl = 'crud/update.tpl')
 	{
 		try {
 			// Toutes les données du formulaire en JSON
@@ -172,7 +176,7 @@ class CrudController extends \Library\Core\Auth {
 	/**
 	 * Delete an \app\Entities entity object
 	 */
-	public function deleteAction($sViewTpl = 'crud/list.tpl')
+	public function deleteAction($sViewTpl = 'crud/delete.tpl')
 	{
 		try {
 			if (isset($this->_params['view']) && strlen(isset($this->_params['view'])) > 0) {

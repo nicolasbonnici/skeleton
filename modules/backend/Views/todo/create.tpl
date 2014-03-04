@@ -10,9 +10,18 @@
 	<form role="form" id="newTodoForm" action="/backend/crud/create/" data-entity="Todo" data-view="todo/create.tpl" method="post">
 	    <div class="form-group">
 	        <label>Titre du Todo</label>
-	        {#<a href="#" class="ui-editable" data-entity="Todo" data-name="label" data-module="backend" data-controller="crud" data-action="update">
-	        </a>#}
+	        <a href="#" class="ui-editable" data-entity="Todo" data-name="label" data-module="backend" data-controller="crud" data-action="update">
+	        </a>
             <input type="text" name="label" class="form-control input-lg" placeholder="Entrez le titre de votre post" value="{% if title|Exists %}{{title}}{% endif %}" />
+	    </div>   
+	    <div class="form-group">
+	        <label>Deadline</label>
+            <div class="input-append date" id="dpYears" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                <span class="icon-calendar glyphicon glyphicon-calendar"></span>
+                <input name="date" class="ui-datepicker span2" size="16" type="text" value="">
+                <span class="icon-time glyphicon glyphicon-time"></span>
+                <input name="time" class="ui-datepicker span2" size="16" type="text" value="">
+            </div>
 	    </div>
 	    <div class="form-group">
 	        <label>Contenu</label>

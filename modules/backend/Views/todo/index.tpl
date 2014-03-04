@@ -5,6 +5,7 @@
 
 {% block js %}
 <script type="text/javascript" src="/lib/plugins/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+<script type="text/javascript" src="/lib/plugins/moment/js/moment.min.js"></script>
 <script type="text/javascript" src="/lib/plugins/summernote/js/summernote.js"></script>
 {% endblock %}
 
@@ -60,12 +61,9 @@
 						<th>
 							Deadline
 						</th>
-                        <th>
+                        <th class="text-center">
                             Actions
                         </th>
-						<th>
-							Last edited
-						</th>
 					</tr>
 				</thead>
 				<tbody id="todoList" class="ui-loadable" data-entity="Todo" data-view="todo/list.tpl" data-parameters="" data-module="backend" data-controller="crud" data-action="listByUser">

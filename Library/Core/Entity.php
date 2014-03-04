@@ -424,25 +424,42 @@ abstract class Entity extends Database  {
     }
 
     /**
-     * Attribute query
-     * @return array
+     * Query if an attribute exists
+     *
+     * @return boolean
      */
     public function hasAttribute($sAttributeName)
     {
+    	assert('strlen($sAttributeName) > 0');
     	return array_key_exists($sAttributeName, $this->aFields);
     }
 
     /**
-     * $aFields accessor
-     * @return array
+     * Get Entity SGBD type from experimental PDO driver
+     *
+     * @param unknown $sAttributeName
+     * @return NULL|string				Return SGBD field type if exists otherwhise NULL
      */
-    public function getAttributes()
+    public function getAttributeType($sAttributeName)
     {
-    	return $this->aFields;
+    	assert('strlen($sAttributeName) > 0');
+    	if (strlen($sAttributeName) > 0 && isset($this->aFields[$sAttributeName])) {
+    		return $this->aFields[$sAttributeName]['Type'];
+    	}
+    	return null;
     }
 
     /**
-     * Return type of data in function of database field type
+     * Get Entity attributes
+     * @return array			A one dimensional array with all Entity attributes
+     */
+    public function getAttributes()
+    {
+		return array_keys($this->aFields);
+    }
+
+    /**
+     * Translate a SGBD field type to PHP types
      *
      * @param string $sName
      * @return string|null
@@ -464,7 +481,7 @@ abstract class Entity extends Database  {
 			} elseif (preg_match('#(^varchar|^text|^blob|^tinyblob|^tinytext|^mediumblob|^mediumtext|^longblob|^longtext|^date|^datetime|^timestamp)#', $this->aFields[$sName]['Type'])) {
 				$sDataType = 'string';
 			} elseif (preg_match('#^enum#', $this->aFields[$sName]['Type'])) {
-				$sDataType = 'enum'; // @todo ajouter un type enum dans validator puis un inArray pour valider
+				$sDataType = 'array'; // @todo ajouter un type enum dans validator puis un inArray pour valider
 			} else {
 				throw new EntityException(__CLASS__ . ' Unsuported database field type: ' . $this->aFields[$sName]['Type']);
 			}

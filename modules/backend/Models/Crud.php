@@ -97,10 +97,10 @@ class Crud {
 	{
 		assert('count($aParameters) > 0');
 		assert('!is_null($this->oEntity)');
+		assert('!is_null($this->oUser)');
 
 		// Check for user bypass attempt
 		if (
-			!is_null($this->oUser) &&
 			(
 				isset($aParameter['user_iduser']) &&
 				$this->oUser->getId() !== intval($aParameter['user_iduser'])
@@ -112,23 +112,23 @@ class Crud {
 		) {
 			throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
 		} else {
-			$oEntity = clone $this->oEntity;
-			foreach ($aParameters as $aParameter) {
-					if (
-						!empty($aParameter['name']) &&
-						!empty($aParameter['value'])
-					) {
-						$oEntity->{$aParameter['name']} = $aParameter['value'];
-					}
-			}
-
-			if (
-				$oEntity->hasAttribute('created')
-			) {
-				$oEntity->created = time();
-			}
-				return $oEntity->add();
 			try {
+				$oEntity = clone $this->oEntity;
+				foreach ($aParameters as $aParameter) {
+						if (
+							!empty($aParameter['name']) &&
+							!empty($aParameter['value'])
+						) {
+							$oEntity->{$aParameter['name']} = $aParameter['value'];
+						}
+				}
+
+				if (
+					$oEntity->hasAttribute('created')
+				) {
+					$oEntity->created = time();
+				}
+				return $oEntity->add();
 			} catch (\Library\Core\EntityException $oException) {
 				return $oException;
 			}

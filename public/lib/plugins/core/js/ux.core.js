@@ -186,8 +186,9 @@
                 		if (!$(this).data('formatTimestampFired')) {
                 			
                 			var iTimestamp = parseInt($(this).attr('data-timestamp'));
-                			var oDate = new Date(iTimestamp*1000);                	
-                			$(this).empty().append(oDate.toLocaleDateString() + ' ' + oDate.toLocaleTimeString() + ' <span class="glyphicon glyphicon-time"></span>');
+                			var oDate = new Date(iTimestamp*1000);
+                			var sFormatedDateTime = '<span class="glyphicon glyphicon-calendar"></span> ' + oDate.toLocaleDateString() + ' <span class="glyphicon glyphicon-time"></span> ' + oDate.toLocaleTimeString();
+                			$(this).empty().append(sFormatedDateTime).data('iTimestamp', iTimestamp);
                 			
 	                		$(this).data('formatTimestampFired', true);
                 		}
@@ -213,6 +214,7 @@
                     	
                     	// @see setup editable plugin
                     	$.fn.editable.defaults.mode = 'inline';
+                    	$.fn.editableform.buttons = '<button type="submit" class="btn btn-lg btn-primary editable-submit">Save</button><button type="button" class="btn btn-lg btn-default editable-cancel">Annuler</button>';
                     	
                     	$('.ui-editable').each(function() {
                             var sUrl = '';
@@ -623,6 +625,39 @@
                 },
                 
                 /**
+                 * Init date picker
+                 */
+                initDatepicker: function() {
+                	$('.ui-datepicker').each(function() {
+                		if (!$(this).data('uiDatePickerFired')) {
+                			$(this).datepicker({
+                				format: 'dd/mm/yyyy',
+                				vewMode : 'years',
+                			    todayBtn: "linked",
+                			    language: "fr",
+                			    calendarWeeks: true,
+                			    autoclose: true,
+                			    beforeShowDay: function (date){
+                			      if (date.getMonth() == (new Date()).getMonth())
+                			        switch (date.getDate()){
+                			          case 4:
+                			            return {
+                			              tooltip: 'Example tooltip',
+                			              classes: 'active'
+                			            };
+                			          case 8:
+                			            return false;
+                			          case 12:
+                			            return "green";
+                			        }
+                			    }                				
+                			});
+                			$(this).data('uiDatePickerFired', true);
+                		}
+                	});
+                },
+                
+                /**
                  * Tooltip helper on title attribute
                  */
                 initTooltip: function() {
@@ -668,6 +703,9 @@
                 	
                     // Init grids layout with Masonry
                     this.initGrids();
+                    
+                    // Init Datepicker
+                    this.initDatepicker();
                     
                     // Init editors
                     this.initEditors();
