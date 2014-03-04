@@ -467,12 +467,12 @@ abstract class Entity extends Database  {
      */
     public function getDataType($sName = null) {
 
-    	assert('$this->getFieldType($sName) !== null');
+    	assert('$this->getAttributeType($sName) !== null');
 
     	$sDataType = null;
     	if (!is_null($sName)) {
 
-    		$sDataType = $this->getFieldType($sName);
+    		$sDataType = $this->getAttributeType($sName);
 
 			if (preg_match('#(^int|^integer|^tinyint|^smallmint|^mediumint|^tinyint|^bigint)#', $sDataType)) {
 				$sDataType = 'integer';
@@ -508,16 +508,6 @@ abstract class Entity extends Database  {
     	}
 
     	$this->bIsLoaded = false;
-    }
-
-	/**
-	 * Return database field type
-	 *
-	 * @param string $sName
-	 * @return string
-	 */
-    protected function getFieldType($sName = '') {
-		return (!empty($sName) && isset($this->aFields[$sName]['Type'])) ? $this->aFields[$sName]['Type'] : null;
     }
 
     /**

@@ -2,7 +2,6 @@
 
 namespace modules\backend\Models;
 
-use modules\backend\Controllers\CrudControllerException;
 class Crud {
 
 	/**
@@ -102,10 +101,12 @@ class Crud {
 		// Check for user bypass attempt
 		if (
 			(
+				$this->oEntity->hasAttribute('user_iduser') &&
 				isset($aParameter['user_iduser']) &&
 				$this->oUser->getId() !== intval($aParameter['user_iduser'])
 			) ||
 			(
+				$this->oEntity->hasAttribute('iduser') &&
 				isset($aParameter['iduser']) &&
 				$this->oUser->getId() !== intval($aParameter['iduser'])
 			)
@@ -148,7 +149,7 @@ class Crud {
 			throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
 		} else {
 			// Check for user bypass attempt
-			if (isset($this->oEntity->user_iduser) && $this->oUser->getId() !== intval($this->oEntity->user_iduser)) {
+			if ($this->oEntity->hasAttribute('user_iduser') && $this->oUser->getId() !== intval($this->oEntity->user_iduser)) {
 				throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
 			} elseif (!$this->oEntity->isLoaded()) {
 				throw new CrudModelException('Cannot read an unloaded entity.', self::ERROR_ENTITY_NOT_LOADED);
@@ -172,7 +173,7 @@ class Crud {
 	public function update(array $aParameters = array()) {
 		assert('count($aParameters) > 0');
 
-		if (is_null($this->oUser)) {
+		if ($this->oEntity->hasAttribute('user_iduser') && $this->oUser->getId() !== intval($this->oEntity->user_iduser)) {
 			throw new CrudModelException('Invalid user', self::ERROR_USER_INVALID);
 		} elseif (!$this->oEntity->isLoaded()) {
 			throw new CrudModelException('Cannot update an unloaded enitity.', self::ERROR_ENTITY_NOT_LOADED);
