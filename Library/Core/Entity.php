@@ -112,7 +112,7 @@ abstract class Entity extends Database {
      */
     public final function __toString()
     {
-    	return get_called_class();
+    	return $this->sChildClass;
     }
 
     /**
@@ -484,6 +484,15 @@ abstract class Entity extends Database {
 			}
     	}
 		return $sDataType;
+    }
+
+    /**
+     * Get entity primary key attribute name
+     * @return string
+     */
+    public function getPrimaryKeyName()
+    {
+        return static::PRIMARY_KEY;
     }
 
     /**

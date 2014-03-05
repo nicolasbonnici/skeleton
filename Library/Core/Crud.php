@@ -145,8 +145,8 @@ abstract class Crud {
 				}
 
 				 // Check for Null attributes
-				 foreach ($oEntity->getAttributes as $sAttr) {
-				 	if (!$oEntity->isNullable($sAttr) && empty($oEntity->{$sAttr})) {
+				 foreach ($oEntity->getAttributes() as $sAttr) {
+				 	if ($sAttr !== $oEntity->getPrimaryKeyName() && !$oEntity->isNullable($sAttr) && empty($oEntity->{$sAttr})) {
 				 		throw new CrudException('No value provided for the "' . $sAttr . '" attribute of "' . $oEntity .'" Entity', self::ERROR_ENTITY_EMPTY_ATTRIBUTE);
 				 	}
 				 }
