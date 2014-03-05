@@ -5,8 +5,9 @@
 
 {% block js %}
 <script type="text/javascript" src="/lib/plugins/bootstrap-editable/js/bootstrap-editable.min.js"></script>
-<script type="text/javascript" src="/lib/plugins/moment/js/moment.min.js"></script>
 <script type="text/javascript" src="/lib/plugins/summernote/js/summernote.js"></script>
+<script type="text/javascript" src="/lib/plugins/moment/js/moment.min.js"></script>
+<script type="text/javascript" src="/lib/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 {% endblock %}
 
 {% block css %}
@@ -27,6 +28,7 @@
 {% endblock %}
 
 {% block main %}
+
 	<div class="row clearfix transparentBlackBg rounded well ui-transition ui-shadow">
 		<div class="col-md-12 column">
 			<div class="page-header">

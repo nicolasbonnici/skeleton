@@ -9,25 +9,16 @@ namespace modules\frontend\Controllers;
  */
 class HomeController extends \Library\Core\Controller {
 
-    public function __preDispatch() {
+    public function __preDispatch() {}
 
-    }
+    public function __postDispatch() {}
 
-    public function __postDispatch() {
-
-    }
-
-    public function indexAction() {
-
-        $this->render('home/index.tpl');
-    }
-
-    public function lifestreamAction()
+    public function indexAction()
     {
     	$oFeeds = new \app\Entities\Collection\FeedCollection();
     	$oFeeds->load();
     	$this->_view['oFeeds'] = $oFeeds;
-        $this->render('home/lifestream.tpl');
+        $this->render('home/index.tpl');
     }
 
     public function portfolioAction()

@@ -48,22 +48,18 @@ class Controller extends Acl {
             // @see pre dispatch action
             if (method_exists($this, '__preDispatch')) {
 
-            	try {
+//             	try {
             		$this->__preDispatch();
-            	} catch (Library\Core\ControllerException $oException) {
-            		throw new ControllerException('Pre dispatch action throw an exception: ' . $oException->getMessage(), $oException->getCode());
-            		exit;
-            	}
+//             	} catch (Library\Core\ControllerException $oException) {
+//             		throw new ControllerException('Pre dispatch action throw an exception: ' . $oException->getMessage(), $oException->getCode());
+//             		exit;
+//             	}
 
             }
 
-            try {
-	            // Run mothafucka run!
-	            $this->{$this->_action}();
-            } catch (Library\Core\ControllerException $oException) {
-            	throw new ControllerException('Action ' . $this->_action . ' throw an exception: ' . $oException->getMessage(), $oException->getCode());
-            	exit;
-            }
+	        // Run mothafucka run!
+			$this->{$this->_action}();
+
 
             // @see post dispatch action
             if (method_exists($this, '__postDispatch')) {

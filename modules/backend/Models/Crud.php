@@ -115,6 +115,7 @@ class Crud {
 		} else {
 			try {
 				$oEntity = clone $this->oEntity;
+
 				foreach ($aParameters as $aParameter) {
 						if (
 							!empty($aParameter['name']) &&
@@ -124,11 +125,20 @@ class Crud {
 						}
 				}
 
-				if (
-					$oEntity->hasAttribute('created')
-				) {
+				// Check for user bypass attempt
+				if ($oEntity->hasAttribute('user_iduser')) {
+					$oEntity->user_iduser = $this->oUser->getId();
+				}
+
+				if ($oEntity->hasAttribute('created')) {
 					$oEntity->created = time();
 				}
+				if ($oEntity->hasAttribute('lastupdate')) {
+					$oEntity->lastupdate = time();
+				}
+
+				$this->oEntity = clone $oEntity;
+
 				return $oEntity->add();
 			} catch (\Library\Core\EntityException $oException) {
 				return $oException;

@@ -5,117 +5,74 @@
 
 {% block css %}{% endblock %}
 
-{% block js %}{% endblock %}
+{% block js %}
+<script>
+$(document).ready(function() {
+    var ux = $.fn.userExperience();
+    
+    $('.filterFeed').on('click', function() {
+        $(this).toggleClass('btn-success').toggleClass('btn-default');
+        return false;
+    });
+    
+    $('.filterFeedItems').on('click', function() {
+
+        var iFeedsCount = $('.filterFeed.btn-success').size();
+        if (iFeedsCount > 0) {
+            var sFeedId = ''; 
+            var iIndex = 1;
+            $('.filterFeed.btn-success').each(function() {
+                sFeedId += new String($(this).data('ifeedid') + ((iIndex === iFeedsCount) ? '' : ','));
+                iIndex++;
+            });
+        }
+        $($(this).data('sreloadtarget')).data('sfeedid', sFeedId);
+        return false;
+    });
+});
+</script>
+{% endblock %}
 
 {% block main %}
 
-                <div class="row transparentBlackBg well ui-shadow rounded">
-                    <div class="col-md-6 column">
-                        <h1>
-                           {{ tr['welcome'] }}! <small></small>
-                        </h1>
-                        <p>
-                            Je suis un développeur situé prés de Paris, spécialisé dans les technologies du web. Je peux réaliser votre site internet, votre boutique en ligne, votre application mobile ou encore votre solution informatique sur mesures. 
-                             </p>
-                             <p>
-                            Mes créations respectent les standards W3C et sont accessibles depuis n'importe quel environnement même mobile (directement sur votre terminal iPhone, Android, Blackberry...)                            
-                        </p>
-        
-                        <p>
-                           <a class="btn btn-lg btn-default btn-large" href="#"><i class="glyphicon glyphicon-zoom-in"></i> En savoir plus</a>
-                           <a class="btn btn-lg btn-primary ui-login-popover" href="#"><i class="glyphicon glyphicon-user"></i> {{tr['login']}}</a>
-                           <a class="btn btn-lg btn-info" href="#"><i class="glyphicon glyphicon-envelope"></i> {{tr['contact']}}</a>
-                        </p>
+            <div class="row">
+                    {% if aSession|Exists %}
+                    <div class="col-md-12 column">
+                        <div class="col-md-9 transparentBlackBg rounded well text-left ui-shadow">
+                            {% if oFeeds|Exists %}
+                            {% for oFeed in oFeeds %}
+                            <div class="btn-group">
+                              <a href="#" data-ifeedid="{{oFeed.idfeed}}" class="filterFeed btn btn-default btn-lg" title="Afficher l'activité du feed {{oFeed.title}}">
+                                    <img src="{{oFeed.icon}}" class="icon-feed" alt="Feed icon" />
+                              </a>
+                              <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" title="Afficher les options du feed {{oFeed.title}}">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                              </button>
+                              <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#" class="" title="Parser les nouveaux éléments de ce feed">
+                                         <span class="glyphicon glyphicon-refresh"></span> Parse
+                                    </a>                            
+                                </li>
+                                <li><a href="#"><span class="glyphicon glyphicon-edit"></span> Edit</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
+                              </ul>
+                            </div>                      
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="col-md-2 col-md-offset-1 transparentBlackBg rounded well text-center ui-shadow">
+                            <a href="#" class="btn btn-lg btn-default filterFeedItems" data-sreloadtarget="#lifestream" title="Filtrer les résultats">
+                              Recharger <span class="glyphicon glyphicon-refresh"></span>
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                      
+                    <div id="lifestream" class="col-md-12 column ui-loadable ui-scroll-loadable ui-grid" data-module="frontend" data-controller="home" data-action="list">
                     </div>
                     
-                    <div class="col-md-6 column ui-noSelect">
-                        <div class="carousel slide" id="portfolio-carousel">
-                            <ol class="carousel-indicators">
-                                <li data-slide-to="0" data-target="#portfolio-carousel" class="active">
-                                </li>
-                                <li data-slide-to="1" data-target="#portfolio-carousel">
-                                </li>
-                                <li data-slide-to="2" data-target="#portfolio-carousel">
-                                </li>
-                                <li data-slide-to="3" data-target="#portfolio-carousel">
-                                </li>
-                                <li data-slide-to="4" data-target="#portfolio-carousel">
-                                </li>
-                                <li data-slide-to="5" data-target="#portfolio-carousel">
-                                </li>
-                                <li data-slide-to="6" data-target="#portfolio-carousel">
-                                </li>
-                            </ol>
-                            <div class="carousel-inner">
-                                <div class="item active">
-                                    <img src="/lib/img/portfolio/abl.jpg" class="ui-noSelect" alt="Portfolio image">                        
-                                    <div class="carousel-caption transparentBlackBg ui-shadow">
-                                        <h4>
-                                            First Thumbnail label
-                                        </h4>
-                                        <p>
-                                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <img src="/lib/img/portfolio/lm5.jpg" class="ui-noSelect" alt="Portfolio image">
-                                    <div class="carousel-caption transparentBlackBg ui-shadow">
-                                        <h4>
-                                            Second Thumbnail label
-                                        </h4>
-                                        <p>
-                                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <img src="/lib/img/portfolio/aab.jpg" class="ui-noSelect" alt="Portfolio image">
-                                    <div class="carousel-caption transparentBlackBg ui-shadow">
-                                        <h4>
-                                            Second Thumbnail label
-                                        </h4>
-                                        <p>
-                                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <img src="/lib/img/portfolio/nextcom.jpg" class="ui-noSelect" alt="Portfolio image">
-                                    <div class="carousel-caption transparentBlackBg ui-shadow">
-                                        <h4>
-                                            Second Thumbnail label
-                                        </h4>
-                                        <p>
-                                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <img src="/lib/img/portfolio/visudom.jpg" class="ui-noSelect" alt="Portfolio image">
-                                    <div class="carousel-caption transparentBlackBg ui-shadow">
-                                        <h4>
-                                            Second Thumbnail label
-                                        </h4>
-                                        <p>
-                                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <img src="/lib/img/portfolio/lekrimo-nad.png" class="ui-noSelect" alt="Portfolio image">
-                                    <div class="carousel-caption transparentBlackBg ui-shadow">
-                                        <h4>
-                                            Third Thumbnail label
-                                        </h4>
-                                        <p>
-                                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div> <a class="left carousel-control" href="#portfolio-carousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control" href="#portfolio-carousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-                        </div>
-                    </div>                    
-                </div>
-
+            </div> 
 {% endblock %}

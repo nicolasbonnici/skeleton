@@ -49,9 +49,6 @@
 									<li{% if sAction|Exists && sAction == 'indexAction' %} class="active"{% endif %}>
 										<a href="/" title="{{tr['homepage_tip']}}"><span class="glyphicon glyphicon-home"></span> {{tr['homepage']}}</a>
 									</li>
-									<li{% if sAction|Exists && sAction == 'lifestreamAction' %} class="active"{% endif %}>
-										<a href="/lifestream" title="{{tr['lifestream_tip']}}"><span class="glyphicon glyphicon-globe"></span> {{tr['lifestream']}}</a>
-									</li>
 									<li{% if sAction|Exists && sAction == 'portfolioAction' %} class="active"{% endif %}>
 										<a href="/portfolio" title="{{tr['portfolio_tip']}}"><span class="glyphicon glyphicon-folder-open"></span> {{tr['portfolio']}}</a>
 									</li>

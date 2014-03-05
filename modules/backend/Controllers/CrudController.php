@@ -57,6 +57,7 @@ class CrudController extends \Library\Core\Auth {
 			($sAction = substr($this->_action, 0, (strlen($this->_action) - strlen('action')))) &&
 			in_array($sAction, array('create', 'read', 'update', 'delete', 'list', 'listByUser')) &&
 			($sCheckMethodName = 'has' . $sAction . 'Access') &&
+			method_exists($this, $sCheckMethodName) &&
 			$this->{$sCheckMethodName}(strtolower($sEntityName))
 		) {
 
@@ -72,7 +73,7 @@ class CrudController extends \Library\Core\Auth {
 			}
 
 		} else {
-			throw new ControllerException('Error forbidden by ACL or invalid unauthorized action.', \modules\backend\Models\Crud::ERROR_FORBIDDEN_BY_ACL);
+			throw new ControllerException('Error forbidden by ACL or unauthorized action: ' . $this->_action, \modules\backend\Models\Crud::ERROR_FORBIDDEN_BY_ACL);
 		}
 	}
 

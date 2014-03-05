@@ -213,8 +213,15 @@
                     if ($('.ui-editable').size() > 0 && typeof($.fn.editable) !== 'undefined') {
                     	
                     	// @see setup editable plugin
-                    	$.fn.editable.defaults.mode = 'inline';
-                    	$.fn.editableform.buttons = '<button type="submit" class="btn btn-lg btn-primary editable-submit">Save</button><button type="button" class="btn btn-lg btn-default editable-cancel">Annuler</button>';
+                    	$.fn.editable.defaults.mode = 'popup';
+                    	$.fn.editable.inputs = '<form class="form-inline editableform margin">' +
+								                    '<div class="control-group">' +
+								                        '<div class="editable-input input-lg form-control"></div>' +
+								                        '<div class="editable-buttons"></div></div>'+
+								                        '<div class="editable-error-block"></div>' +
+								                   '</div>'+
+								               '</form>';
+                    	$.fn.editableform.buttons = '<button type="submit" class="btn btn-lg btn-primary editable-submit">Ok</button><button type="button" class="btn btn-lg btn-default editable-cancel">Annuler</button>';
                     	
                     	$('.ui-editable').each(function() {
                             var sUrl = '';
@@ -239,8 +246,10 @@
 			                            return params;
 			                        },
                     				url: sUrl,
-                    				title: 'Editer ce champs',
-                    				placeholder: $(this).attr('placeholder'),
+                    				title: 'Entrez la nouvelle valeur',
+                    				placement: 'bottom',
+                    				placeholder: $(this).data('placeholder'),
+                    				inputclass: 'form-control input-lg',
                     				success: function(rep) {
                     					switch(rep.status) {
 	                    					case 1:
@@ -628,31 +637,10 @@
                  * Init date picker
                  */
                 initDatepicker: function() {
-                	$('.ui-datepicker').each(function() {
-                		if (!$(this).data('uiDatePickerFired')) {
-                			$(this).datepicker({
-                				format: 'dd/mm/yyyy',
-                				vewMode : 'years',
-                			    todayBtn: "linked",
-                			    language: "fr",
-                			    calendarWeeks: true,
-                			    autoclose: true,
-                			    beforeShowDay: function (date){
-                			      if (date.getMonth() == (new Date()).getMonth())
-                			        switch (date.getDate()){
-                			          case 4:
-                			            return {
-                			              tooltip: 'Example tooltip',
-                			              classes: 'active'
-                			            };
-                			          case 8:
-                			            return false;
-                			          case 12:
-                			            return "green";
-                			        }
-                			    }                				
-                			});
-                			$(this).data('uiDatePickerFired', true);
+                	$('.ui-datetimepicker').each(function() {
+                		if (!$(this).data('uiDateTimePickerFired')) {
+                			$('.ui-datetimepicker').datetimepicker();
+                			$(this).data('uiDateTimePickerFired', true);
                 		}
                 	});
                 },
