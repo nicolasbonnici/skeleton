@@ -62,10 +62,8 @@ class CrudController extends \Library\Core\Auth {
 		) {
 
 			try {
-				$iPrimaryKey = 0;
-				if (isset($this->_params['pk']) && intval($this->_params['pk']) > 0) {
-					$iPrimaryKey = intval($this->_params['pk']);
-				}
+				$iPrimaryKey = ((isset($this->_params['pk']) && intval($this->_params['pk']) > 0) ? intval($this->_params['pk']) : 0);
+
 				// Check Entity instance with Crud model constructor
 				$this->oCrudModel = new \modules\backend\Models\Crud(ucfirst($sEntityName), $iPrimaryKey, $this->oUser);
 			} catch (\modules\backend\Models\CrudModelException $oException) {

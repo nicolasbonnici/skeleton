@@ -3,15 +3,16 @@
 namespace Library\Core;
 
 /**
- * On the fly ORM CRUD managment
- * @author niko nicolasbonnici@gmail.com
+ * On the fly ORM CRUD abstract class managment
+ * @author Antoine <antoine.preveaux@bazarchic.com>
+ * @author niko <nicolasbonnici@gmail.com>
  *
  * @todo optimiser la gestion du cache dans le composant Cache
  * @dependancy \Library\Core\Validator
  * @important Entity need a primary auto incremeted index
  */
 
-abstract class Entity extends Database  {
+abstract class Entity extends Database {
 
     /**
      * List of associated table's fields
@@ -106,33 +107,13 @@ abstract class Entity extends Database  {
     }
 
     /**
-     * Restrict scope to database schema and manage dependances
-     *
-     * @todo performance loose
-     *
-     * @param type $sName
-     * @return object
-     * @throws CoreException
-
-    public function __get($sName)
-    {
-        if (
-            array_key_exists($sName, $this->aLinkedEntities)
-            && !empty($this->aLinkedEntities[$sName]['entity'])
-            && !empty($this->aLinkedEntities[$sName]['mappedByField'])
-            && isset($this->{$this->aLinkedEntities[$sName]['mappedByField']})
-        ) {
-            $sClass = '\app\Entities\\' . $this->aLinkedEntities[$sName]['entity'];
-            $this->$sName = new $sClass($this->{$this->aLinkedEntities[$sName]['mappedByField']});
-        }
-
-        if (!isset($this->$sName)) {
-            throw new EntityException('Trying to get undefined member "' . $sName . '" of entity "' . get_called_class() . '"');
-        }
-
-        return $this->$sName;
-    }
+     * Return the Entity class name
+     * @return string
      */
+    public final function __toString()
+    {
+    	return get_called_class();
+    }
 
     /**
      * Load object with provided data
@@ -437,7 +418,7 @@ abstract class Entity extends Database  {
     /**
      * Get Entity SGBD type from experimental PDO driver
      *
-     * @param unknown $sAttributeName
+     * @param string $sAttributeName
      * @return NULL|string				Return SGBD field type if exists otherwhise NULL
      */
     public function getAttributeType($sAttributeName)
@@ -450,8 +431,23 @@ abstract class Entity extends Database  {
     }
 
     /**
+     * Determine if an Entity attribute can be nullable
+     *
+     * @param string $sAttributeName
+     * @return boolean					TRUE if Entity attribute can be null otherwhise FALSE
+     */
+    public function isNullable($sAttributeName)
+    {
+    	assert('strlen($sAttributeName) > 0');
+    	if (strlen($sAttributeName) > 0 && isset($this->aFields[$sAttributeName])) {
+    		return $this->aFields[$sAttributeName]['Null'] !== 'NO';
+    	}
+    	return false;
+    }
+
+    /**
      * Get Entity attributes
-     * @return array			A one dimensional array with all Entity attributes
+     * @return array					A one dimensional array with all Entity attributes
      */
     public function getAttributes()
     {
@@ -461,6 +457,7 @@ abstract class Entity extends Database  {
     /**
      * Translate a SGBD field type to PHP types
      *
+     * @todo optimiser cette méthode et utiliser un switch
      * @param string $sName
      * @return string|null
      * @throws EntityException
@@ -547,6 +544,8 @@ abstract class Entity extends Database  {
 
 	/**
 	 * List all database tables
+	 *
+	 * @todo rendre facilement overidable pour d'autres SGBD que Mysql
 	 *
 	 * @return \Library\Core\Collection
 	 */

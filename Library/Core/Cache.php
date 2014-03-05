@@ -5,8 +5,8 @@ namespace Library\Core;
 /**
  * Memcached
  *
- * @version 1.1.0 - 2013-07-09 - Antoine <antoine.preveaux@bazarchic.com>
- *              Add getKey() method
+ * @author Antoine <antoine.preveaux@bazarchic.com>
+ * @author niko <nicolasbonnici@gmail.com>
  */
 class Cache {
     /**

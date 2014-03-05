@@ -17,10 +17,11 @@ class TestController extends \Library\Core\Auth {
 
 		$this->oCrudModel = new \modules\backend\Models\Crud('Todo', 2, $this->oUser);
 		$oEntity 		= $this->oCrudModel->getEntity();
-		$sAttributeType = $oEntity->getAttributeType('idtodo');
 		$aAttrs 		= $oEntity->getAttributes();
+		$sAttributeType = $oEntity->getAttributeType('idtodo');
 		$bHasAttr 		= $oEntity->hasAttribute('idtodo');
-		die(var_dump($aAttrs, $bHasAttr, $sAttributeType));
+		$bIsNullable 	= $oEntity->isNullable('idtodo');
+		die(var_dump($aAttrs, $bHasAttr, $sAttributeType, $bIsNullable));
 
         $this->render('test/index.tpl');
     }

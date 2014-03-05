@@ -3,7 +3,8 @@
 namespace Library\Core;
 /**
  *
- * @author niko
+ * @author Antoine <antoine.preveaux@bazarchic.com>
+ * @author niko <nicolasbonnici@gmail.com>
  *
  */
 abstract class EntitiesCollection extends Collection {

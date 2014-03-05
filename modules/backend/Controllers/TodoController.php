@@ -24,24 +24,6 @@ class TodoController extends \Library\Core\Auth {
 
     public function createAction()
     {
-    	if (
-    		isset(
-    			$this->_params['label'],
-    			$this->_params['content']
-    		)
-    	) {
-
-    		if (
-    				\Library\Core\Validator::string($this->_params['label'], 3, 96) === \Library\Core\Validator::STATUS_OK &&
-    				\Library\Core\Validator::string($this->_params['content'], 3) === \Library\Core\Validator::STATUS_OK
-    				//! empty($this->_params['deadline'])
-    		) {
-				$oTodoModel = new \modules\backend\Models\Todo(new \app\Entities\User($this->_session['iduser']));
-				$this->view['bCreateNewTodo'] = $oTodoModel->createByUser($this->_params['label'], $this->_params['content']);
-				$this->_view['label'] = $this->_params['label'];
-				$this->_view['content'] = $this->_params['content'];
-    		}
-    	}
     	$this->render('todo/create.tpl');
     }
 

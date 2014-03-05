@@ -1,7 +1,12 @@
 <?php
 
 namespace Library\Core;
-
+/**
+ *
+ * @author Antoine <antoine.preveaux@bazarchic.com>
+ * @author niko <nicolasbonnici@gmail.com>
+ *
+ */
 class Collection implements \Iterator{
 
     /**
