@@ -9,13 +9,9 @@ namespace modules\backend\Controllers;
  */
 class TodoController extends \Library\Core\Auth {
 
-    public function __preDispatch() {
+    public function __preDispatch() {}
 
-    }
-
-    public function __postDispatch() {
-
-    }
+    public function __postDispatch() {}
 
     public function indexAction()
     {
@@ -29,9 +25,9 @@ class TodoController extends \Library\Core\Auth {
 
     public function readAction()
     {
-        if ($this->_params['idtodo'] && intval($this->_params['idtodo']) > 0) {
-       		$oTodoModel = new \modules\backend\Models\Todo(new \app\Entities\User($this->_session['iduser']));
-       		$oTodo = $oTodoModel->loadByTodoId((int)$this->_params['idtodo']);
+        if (isset($this->_params['idtodo']) && intval($this->_params['idtodo']) > 0) {
+       		$oTodoModel = new \modules\backend\Models\Todo(intval($this->_params['idtodo']), $this->oUser);
+       		$oTodo = $oTodoModel->read();
     		if (! is_null($oTodo) && $oTodo->isLoaded()) {
     			$this->_view['oTodo'] = $oTodo;
     		}
@@ -42,9 +38,9 @@ class TodoController extends \Library\Core\Auth {
 
     public function updateAction()
     {
-    	if ($this->_params['idtodo'] && intval($this->_params['idtodo']) > 0) {
-       		$oTodoModel = new \modules\backend\Models\Todo(new \app\Entities\User($this->_session['iduser']));
-       		$oTodo = $oTodoModel->loadByTodoId((int)$this->_params['idtodo']);
+    	if (isset($this->_params['idtodo']) && intval($this->_params['idtodo']) > 0) {
+       		$oTodoModel = new \modules\backend\Models\Todo(intval($this->_params['idtodo']), $this->oUser);
+    	    $oTodo = $oTodoModel->getEntity();
     		if (! is_null($oTodo) && $oTodo->isLoaded()) {
     			$this->_view['oTodo'] = $oTodo;
     		}

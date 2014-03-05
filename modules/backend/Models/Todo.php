@@ -20,29 +20,6 @@ class Todo extends \Library\Core\Crud {
 		}
 	}
 
-    /**
-     * Get a todo by his primary key (restricted to current user)
-     *
-     * @param integer $iTodoId
-     */
-    public function loadById($iTodoId)
-    {
-    	assert("$this->oEntity === 'Todo'");
-    	try {
-    		$this->oEntity = new \app\Entities\Todo();
-    		$this->oEntity->loadByParameters(
-    				array(
-    						'idtodo' 		=> $iTodoId,
-    						'user_iduser' 	=> $this->oUser->getId()
-    				)
-    		);
-    		if ($this->oEntity->isLoaded()) {
-    			return $this->oEntity;
-    		}
-    	} catch (\Library\Core\EntityException $oException) {}
-		return null;
-    }
-
 }
 
 class TodoModelException extends \Exception {}

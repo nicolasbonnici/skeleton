@@ -208,12 +208,12 @@ abstract class Crud {
 				if (
 					(
 						$this->oEntity->hasAttribute('user_iduser') &&
-						!empt($aParameter['user_iduser']) &&
+						!empty($aParameter['user_iduser']) &&
 						$this->oUser->getId() !== intval($aParameter['user_iduser'])
 					) ||
 					(
 						$this->oEntity->hasAttribute('user_iduser') &&
-						isset($aParameter['iduser']) &&
+						!empty($aParameter['iduser']) &&
 						$this->oUser->getId() !== intval($aParameter['iduser'])
 					)
 				) {

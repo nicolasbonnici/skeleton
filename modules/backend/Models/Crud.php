@@ -3,7 +3,7 @@
 namespace modules\backend\Models;
 
 /**
- * CRUD action model layer abstract class
+ * CRUD action model layer class
  *
  * @author niko
  *
