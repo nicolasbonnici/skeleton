@@ -8,12 +8,13 @@ $(document).ready(function() {
     // Fire UI
     ux.initUi();    
     $(document).ajaxStop(function() {
+    	// Also after asynch call
         ux.initUi();        
     });
 
     
     /**
-     * ************* Bindings ****************
+     * ************* Events  ****************
      * Asynchrone request
      */ 
     

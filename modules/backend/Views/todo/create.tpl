@@ -24,12 +24,9 @@
 	    
 	    <div class="form-group">
 	        <label>Contenu</label>
-	        <div class="ui-editor" data-name="content">
+	        <div class="ui-editor" data-name="content" data-placeholder="Vous pouvez mettre en form votre todo à l'aide de la barre d'outils de mise en forme">
 	        {% if content|Exists %}{{content}}{% endif %}
 	        </div>
-	        <p class="help-block">
-	            Vous pouvez mettre en form votre todo à l'aide de la barre d'outils de mise en forme
-	        </p>
 	    </div>
 	</form> 		    
   

@@ -7,9 +7,11 @@ namespace Library\Core;
  * @author Antoine <antoine.preveaux@bazarchic.com>
  * @author niko <nicolasbonnici@gmail.com>
  *
+ * @important Entities need a primary auto incremented index (id[entity])
  * @todo optimiser la gestion du cache dans le composant Cache
  * @dependancy \Library\Core\Validator
- * @important Entity need a primary auto incremeted index
+ * @dependancy \Library\Core\Cache
+ * @dependancy \Library\Core\Database
  */
 
 abstract class Entity extends Database {
@@ -497,6 +499,7 @@ abstract class Entity extends Database {
 
     /**
      * Reset current instance to blank state
+     * @todo aucun interet autant re instancier la class appelé
      */
     public function reset()
     {

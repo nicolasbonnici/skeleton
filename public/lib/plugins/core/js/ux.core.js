@@ -21,7 +21,8 @@
                                             resizerTip: 'Ouvrir/fermer',
                                             sliderTip: 'Redimmensionner',
                                             fxSettings_open: { easing: 'easeOutBounce' },
-                                            fxSettings_close: { easing: 'easeOutBounce' }
+                                            fxSettings_close: { easing: 'easeOutBounce' },
+                                            enableCursorHotkey: false,
                                     },
                                     center: {
                                             applyDefaultStyles: false,

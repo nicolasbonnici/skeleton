@@ -324,7 +324,6 @@ abstract class Crud {
     */
     public function getEntityAttributes()
     {
-    	assert('!is_null($this->oEntity)');
     	return $this->oEntity->getAttributes();
     }
 
@@ -333,6 +332,7 @@ abstract class Crud {
      */
     public function getEntities()
     {
+        assert('$this->oEntities->count() > 0');
     	return $this->oEntities;
     }
 
@@ -341,6 +341,7 @@ abstract class Crud {
      */
     public function getEntity()
     {
+        assert('$this->oEntity->isLoaded()') ;
     	return $this->oEntity;
     }
 }
