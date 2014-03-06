@@ -9,64 +9,64 @@ namespace Library\Core;
  */
 class Auth extends Controller {
 
-	/**
-	 * Currently logged user instance
-	 *
-	 * @type \app\Entities\User
-	 */
-	protected $oUser;
+    /**
+     * Currently logged user instance
+     *
+     * @type \app\Entities\User
+     */
+    protected $oUser;
 
     public function __construct() {
 
-    	$this->loadRequest();
+        $this->loadRequest();
 
         /**
          * Check php session
          */
         if (
-        	isset($_SESSION['token']) &&
-        	($this->_session = $_SESSION) &&
-        	$this->checkSessionintegrity()
+            isset($_SESSION['token']) &&
+            ($this->_session = $_SESSION) &&
+            $this->checkSessionintegrity()
         ) {
             parent::__construct($this->oUser);
         } else {
-        	Router::redirect('/frontend/auth/index/redirect/' . urlencode(str_replace('/', '*', '/' . Router::getModule() . '/' . Router::getController() . '/' . Router::getAction())));
+            Router::redirect('/frontend/auth/index/redirect/' . urlencode(str_replace('/', '*', '/' . Router::getModule() . '/' . Router::getController() . '/' . Router::getAction())));
         }
 
     }
 
-	/**
-	 * Validate session integrity
-	 * @return bool
-	 */
+    /**
+     * Validate session integrity
+     * @return bool
+     */
     public function checkSessionintegrity() {
-    	$this->oUser = new \app\Entities\User();
+        $this->oUser = new \app\Entities\User();
 
-    	try {
-    		$this->oUser->loadByParameters(
-    			array(
-    				'iduser' => $this->_session['iduser'],
-    				'mail' => $this->_session['mail'],
-    				'token' => $this->_session['token'],
-    				'created' => $this->_session['created']
-    			)
-    		);
-    	} catch(CoreEntityException $oException) {}
-    	if ($this->oUser->isLoaded()) {
+        try {
+            $this->oUser->loadByParameters(
+                array(
+                    'iduser' => $this->_session['iduser'],
+                    'mail' => $this->_session['mail'],
+                    'token' => $this->_session['token'],
+                    'created' => $this->_session['created']
+                )
+            );
+        } catch(CoreEntityException $oException) {}
+        if ($this->oUser->isLoaded()) {
 
             foreach ($this->oUser as $key=>$mValue) {
-            	$_SESSION[$key] = $mValue;
+                $_SESSION[$key] = $mValue;
             }
 
             // Regenerate session token
-    		$_SESSION['token'] = $this->generateToken();
-    		// Unset password
-			unset($_SESSION['pass']);
+            $_SESSION['token'] = $this->generateToken();
+            // Unset password
+            unset($_SESSION['pass']);
 
             $this->oUser->token = $_SESSION['token'];
 
-			return $this->oUser->update();
-    	}
+            return $this->oUser->update();
+        }
 
         return false;
     }

@@ -15,9 +15,9 @@ class HomeController extends \Library\Core\Controller {
 
     public function indexAction()
     {
-    	$oFeeds = new \app\Entities\Collection\FeedCollection();
-    	$oFeeds->load();
-    	$this->_view['oFeeds'] = $oFeeds;
+        $oFeeds = new \app\Entities\Collection\FeedCollection();
+        $oFeeds->load();
+        $this->_view['oFeeds'] = $oFeeds;
         $this->render('home/index.tpl');
     }
 
@@ -33,21 +33,21 @@ class HomeController extends \Library\Core\Controller {
 
     public function listAction(array $aFeedIds = array(1,2,3), $iLoadStep = 64) {
 
-		$aLimit = array(0, $iLoadStep);
-    	if (isset($this->_params['ioffset']) && $this->_params['ioffset'] > 0) {
-    		$aLimit = array((int)$this->_params['ioffset'], $iLoadStep);
-    	}
+        $aLimit = array(0, $iLoadStep);
+        if (isset($this->_params['ioffset']) && $this->_params['ioffset'] > 0) {
+            $aLimit = array((int)$this->_params['ioffset'], $iLoadStep);
+        }
 
-    	if (isset($this->_params['sfeedid'])) {
-    		$aFeedIds = explode(',', $this->_params['sfeedid']);
-    	}
+        if (isset($this->_params['sfeedid'])) {
+            $aFeedIds = explode(',', $this->_params['sfeedid']);
+        }
 
-    	$oFeedItems = new \modules\frontend\Models\FeedItem();
-		$oFeedItems->loadByFeed($aFeedIds, $aLimit);
+        $oFeedItems = new \modules\frontend\Models\FeedItem();
+        $oFeedItems->loadByFeed($aFeedIds, $aLimit);
 
-    	$this->_view['oItems'] = $oFeedItems->getItems();
+        $this->_view['oItems'] = $oFeedItems->getItems();
 
-    	$this->render('home/list.tpl');
+        $this->render('home/list.tpl');
     }
 
 }

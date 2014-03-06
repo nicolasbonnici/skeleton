@@ -19,8 +19,8 @@ class MenuController extends \Library\Core\Controller {
 
     public function indexAction() {   
                
-    	$this->_view['aModule'] = $this->_module;
-    	$this->_view['aControllers'] = $this->buildControllers($this->_module);
+        $this->_view['aModule'] = $this->_module;
+        $this->_view['aControllers'] = $this->buildControllers($this->_module);
         $this->render('menu/index.tpl');
     }
     

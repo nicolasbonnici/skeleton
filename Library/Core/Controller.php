@@ -11,7 +11,7 @@ class Controller extends Acl {
 
     const XHR_STATUS_OK                 = 1;
     const XHR_STATUS_ERROR              = 2;
-    const XHR_STATUS_ACCESS_DENIED		= 3;
+    const XHR_STATUS_ACCESS_DENIED        = 3;
     const XHR_STATUS_SESSION_EXPIRED    = 4;
 
     protected $_config;
@@ -35,11 +35,11 @@ class Controller extends Acl {
 
         // Check ACL if we have a logged user
         if (
-        	!is_null($oUser) &&
-        	$oUser instanceof \app\Entities\User &&
-        	$oUser->isLoaded()
+            !is_null($oUser) &&
+            $oUser instanceof \app\Entities\User &&
+            $oUser->isLoaded()
         ) {
-			parent::__construct($oUser);
+            parent::__construct($oUser);
         }
 
         // @see run action & pre|post dispatch callback (optionnal)
@@ -48,28 +48,28 @@ class Controller extends Acl {
             // @see pre dispatch action
             if (method_exists($this, '__preDispatch')) {
 
-//             	try {
-            		$this->__preDispatch();
-//             	} catch (Library\Core\ControllerException $oException) {
-//             		throw new ControllerException('Pre dispatch action throw an exception: ' . $oException->getMessage(), $oException->getCode());
-//             		exit;
-//             	}
+//                 try {
+                    $this->__preDispatch();
+//                 } catch (Library\Core\ControllerException $oException) {
+//                     throw new ControllerException('Pre dispatch action throw an exception: ' . $oException->getMessage(), $oException->getCode());
+//                     exit;
+//                 }
 
             }
 
-	        // Run mothafucka run!
-			$this->{$this->_action}();
+            // Run mothafucka run!
+            $this->{$this->_action}();
 
 
             // @see post dispatch action
             if (method_exists($this, '__postDispatch')) {
 
                 try {
-            		$this->__postDispatch();
-            	} catch (Library\Core\ControllerException $oException) {
-            		throw new ControllerException('Post dispatch action throw an exception: ' . $oException->getMessage(), $oException->getCode());
-            		exit;
-            	}
+                    $this->__postDispatch();
+                } catch (Library\Core\ControllerException $oException) {
+                    throw new ControllerException('Post dispatch action throw an exception: ' . $oException->getMessage(), $oException->getCode());
+                    exit;
+                }
 
                 if (ENV === 'dev') {
                     //echo 'Execution time: ' . (microtime(true) - FRAMEWORK_STARTED);
@@ -101,18 +101,18 @@ class Controller extends Acl {
             require_once MODULES_PATH . '/modules/' . DEFAULT_MODULE . '/translations/' . $this->_lang . '/' . $sTranslationFile;
         }
 
-		if (count($this->_session) > 0) {
-			$this->_view['aSession'] = $this->_session;
-			$this->_view['sGravatarSrc16'] = Tools::getGravatar($this->_session['mail'],  16);
-			$this->_view['sGravatarSrc32'] = Tools::getGravatar($this->_session['mail'],  32);
-			$this->_view['sGravatarSrc64'] = Tools::getGravatar($this->_session['mail'],  64);
-			$this->_view['sGravatarSrc128'] = Tools::getGravatar($this->_session['mail'], 128);
-		}
+        if (count($this->_session) > 0) {
+            $this->_view['aSession'] = $this->_session;
+            $this->_view['sGravatarSrc16'] = Tools::getGravatar($this->_session['mail'],  16);
+            $this->_view['sGravatarSrc32'] = Tools::getGravatar($this->_session['mail'],  32);
+            $this->_view['sGravatarSrc64'] = Tools::getGravatar($this->_session['mail'],  64);
+            $this->_view['sGravatarSrc128'] = Tools::getGravatar($this->_session['mail'], 128);
+        }
 
-		// Translation
-		$this->_view["sAppName"] = $this->_config['app']['name'];
-		$this->_view["lang"] = $this->_lang;
-		$this->_view["tr"] = $tr; // @see loading de la traduction pour la vue
+        // Translation
+        $this->_view["sAppName"] = $this->_config['app']['name'];
+        $this->_view["lang"] = $this->_lang;
+        $this->_view["tr"] = $tr; // @see loading de la traduction pour la vue
 
         // Views common couch
         $this->_view["appLayout"] = '../../../app/Views/layout.tpl'; // @todo degager ca ou constante mais quelquechose
@@ -133,25 +133,25 @@ class Controller extends Acl {
         $this->_view['framework_started'] = FRAMEWORK_STARTED;
         $this->_view['current_timestamp'] = time();
 
-    	// @see check if it's an XMLHTTPREQUEST
-	    if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
-	    	//var_dump($this->_view);
+        // @see check if it's an XMLHTTPREQUEST
+        if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+            //var_dump($this->_view);
 
-	    	$aResponse = json_encode(array(
-	            'status'    => $iStatusXHR,
-	            'content'   => str_replace(array("\r", "\r\n", "\n", "\t"), '', \Bootstrap::initView($sTpl, $this->_view, true)),
-	            'debug'   	=> str_replace(array("\r", "\r\n", "\n", "\t"), '', \Bootstrap::initView($this->_view["sDeBugHelper"], $this->_view, true))
-	        ));
-	        if ($bToString === true) {
-	            return $aResponse;
-	        }
+            $aResponse = json_encode(array(
+                'status'    => $iStatusXHR,
+                'content'   => str_replace(array("\r", "\r\n", "\n", "\t"), '', \Bootstrap::initView($sTpl, $this->_view, true)),
+                'debug'       => str_replace(array("\r", "\r\n", "\n", "\t"), '', \Bootstrap::initView($this->_view["sDeBugHelper"], $this->_view, true))
+            ));
+            if ($bToString === true) {
+                return $aResponse;
+            }
 
-	        header('Content-Type: application/json');
-	        echo $aResponse;
-	        exit;
-		}
+            header('Content-Type: application/json');
+            echo $aResponse;
+            exit;
+        }
 
-		// Render the view using Haanga
+        // Render the view using Haanga
         \Bootstrap::initView($sTpl, $this->_view, $bToString);
 
         return;
@@ -160,50 +160,50 @@ class Controller extends Acl {
 
     public function buildModules() {
 
-    	assert('is_dir(MODULES_PATH)');
+        assert('is_dir(MODULES_PATH)');
 
-    	$aMenu = array();
-    	$aModules = array_diff(scandir(MODULES_PATH), array('..', '.'));
+        $aMenu = array();
+        $aModules = array_diff(scandir(MODULES_PATH), array('..', '.'));
 
-    	foreach($aModules as $sModule) {
-    		$aMenu[$sModule] = $this->buildControllers($sModule);
-    	}
+        foreach($aModules as $sModule) {
+            $aMenu[$sModule] = $this->buildControllers($sModule);
+        }
 
-    	return $aMenu;
+        return $aMenu;
     }
 
 
     public function buildControllers($sModule) {
 
-    	assert('!empty($sModule) && is_string($sModule) && is_dir(MODULES_PATH . "/" . $this->_module . "/Controllers/")');
+        assert('!empty($sModule) && is_string($sModule) && is_dir(MODULES_PATH . "/" . $this->_module . "/Controllers/")');
 
-    	$aControllers = array();
-    	$sControllerPath = MODULES_PATH . '/' . $sModule . '/Controllers/';
-    	$aFiles = array_diff(scandir($sControllerPath), array('..', '.'));
+        $aControllers = array();
+        $sControllerPath = MODULES_PATH . '/' . $sModule . '/Controllers/';
+        $aFiles = array_diff(scandir($sControllerPath), array('..', '.'));
 
-    	foreach ($aFiles as $sController) {
-    		if (preg_match('#Controller.php$#', $sController)) {
-    			$aControllers[substr($sController, 0, strlen($sController) - strlen('Controller.php'))] = $this->buildActions($sModule, $sController);
-    		}
-    	}
+        foreach ($aFiles as $sController) {
+            if (preg_match('#Controller.php$#', $sController)) {
+                $aControllers[substr($sController, 0, strlen($sController) - strlen('Controller.php'))] = $this->buildActions($sModule, $sController);
+            }
+        }
 
-    	return $aControllers;
+        return $aControllers;
     }
 
     public function buildActions($sModule, $sController) {
 
-    	assert('!empty($sController) && is_string($sController) && !empty($sModule) && is_string($sModule)');
-    	$aActions = array();
-		$aMethods = get_class_methods('\modules\\' . $sModule . '\Controllers\\' . substr($sController, 0, strlen($sController) - strlen('.php')));
-		if (count($aMethods) > 0) {
-			foreach ($aMethods as $sMethod) {
-				if (preg_match('#Action$#', $sMethod) && $sMethod !== 'getAction' && $sMethod !== 'setAction') {
-					$aActions[] = substr($sMethod, 0, strlen($sMethod) - strlen('Action'));
-				}
-			}
-		}
+        assert('!empty($sController) && is_string($sController) && !empty($sModule) && is_string($sModule)');
+        $aActions = array();
+        $aMethods = get_class_methods('\modules\\' . $sModule . '\Controllers\\' . substr($sController, 0, strlen($sController) - strlen('.php')));
+        if (count($aMethods) > 0) {
+            foreach ($aMethods as $sMethod) {
+                if (preg_match('#Action$#', $sMethod) && $sMethod !== 'getAction' && $sMethod !== 'setAction') {
+                    $aActions[] = substr($sMethod, 0, strlen($sMethod) - strlen('Action'));
+                }
+            }
+        }
 
-		return $aActions;
+        return $aActions;
 
     }
 

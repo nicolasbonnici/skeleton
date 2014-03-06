@@ -121,7 +121,7 @@ class Validator
      */
     static public function timestamp(&$iTimestamp)
     {
-    	return ((($iTimestamp = intval($iTimestamp)) && $iTimestamp > 0) ? self::STATUS_OK : self::STATUS_INVALID);
+        return ((($iTimestamp = intval($iTimestamp)) && $iTimestamp > 0) ? self::STATUS_OK : self::STATUS_INVALID);
     }
 
     /**

@@ -9,10 +9,10 @@ namespace Library\Core;
  */
 class Scaffold   {
     
-	public static function generateEntity($sTableName, $iCacheDuration = 120) {
-		if (!empty($sTableName)) {
-			$sEntityName = self::formatEntityName($sTableName);
-			return '<?php
+    public static function generateEntity($sTableName, $iCacheDuration = 120) {
+        if (!empty($sTableName)) {
+            $sEntityName = self::formatEntityName($sTableName);
+            return '<?php
 
 namespace app\Entities;
 
@@ -36,26 +36,26 @@ class ' . $sEntityName . ' extends \Library\Core\Entity {
     
     protected $aLinkedEntities = array();
     
-}			
-			';
-		}
-		
-		return false;
-	}
+}            
+            ';
+        }
+        
+        return false;
+    }
 
-	/**
-	 * Convert table name to \app\Entities valid name
-	 * 
-	 * @todo convention dégueulasse et trop relou a gérer utiliser le nom des table avec juste un ucfirst() ou directement nommer correctement les tables dans le shema
-	 * 
-	 * @param string $sTableName
-	 */
-	public static function formatEntityName($sTableName)
-	{
-		assert('strlen($sTableName) > 0');
-		return ucfirst($sTableName);
-	}
-	
+    /**
+     * Convert table name to \app\Entities valid name
+     * 
+     * @todo convention dégueulasse et trop relou a gérer utiliser le nom des table avec juste un ucfirst() ou directement nommer correctement les tables dans le shema
+     * 
+     * @param string $sTableName
+     */
+    public static function formatEntityName($sTableName)
+    {
+        assert('strlen($sTableName) > 0');
+        return ucfirst($sTableName);
+    }
+    
 }
 
 class CoreScaffoldingException extends \Exception {}

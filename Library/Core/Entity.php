@@ -67,12 +67,12 @@ abstract class Entity extends Database {
      *     'field' refers to current class member name which value will be used as the ID of chained object
      *     'class' refers to chained object class name
      * Example:
-	    protected $aLinkedEntities = array(
-	        'membre' => array(
-	            'field' => 'idmembre',
-	            'class' => 'db_Membres'
-	        )
-	    );
+        protected $aLinkedEntities = array(
+            'membre' => array(
+                'field' => 'idmembre',
+                'class' => 'db_Membres'
+            )
+        );
      * @var array
      */
     protected $aLinkedEntities = array();
@@ -91,7 +91,7 @@ abstract class Entity extends Database {
     public function __construct($mPrimaryKey = null)
     {
         // If we just want to instanciate a blank object, do not pass any parameter to constructor
-		$this->loadFields();
+        $this->loadFields();
         if (!is_null($mPrimaryKey) && is_string($mPrimaryKey) || is_int($mPrimaryKey)) {
 
             // @see Build only one object
@@ -99,8 +99,8 @@ abstract class Entity extends Database {
             $this->loadByPrimaryKey();
 
         } elseif (is_array($mPrimaryKey)) {
-        	// @see Sinon si c'est un array je load l'objet via different paramètres
-        	$this->loadByParameters($mPrimaryKey);
+            // @see Sinon si c'est un array je load l'objet via different paramètres
+            $this->loadByParameters($mPrimaryKey);
         }
 
         $this->sChildClass = get_called_class();
@@ -114,7 +114,7 @@ abstract class Entity extends Database {
      */
     public final function __toString()
     {
-    	return $this->sChildClass;
+        return $this->sChildClass;
     }
 
     /**
@@ -131,7 +131,7 @@ abstract class Entity extends Database {
                 $this->aFields[$sName]['value'] = $mValue;
             }
 
-		    $this->{$sName} = $mValue;
+            $this->{$sName} = $mValue;
         }
 
         if ($this->bIsCacheable && $bRefreshCache && isset($aData[static::PRIMARY_KEY]) && !empty($this->iCacheDuration)) {
@@ -223,7 +223,7 @@ abstract class Entity extends Database {
      */
     public static function getCacheKey($iId)
     {
-    	return \Library\Core\Cache::getKey(get_called_class(), $iId);
+        return \Library\Core\Cache::getKey(get_called_class(), $iId);
     }
 
     /**
@@ -236,12 +236,12 @@ abstract class Entity extends Database {
         $aInsertedFields = array();
         $aInsertedValues = array();
         foreach ($this->aFields as $sFieldName=>$aFieldInfos) {
-        	if (
-        		isset($this->{$sFieldName}) &&
-        		!is_null($this->{$sFieldName}) &&
-        		$this->validateDataIntegrity($sFieldName, $this->{$sFieldName})
-        	) {
-        		$aInsertedFields[] = $sFieldName;
+            if (
+                isset($this->{$sFieldName}) &&
+                !is_null($this->{$sFieldName}) &&
+                $this->validateDataIntegrity($sFieldName, $this->{$sFieldName})
+            ) {
+                $aInsertedFields[] = $sFieldName;
                 $aInsertedValues[] = $this->{$sFieldName};
             }
         }
@@ -271,11 +271,11 @@ abstract class Entity extends Database {
         $aUpdatedFields = array();
         $aUpdatedValues = array();
         foreach ($this->aFields as $sFieldName=>$aFieldInfos) {
-        	if (
-        		isset($this->{$sFieldName}) &&
-        		!is_null($this->{$sFieldName}) &&
-        		$this->validateDataIntegrity($sFieldName, $this->{$sFieldName})
-        	) {
+            if (
+                isset($this->{$sFieldName}) &&
+                !is_null($this->{$sFieldName}) &&
+                $this->validateDataIntegrity($sFieldName, $this->{$sFieldName})
+            ) {
                 $aUpdatedFields[] = $sFieldName;
                 $aUpdatedValues[] = $this->{$sFieldName};
             }
@@ -307,22 +307,22 @@ abstract class Entity extends Database {
      */
     public function delete()
     {
-    	if (!$this->bIsDeletable) {
-    		throw new EntityException('Cannot delete object of type "' . get_called_class() . '", this type of object is not deletable');
-    	}
+        if (!$this->bIsDeletable) {
+            throw new EntityException('Cannot delete object of type "' . get_called_class() . '", this type of object is not deletable');
+        }
 
-    	if (!$this->bIsLoaded) {
-    		throw new EntityException('Cannot delete entry, object not loaded properly');
-    	}
+        if (!$this->bIsLoaded) {
+            throw new EntityException('Cannot delete entry, object not loaded properly');
+        }
 
-    	try {
-    		$oStatement = \Library\Core\Database::dbQuery('DELETE FROM `' . static::TABLE_NAME . '` WHERE `' . static::PRIMARY_KEY . '` = ?', array($this->{static::PRIMARY_KEY}));
-    		$this->reset();
-    	} catch (\PDOException $oException) {
-    		return false;
-    	}
+        try {
+            $oStatement = \Library\Core\Database::dbQuery('DELETE FROM `' . static::TABLE_NAME . '` WHERE `' . static::PRIMARY_KEY . '` = ?', array($this->{static::PRIMARY_KEY}));
+            $this->reset();
+        } catch (\PDOException $oException) {
+            return false;
+        }
 
-    	return true;
+        return true;
     }
 
     /**
@@ -413,47 +413,47 @@ abstract class Entity extends Database {
      */
     public function hasAttribute($sAttributeName)
     {
-    	assert('strlen($sAttributeName) > 0');
-    	return array_key_exists($sAttributeName, $this->aFields);
+        assert('strlen($sAttributeName) > 0');
+        return array_key_exists($sAttributeName, $this->aFields);
     }
 
     /**
      * Get Entity SGBD type from experimental PDO driver
      *
      * @param string $sAttributeName
-     * @return NULL|string				Return SGBD field type if exists otherwhise NULL
+     * @return NULL|string                Return SGBD field type if exists otherwhise NULL
      */
     public function getAttributeType($sAttributeName)
     {
-    	assert('strlen($sAttributeName) > 0');
-    	if (strlen($sAttributeName) > 0 && isset($this->aFields[$sAttributeName])) {
-    		return $this->aFields[$sAttributeName]['Type'];
-    	}
-    	return null;
+        assert('strlen($sAttributeName) > 0');
+        if (strlen($sAttributeName) > 0 && isset($this->aFields[$sAttributeName])) {
+            return $this->aFields[$sAttributeName]['Type'];
+        }
+        return null;
     }
 
     /**
      * Determine if an Entity attribute can be nullable
      *
      * @param string $sAttributeName
-     * @return boolean					TRUE if Entity attribute can be null otherwhise FALSE
+     * @return boolean                    TRUE if Entity attribute can be null otherwhise FALSE
      */
     public function isNullable($sAttributeName)
     {
-    	assert('strlen($sAttributeName) > 0');
-    	if (strlen($sAttributeName) > 0 && isset($this->aFields[$sAttributeName])) {
-    		return $this->aFields[$sAttributeName]['Null'] !== 'NO';
-    	}
-    	return false;
+        assert('strlen($sAttributeName) > 0');
+        if (strlen($sAttributeName) > 0 && isset($this->aFields[$sAttributeName])) {
+            return $this->aFields[$sAttributeName]['Null'] !== 'NO';
+        }
+        return false;
     }
 
     /**
      * Get Entity attributes
-     * @return array					A one dimensional array with all Entity attributes
+     * @return array                    A one dimensional array with all Entity attributes
      */
     public function getAttributes()
     {
-		return array_keys($this->aFields);
+        return array_keys($this->aFields);
     }
 
     /**
@@ -466,26 +466,26 @@ abstract class Entity extends Database {
      */
     public function getDataType($sName = null) {
 
-    	assert('$this->getAttributeType($sName) !== null');
+        assert('$this->getAttributeType($sName) !== null');
 
-    	$sDataType = null;
-    	if (!is_null($sName)) {
+        $sDataType = null;
+        if (!is_null($sName)) {
 
-    		$sDataType = $this->getAttributeType($sName);
+            $sDataType = $this->getAttributeType($sName);
 
-			if (preg_match('#(^int|^integer|^tinyint|^smallmint|^mediumint|^tinyint|^bigint)#', $sDataType)) {
-				$sDataType = 'integer';
-			} elseif (preg_match('#(^float|^decimal|^numeric)#', $this->aFields[$sName]['Type'])) {
-				$sDataType = 'float';
-			} elseif (preg_match('#(^varchar|^text|^blob|^tinyblob|^tinytext|^mediumblob|^mediumtext|^longblob|^longtext|^date|^datetime|^timestamp)#', $this->aFields[$sName]['Type'])) {
-				$sDataType = 'string';
-			} elseif (preg_match('#^enum#', $this->aFields[$sName]['Type'])) {
-				$sDataType = 'array'; // @todo ajouter un type enum dans validator puis un inArray pour valider
-			} else {
-				throw new EntityException(__CLASS__ . ' Unsuported database field type: ' . $this->aFields[$sName]['Type']);
-			}
-    	}
-		return $sDataType;
+            if (preg_match('#(^int|^integer|^tinyint|^smallmint|^mediumint|^tinyint|^bigint)#', $sDataType)) {
+                $sDataType = 'integer';
+            } elseif (preg_match('#(^float|^decimal|^numeric)#', $this->aFields[$sName]['Type'])) {
+                $sDataType = 'float';
+            } elseif (preg_match('#(^varchar|^text|^blob|^tinyblob|^tinytext|^mediumblob|^mediumtext|^longblob|^longtext|^date|^datetime|^timestamp)#', $this->aFields[$sName]['Type'])) {
+                $sDataType = 'string';
+            } elseif (preg_match('#^enum#', $this->aFields[$sName]['Type'])) {
+                $sDataType = 'array'; // @todo ajouter un type enum dans validator puis un inArray pour valider
+            } else {
+                throw new EntityException(__CLASS__ . ' Unsuported database field type: ' . $this->aFields[$sName]['Type']);
+            }
+        }
+        return $sDataType;
     }
 
     /**
@@ -503,20 +503,20 @@ abstract class Entity extends Database {
      */
     public function reset()
     {
-    	$aOriginProperties = array();
-    	$oReflection = new \ReflectionClass($this);
+        $aOriginProperties = array();
+        $oReflection = new \ReflectionClass($this);
 
-    	foreach ($oReflection->getProperties() as $oRelectionProperty) {
-    		$aOriginProperties[] = $oRelectionProperty->getName();
-    	}
+        foreach ($oReflection->getProperties() as $oRelectionProperty) {
+            $aOriginProperties[] = $oRelectionProperty->getName();
+        }
 
-    	foreach ($this as $sKey => $mValue) {
-    		if (!in_array($sKey, $aOriginProperties)) {
-    			unset($this->$sKey);
-    		}
-    	}
+        foreach ($this as $sKey => $mValue) {
+            if (!in_array($sKey, $aOriginProperties)) {
+                unset($this->$sKey);
+            }
+        }
 
-    	$this->bIsLoaded = false;
+        $this->bIsLoaded = false;
     }
 
     /**
@@ -531,50 +531,50 @@ abstract class Entity extends Database {
      */
     protected function validateDataIntegrity($sFieldName, $mValue)
     {
-    	assert('isset($this->aFields[$sFieldName]["Type"])');
+        assert('isset($this->aFields[$sFieldName]["Type"])');
 
-    	$iValidatorStatus = 0;
-    	$sDataType = '';
+        $iValidatorStatus = 0;
+        $sDataType = '';
 
-    	// @todo prendre en charge les variables nullables à ce niveau en fonctions des infos sur le champs mysql
-    	// @todo Dépend d'une feature experimentale de PDO attendre la version stable
-    	if (is_null($mValue) && $this->aFields[$sFieldName]['Null'] === 'YES') {
-    		return true;
-    	}
+        // @todo prendre en charge les variables nullables à ce niveau en fonctions des infos sur le champs mysql
+        // @todo Dépend d'une feature experimentale de PDO attendre la version stable
+        if (is_null($mValue) && $this->aFields[$sFieldName]['Null'] === 'YES') {
+            return true;
+        }
 
-    	if (!empty($sFieldName) && !empty($mValue)) {
-			if (
-	            ($sDataType = $this->getDataType($sFieldName)) !== NULL &&
-	            method_exists(__NAMESPACE__ . '\\Validator', $sDataType) &&
-	            ($iValidatorStatus = Validator::$sDataType($mValue)) === Validator::STATUS_OK
-			) {
-				return true;
-			}
-    	}
-		return false;
+        if (!empty($sFieldName) && !empty($mValue)) {
+            if (
+                ($sDataType = $this->getDataType($sFieldName)) !== NULL &&
+                method_exists(__NAMESPACE__ . '\\Validator', $sDataType) &&
+                ($iValidatorStatus = Validator::$sDataType($mValue)) === Validator::STATUS_OK
+            ) {
+                return true;
+            }
+        }
+        return false;
     }
 
-	/**
-	 * List all database tables
-	 *
-	 * @todo rendre facilement overidable pour d'autres SGBD que Mysql
-	 *
-	 * @return \Library\Core\Collection
-	 */
+    /**
+     * List all database tables
+     *
+     * @todo rendre facilement overidable pour d'autres SGBD que Mysql
+     *
+     * @return \Library\Core\Collection
+     */
     protected function getDatabaseEntities()
     {
-    	$aDatabaseEntities = array();
-    	$aConfig = \Bootstrap::getConfig();
+        $aDatabaseEntities = array();
+        $aConfig = \Bootstrap::getConfig();
 
-    	$oStatement = Database::dbQuery(
-    		'SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE `TABLE_SCHEMA` = ? ORDER BY `TABLES`.`TABLE_SCHEMA` DESC',
-    		array($aConfig['database']['name'])
-		);
-    	if ($oStatement !== false && $oStatement->rowCount() > 0) {
-    	     $aDatabaseEntities = $oStatement->fetchAll(\PDO::FETCH_ASSOC);
-    	}
+        $oStatement = Database::dbQuery(
+            'SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE `TABLE_SCHEMA` = ? ORDER BY `TABLES`.`TABLE_SCHEMA` DESC',
+            array($aConfig['database']['name'])
+        );
+        if ($oStatement !== false && $oStatement->rowCount() > 0) {
+             $aDatabaseEntities = $oStatement->fetchAll(\PDO::FETCH_ASSOC);
+        }
 
-    	return $aDatabaseEntities;
+        return $aDatabaseEntities;
     }
 
 }

@@ -21,49 +21,49 @@ class Router extends Singleton {
 
     public static function init() {
 
-    	// @todo retrieve from db
-    	self::$aRules = array(
-    			'/login' => array(
-    					'module'    => 'frontend',
-    					'controller' => 'auth',
-    					'action'    => 'index'
-    			),
-    			'/logout' => array(
-    					'module'    => 'frontend',
-    					'controller' => 'auth',
-    					'action'    => 'logout'
-    			),
-    			'/profile' => array(
-    					'module'    => 'backend',
-    					'controller' => 'user',
-    					'action'    => 'profile'
-    			),
-    			'/blog' => array(
-    					'module'    => 'frontend',
-    					'controller' => 'blog',
-    					'action'    => 'index'
-    			),
-    			'/portfolio' => array(
-    					'module'    => 'frontend',
-    					'controller' => 'home',
-    					'action'    => 'portfolio'
-    			),
-    			'/lifestream' => array(
-    					'module'    => 'frontend',
-    					'controller' => 'home',
-    					'action'    => 'lifestream'
-    			),
-    			'/contact' => array(
-    					'module'    => 'frontend',
-    					'controller' => 'home',
-    					'action'    => 'contact'
-    			),
-    			'/todo' => array(
-    					'module'    	=> 'backend',
-    					'controller' 	=> 'todo',
-    					'action'    	=> 'index'
-    			)
-    	);
+        // @todo retrieve from db
+        self::$aRules = array(
+                '/login' => array(
+                        'module'    => 'frontend',
+                        'controller' => 'auth',
+                        'action'    => 'index'
+                ),
+                '/logout' => array(
+                        'module'    => 'frontend',
+                        'controller' => 'auth',
+                        'action'    => 'logout'
+                ),
+                '/profile' => array(
+                        'module'    => 'backend',
+                        'controller' => 'user',
+                        'action'    => 'profile'
+                ),
+                '/blog' => array(
+                        'module'    => 'frontend',
+                        'controller' => 'blog',
+                        'action'    => 'index'
+                ),
+                '/portfolio' => array(
+                        'module'    => 'frontend',
+                        'controller' => 'home',
+                        'action'    => 'portfolio'
+                ),
+                '/lifestream' => array(
+                        'module'    => 'frontend',
+                        'controller' => 'home',
+                        'action'    => 'lifestream'
+                ),
+                '/contact' => array(
+                        'module'    => 'frontend',
+                        'controller' => 'home',
+                        'action'    => 'contact'
+                ),
+                '/todo' => array(
+                        'module'        => 'backend',
+                        'controller'     => 'todo',
+                        'action'        => 'index'
+                )
+        );
 
         self::$sUrl = $_SERVER['REQUEST_URI'];
 
@@ -81,7 +81,7 @@ class Router extends Singleton {
 
         }
 
-		foreach($_FILES as $key=>$value) {
+        foreach($_FILES as $key=>$value) {
             self::$aParams[$key] = $value;
         }
 
@@ -117,10 +117,10 @@ class Router extends Singleton {
                 self::$sController = self::$aRules[$sUrl]['controller'];
                 self::$sAction = self::$aRules[$sUrl]['action'];
                 if (
-                	($aParams = array_slice(self::$aRequest, count(self::cleanArray(explode('/', $aUrl[0])))))
-                	&& count($aParams) > 0
-				) {
-	                self::setParams($aParams);
+                    ($aParams = array_slice(self::$aRequest, count(self::cleanArray(explode('/', $aUrl[0])))))
+                    && count($aParams) > 0
+                ) {
+                    self::setParams($aParams);
                 }
 
                 return;

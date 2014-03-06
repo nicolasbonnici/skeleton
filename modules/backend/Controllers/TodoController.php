@@ -20,41 +20,41 @@ class TodoController extends \Library\Core\Auth {
 
     public function createAction()
     {
-    	$this->render('todo/create.tpl');
+        $this->render('todo/create.tpl');
     }
 
     public function readAction()
     {
         if (isset($this->_params['idtodo']) && intval($this->_params['idtodo']) > 0) {
-       		$oTodoModel = new \modules\backend\Models\Todo(intval($this->_params['idtodo']), $this->oUser);
-       		$oTodo = $oTodoModel->read();
-    		if (! is_null($oTodo) && $oTodo->isLoaded()) {
-    			$this->_view['oTodo'] = $oTodo;
-    		}
+               $oTodoModel = new \modules\backend\Models\Todo(intval($this->_params['idtodo']), $this->oUser);
+               $oTodo = $oTodoModel->read();
+            if (! is_null($oTodo) && $oTodo->isLoaded()) {
+                $this->_view['oTodo'] = $oTodo;
+            }
 
-    	}
-		$this->render('todo/read.tpl');
+        }
+        $this->render('todo/read.tpl');
     }
 
     public function updateAction()
     {
-    	if (isset($this->_params['idtodo']) && intval($this->_params['idtodo']) > 0) {
-       		$oTodoModel = new \modules\backend\Models\Todo(intval($this->_params['idtodo']), $this->oUser);
-    	    $oTodo = $oTodoModel->getEntity();
-    		if (! is_null($oTodo) && $oTodo->isLoaded()) {
-    			$this->_view['oTodo'] = $oTodo;
-    		}
+        if (isset($this->_params['idtodo']) && intval($this->_params['idtodo']) > 0) {
+               $oTodoModel = new \modules\backend\Models\Todo(intval($this->_params['idtodo']), $this->oUser);
+            $oTodo = $oTodoModel->getEntity();
+            if (! is_null($oTodo) && $oTodo->isLoaded()) {
+                $this->_view['oTodo'] = $oTodo;
+            }
 
-    	}
-    	$this->render('todo/update.tpl');
+        }
+        $this->render('todo/update.tpl');
     }
 
     public function deleteAction()
     {
-    	if (isset($this->_params['pk']) && intval($this->_params['pk']) > 0) {
-    		$this->_view['pk'] = $this->_params['pk'];
-    	}
-    	$this->render('todo/delete.tpl');
+        if (isset($this->_params['pk']) && intval($this->_params['pk']) > 0) {
+            $this->_view['pk'] = $this->_params['pk'];
+        }
+        $this->render('todo/delete.tpl');
     }
 
 }

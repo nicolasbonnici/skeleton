@@ -23,10 +23,10 @@ class AuthController extends \Library\Core\Controller {
         if (isset($this->_params['email']) && isset($this->_params['password'])) {
 
             if($this->login()) {
-            	$sRedirectUrl = '/backend/';
-            	if (isset($this->_params['redirect']) && !empty($this->_params['redirect'])) {
-            		$sRedirectUrl = str_replace('*', '/', urldecode($this->_params['redirect']));
-            	}
+                $sRedirectUrl = '/backend/';
+                if (isset($this->_params['redirect']) && !empty($this->_params['redirect'])) {
+                    $sRedirectUrl = str_replace('*', '/', urldecode($this->_params['redirect']));
+                }
                 \Library\Core\Router::redirect($sRedirectUrl);
             }// @todo gestion erreur de login
 
@@ -53,7 +53,7 @@ class AuthController extends \Library\Core\Controller {
                     'pass' => hash('SHA256', $this->_params['password'])
                 )) === true
             ) {
-				$oUser->pass = null;
+                $oUser->pass = null;
                 foreach ($oUser as $key=>$mValue) {
                     $_SESSION[$key] = $mValue;
                 }

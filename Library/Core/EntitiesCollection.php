@@ -46,29 +46,29 @@ abstract class EntitiesCollection extends Collection {
      */
     public function load($sOrderBy = '', $sOrder = 'DESC', array $aLimit = array(0,50))
     {
-    	if (empty($sOrderBy)) {
-    		$sOrderBy = constant($this->sChildClass . '::PRIMARY_KEY');
-    	}
+        if (empty($sOrderBy)) {
+            $sOrderBy = constant($this->sChildClass . '::PRIMARY_KEY');
+        }
 
-    	if (!in_array($sOrder, array('ASC','DESC'))) {
-    		$sOrder = 'DESC';
-    	}
+        if (!in_array($sOrder, array('ASC','DESC'))) {
+            $sOrder = 'DESC';
+        }
 
-    	$sQuery = 'SELECT *
-    	FROM `' . constant($this->sChildClass . '::TABLE_NAME') . '`
-    	ORDER BY ' . $sOrderBy . ' ' . $sOrder . ' LIMIT ' .$aLimit[0] . ',' . $aLimit[1];
-    	try {
-    		$oStatement = Database::dbQuery($sQuery);
-    	} catch (\PDOException $oException) {
-    		throw new CoreEntityException('Unable to load collection of ' . $this->sChildClass . ' with query "' . $sQuery . '" ');
-    	}
-    	if ($oStatement !== false) {
-    		foreach ($oStatement->fetchAll(\PDO::FETCH_ASSOC) as $aObjectData) {
-    			$oObject = new $this->sChildClass();
-    			$oObject->loadByData($aObjectData);
-    			$this->add($oObject->getId(), $oObject);
-    		}
-    	}
+        $sQuery = 'SELECT *
+        FROM `' . constant($this->sChildClass . '::TABLE_NAME') . '`
+        ORDER BY ' . $sOrderBy . ' ' . $sOrder . ' LIMIT ' .$aLimit[0] . ',' . $aLimit[1];
+        try {
+            $oStatement = Database::dbQuery($sQuery);
+        } catch (\PDOException $oException) {
+            throw new CoreEntityException('Unable to load collection of ' . $this->sChildClass . ' with query "' . $sQuery . '" ');
+        }
+        if ($oStatement !== false) {
+            foreach ($oStatement->fetchAll(\PDO::FETCH_ASSOC) as $aObjectData) {
+                $oObject = new $this->sChildClass();
+                $oObject->loadByData($aObjectData);
+                $this->add($oObject->getId(), $oObject);
+            }
+        }
     }
 
     /**
@@ -226,23 +226,23 @@ abstract class EntitiesCollection extends Collection {
     }
 
 
-	/**
-	 * Search within the collection
-	 *
-	 * @todo ajouter la gestion des filtre pour obtenir des sous collection avec cette methode
-	 * @todo migrer cette methode vers entitiesCollection!!
-	 *
-	 * @param int|string $mKey
-	 * @param int|string $mValue
-	 * @return object|mixed|NULL Entity otherwhise NULL
-	 */
+    /**
+     * Search within the collection
+     *
+     * @todo ajouter la gestion des filtre pour obtenir des sous collection avec cette methode
+     * @todo migrer cette methode vers entitiesCollection!!
+     *
+     * @param int|string $mKey
+     * @param int|string $mValue
+     * @return object|mixed|NULL Entity otherwhise NULL
+     */
     public function search($mKey, $mValue)
     {
-    	foreach ($this->aElements as $iCollectionIndex=>$oEntity) {
-    		if (isset($oEntity->$mKey) && $oEntity->$mKey === $mValue) {
-    			return $oEntity;
-    		}
-    	}
+        foreach ($this->aElements as $iCollectionIndex=>$oEntity) {
+            if (isset($oEntity->$mKey) && $oEntity->$mKey === $mValue) {
+                return $oEntity;
+            }
+        }
         return NULL;
     }
 
@@ -254,8 +254,8 @@ abstract class EntitiesCollection extends Collection {
      */
     protected function sortElementsById($iFirstKey, $iSecondKey)
     {
-    	$aKeys = array_flip($this->aOriginIds);
-    	return ($aKeys[$iFirstKey] > $aKeys[$iSecondKey]) ? 1 : -1;
+        $aKeys = array_flip($this->aOriginIds);
+        return ($aKeys[$iFirstKey] > $aKeys[$iSecondKey]) ? 1 : -1;
     }
 }
 
