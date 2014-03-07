@@ -43,7 +43,7 @@
                  <button type="button" class="ui-reload btn btn-lg btn-default">
                      <span class="glyphicon glyphicon-refresh"></span> Raffraichir
                  </button>
-				 <button  href="#modal-todo" type="button" class="hide btn btn-lg btn-danger ui-sendxhr" data-url="/backend/todo/delete/" data-selector="#modal-create-content" role="button" data-toggle="modal">
+				 <button  href="#modal-todo" type="button" class="hide btn btn-lg btn-danger ui-sendxhr ui-delete-todos" data-url="/backend/todo/delete/" data-selector="#modal-create-content" role="button" data-toggle="modal">
 				    <span class="glyphicon glyphicon-trash"></span> Supprimer
 				 </button> 
 				 <button  href="#modal-todo" type="button" class="btn btn-lg btn-info ui-sendxhr" data-url="/backend/todo/create/" data-selector="#modal-todo-content" role="button" data-toggle="modal">
@@ -55,7 +55,7 @@
 				<thead>
 					<tr>
 						<th>
-							<input type="checkbox" class="ui-select-all" data-container="#todo-last-items" />
+							<input type="checkbox" class="ui-select-all ui-toggle" data-toggle-selector=".ui-delete-todos" data-checkbox-class="todos" data-container="#todo-last-items" />
 						</th>
 						<th>
 							Title

@@ -41,12 +41,12 @@
 
         {% block main %}{% endblock %}  
 
-		<script	type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script type="text/javascript" src="/lib/js/jquery-1.11.min.js"></script>
 		<script	type="text/javascript" src="/lib/plugins/layout/js/jquery.layout.min.js"></script>
 		<script type="text/javascript" src="/lib/plugins/bootstrap3/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/lib/plugins/pnotify/js/jquery.pnotify.js"></script>
+        <script type="text/javascript" src="/lib/js/core/ux.core.js"></script>
+        <script type="text/javascript" src="/lib/js/core/core.js"></script>
 		{% block js %}{% endblock %}
-		<script type="text/javascript" src="/lib/plugins/core/js/ux.core.js"></script>
-		<script type="text/javascript" src="/lib/plugins/core/js/core.js"></script>
     </body>
 </html>

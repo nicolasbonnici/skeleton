@@ -20,14 +20,14 @@ abstract class Crud {
      * Exceptions error code
      * @var integer
      */
-    const ERROR_ENTITY_EXISTS                  = 400;
-    const ERROR_USER_INVALID                = 401;
-    const ERROR_ENTITY_NOT_LOADED            = 402;
-    const ERROR_ENTITY_NOT_OWNED_BY_USER     = 403;
-    const ERROR_ENTITY_NOT_LOADABLE            = 404;
-    const ERROR_ENTITY_NOT_MAPPED_TO_USERS     = 405;
-    const ERROR_FORBIDDEN_BY_ACL             = 406;
-    const ERROR_ENTITY_EMPTY_ATTRIBUTE        = 407;
+    const ERROR_ENTITY_EXISTS                   = 400;
+    const ERROR_USER_INVALID                    = 401;
+    const ERROR_ENTITY_NOT_LOADED               = 402;
+    const ERROR_ENTITY_NOT_OWNED_BY_USER        = 403;
+    const ERROR_ENTITY_NOT_LOADABLE             = 404;
+    const ERROR_ENTITY_NOT_MAPPED_TO_USERS      = 405;
+    const ERROR_FORBIDDEN_BY_ACL                = 406;
+    const ERROR_ENTITY_EMPTY_ATTRIBUTE          = 407;
 
     /**
      * Current user instance (optional if $oEntity has no foreign key attribute to \app\Entities\User)

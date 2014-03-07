@@ -98,11 +98,11 @@ class CrudController extends \Library\Core\Auth {
             }
 
             if ($this->oCrudModel->create($aParameters)) {
-                $this->_view['bUpdateEntity'] = true;
+                $this->_view['bCreateEntity'] = true;
                 $this->_view['iStatus'] = self::XHR_STATUS_OK;
                 $this->_view['oEntity'] = $this->oCrudModel->getEntity();
             } else {
-                $this->_view['bUpdateEntity'] = false;
+                $this->_view['bCreateEntity'] = false;
             }
 
         } catch (\modules\backend\Models\CrudModelException $oException) {

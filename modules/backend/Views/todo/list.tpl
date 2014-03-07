@@ -2,13 +2,15 @@
 	{% for oTodo in oEntities %}
 	        <tr{% if oTodo.deadline > current_timestamp %} class="danger blackFontColor"{% endif %}>
 	            <td>
-	                <input type="checkbox" class="ui-select" name="idtodo" value="{{oTodo.idtodo}}" />
+	                <input type="checkbox" class="ui-select ui-toggle todos form-control input-lg" name="idtodo" value="{{oTodo.idtodo}}" data-toggle-selector=".ui-delete-todos" />
 	            </td>
                 <td>
-                    {{oTodo.label|safe}}
+                    <a href="#modal-todo" class="ui-sendxhr btn btn-link btn-lg" data-url="/backend/crud/read/" data-selector="#modal-todo-content" data-entity="Todo" data-view="todo/read.tpl" data-toggle="modal" data-pk="{{oTodo.idtodo}}" title="{{tr['view']}}">
+                        {{oTodo.label|safe}}
+                    </a>
                 </td>
 	            <td>
-	               <span class="ui-timestamp" data-timestamp="{{oTodo.deadline}}"></span>
+	               <p><span class="ui-timestamp" data-timestamp="{{oTodo.deadline}}"></span></p>
 	            </td>
 	            <td class="text-center">
 					<div class="btn-group">

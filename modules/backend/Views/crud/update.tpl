@@ -1,14 +1,9 @@
-    {% if bUpdateEntity|Exists %}
-        {% if bUpdateEntity %}
-        <div class="alert alert-success alert-dismissable">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          <h4>Succès!</h4>
-          <p>Votre vous pouvez éditer dès à présent votre nouvel enregistrement.</p>
-        </div>
-        {% else %}
-        <div class="alert alert-success alert-dismissable">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          <h4>Une erreur est survenue...</h4>
-        </div>
-        {% endif %}         
+{% if bUpdateEntity|Exists %}
+    {% if bUpdateEntity %}
+    <h4>Succès!</h4>
+    <p>L'enregistrement a correctement été mis à jour.</p>
+    {% else %}
+    <h4>Une erreur est survenue...</h4>
+    <p>Impossible de mettre à jour l'enregistrement, une erreur est survenue...</p>
     {% endif %}
+{% endif %}
