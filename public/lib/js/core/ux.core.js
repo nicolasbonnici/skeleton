@@ -3,7 +3,7 @@
 
                 var ux = {
 
-                    initLayout: function() {
+                    initAppLayout: function() {
                         //*************************************************** @layout *************************************************
 
                         // @see init layout application level (aka BO)
@@ -11,82 +11,83 @@
 
                             $('body').data('ui-layout-loaded', true);
                             
-                            this.layout = $('body').layout({
-                                    defaults: {
-                                            applyDefaultStyles: false,
-                                            fxName: 'drop',
-                                            fxSpeed: 300,
-                                            spacing_closed: 50,
-                                            spacing_open: 10,
-                                            resizerTip: 'Ouvrir/fermer',
-                                            sliderTip: 'Redimmensionner',
-                                            fxSettings_open: { easing: 'easeOutBounce' },
-                                            fxSettings_close: { easing: 'easeOutBounce' },
-                                            enableCursorHotkey: false,
+                            this.appLayout = $('body').layout({
+                                useStateCookie: true,
+                                cookie: {
+                                    name:   "sociable.ux.layout", // optional
+                                    expires: 90 // days
+                                },
+                                defaults: {
+                                    applyDefaultStyles: false,
+                                    fxName: 'drop',
+                                    fxSpeed: 300,
+                                    spacing_closed: 50,
+                                    spacing_open: 10,
+                                    resizerTip: 'Ouvrir/fermer',
+                                    sliderTip: 'Redimmensionner',
+                                    fxSettings_open: { easing: 'easeOutBounce' },
+                                    fxSettings_close: { easing: 'easeOutBounce' },
+                                    enableCursorHotkey: false
+                                },
+                                center: {
+                                    applyDefaultStyles: false,
+                                    spacing_closed: 0,
+                                    spacing_open: 0,
+                                    size: '100%'
+                                },
+                                north: {
+                                    applyDefaultStyles: true,
+                                    showOverflowOnHover: true,
+                                    spacing_closed: 0,
+                                    spacing_open: 0,
+                                    togglerLength_open: 0,
+                                    size: 52,
+                                    initClosed: false
+                                },
+                                south: {
+                                    applyDefaultStyles: false,                                
+                                    spacing_closed: 0,
+                                    spacing_open: 0,
+                                    size: 90,
+                                    togglerLength_closed: "100%",                                    
+                                    togglerLength_open: 50,
+                                    initClosed:    true,
+                                    onopen_end: function() {
+                                        return false;
                                     },
-                                    center: {
-                                            applyDefaultStyles: false,
-                                            spacing_closed: 0,
-                                            spacing_open: 0,
-                                            size: '100%'
-                                    },
-                                    north: {
-                                            applyDefaultStyles: true,
-                                            showOverflowOnHover: true,
-                                            spacing_closed: 0,
-                                            spacing_open: 0,
-                                            togglerLength_open: 0,
-                                            size: 52,
-                                            initClosed: false,
-                                            togglerTip_open: 'Consulter la liste des applications disponibles',
-                                            togglerTip_close: 'Fermer la liste des applications disponibles'
-                                    },
-                                    south: {
-                                            applyDefaultStyles: false,                                
-                                            spacing_closed: 0,
-                                            spacing_open: 0,
-                                            size: 90,
-                                            togglerLength_closed: "100%",                                    
-                                            togglerLength_open: 50,
-                                            initClosed:    true,
-                                            onopen_end: function() {
-                                                return false;
-                                            },
-                                            onclose_end: function() {
-                                                return false;
-                                            }                                    
-                                    },
-                                    east: {
-                                            size:  150,
-                                            applyDefaultStyles: false,
-                                            initClosed: true,
-                                            togglerLength_closed: 0,
-                                            togglerLength_open: 0,
-                                            spacing_open: 0,
-                                            spacing_closed: 0,
-                                            onopen_end: function() {
-                                                $('.ui-layout-east').addClass('ui-shadow');
-                                            },
-                                            onclose_end: function() {
-                                                $(this).removeClass('ui-shadow');                                                
-                                            }
-                                    },
-                                    west: {
-                                            size: 320,
-                                            applyDefaultStyles: false,
-                                            spacing_open: 0,
-                                            spacing_closed: 0,
-                                            togglerLength_closed: 0,
-                                            initClosed: true,
-                                            slideTrigger_close: 'mouseout',
-                                            slideTrigger_open: 'mouseover',                                             
-                                            onopen_end: function() {
-                                                $('.ui-layout-west').addClass('ui-shadow');
-                                            },
-                                            onclose_end: function() {
-                                                $(this).removeClass('ui-shadow');                                                
-                                            }                                    
+                                    onclose_end: function() {
+                                        return false;
                                     }                                    
+                                },
+                                east: {
+                                    size:  150,
+                                    applyDefaultStyles: false,
+                                    initClosed: true,
+                                    togglerLength_closed: 0,
+                                    togglerLength_open: 0,
+                                    spacing_open: 0,
+                                    spacing_closed: 0,
+                                    onopen_end: function() {
+                                        $('.ui-layout-east').toggleClass('ui-shadow');
+                                    },
+                                    onclose_end: function() {
+                                    }
+                                },
+                                west: {
+                                    size: 320,
+                                    applyDefaultStyles: false,
+                                    spacing_open: 0,
+                                    spacing_closed: 0,
+                                    togglerLength_closed: 0,
+                                    initClosed: true,
+                                    slideTrigger_close: 'mouseout',
+                                    slideTrigger_open: 'mouseover',                                             
+                                    onopen_end: function() {
+                                        $('.ui-layout-west').toggleClass('ui-shadow');
+                                    },
+                                    onclose_end: function() {
+                                    }                                    
+                                }                                    
                             });
                             // toggle panes
                             if ( $('.ui-pane-toggle').size() != 0 ) {
@@ -126,21 +127,21 @@
                                 $('.ui-pane-show').on('click', function() {
                                     
                                     if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                                        ux.layout.show($(this).attr('data-pane'), false); //@see second parameter to just slide but not open
+                                        ux.layout.show($(this).attr('data-pane'), false); 
                                     }
                                     
                                     return false;
                                 });                           
-                            }                                
-                            // pin btn @todo decliner et factoriser les autres type de boutons
+                            }
+                            // Pin button
                             if ( $('.ui-pane-pin').size() != 0 ) {    
-                                this.layout.addPinBtn('.ui-pane-pin', $('.ui-pane-pin').attr('data-pane'));
+                                this.appLayout.addPinBtn('.ui-pane-pin', $('.ui-pane-pin').attr('data-pane'));
                             }
 
                             // Sauvegrder en cookie l etat du layout
                             $(window).unload(function() { 
                                     // Sauvegarder l'organisation du layout
-                                    this.layoutState.save('layout'); // @see Bug sous certains navigateur contournÃ© ca 
+                                this.appLayout.save('layout');  
                             }); 
                                                         
 
@@ -608,6 +609,7 @@
                     var iColumnsCount = 4;
                     var iTwitterBootstrapGridClass = 3;
                     $('.ui-grid').each(function() {
+                        var sGridSelector = '#' + $(this).attr('id');
                         if (!$(this).data('grid-loaded')) {
                             if (parseInt($(this).data('columns')) > 0) {
                                 iColumnsCount  = parseInt($(this).data('columns'));
@@ -619,10 +621,9 @@
                                 $(this).append(sColumnTemplate);
                             }
                             
-                            $(this).data('grid-loaded', true);
                             $(this).data('curCol',0);
+                            $(this).data('grid-loaded', true);
                         }
-                        var sGridSelector = '#' + $(this).attr('id');
                         $(sGridSelector + ' .item').each(function() {
                             
                             if ((iColumnsIndex + 1)  > iColumnsCount) {
@@ -668,6 +669,33 @@
 ////                        }
 //                    });
 //                },             
+                
+                /**
+                 * Init forms element
+                 */
+                initForms: function() {
+                    $('form').each(function() {
+                        if (!$(this).data('HasChangesListnenerFired')) {
+                            $(this).data('bHasChange', false);
+                            $('body').on($(this).attr('id'), 'change', function() {
+                               $(this).data('bHasChange', true); 
+                            });
+                            $(this).data('HasChangesListnenerFired', true);
+                        } 
+                     });
+                    
+                    // Init bootstrap editable elements
+                    this.initEditableElements();
+                    
+                    // Init editors
+                    this.initEditors();
+                    
+                    // Init toggle checkbox
+                    this.initCheckbox();
+                    
+                    // Init Datepicker
+                    this.initDatepicker();
+                },
                 
                 /**
                  * Toggle button
@@ -735,28 +763,20 @@
                     });                                      
                     
                     // Fire app layout
-                    this.initLayout();                    
+                    this.initAppLayout();
                     
-                    // Init grids layout with Masonry
+                    // Init grids layout
                     this.initGrids();
                     
-                    // Init Datepicker
-                    this.initDatepicker();
-                    
-                    // Init editors
-                    this.initEditors();
+                    // Init forms
+                    this.initForms();
                     
                     // init timestamps to date
                     this.formatTimestamps();
-                    
-                    // Init bootstrap editable elements
-                    this.initEditableElements();
 
                     // Init tooltip
                     this.initTooltip();
-                    
-                    // Init toggle
-                    this.initCheckbox();
+
                     
                     // init carousel
                     if ($('.ui-carousel').size() > 0) {

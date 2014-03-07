@@ -27,6 +27,6 @@
     </div>
     <div class="modal-footer">
          <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">{{tr['cancel']}}</button>
-         <button type="submit" class="ui-sendform refreshOnCallback closeModalOnCallback sendNotificationOnCallback btn btn-lg btn-danger" data-view="todo/delete.tpl" data-form="#deleteTodo">Confirmer</button>    
+         <button type="submit" class="ui-sendform refreshOnCallback closeModalOnCallback sendNotificationOnCallback btn btn-lg btn-danger" data-form="#deleteTodo">Confirmer</button>    
     </div>	
 {% endif %}

@@ -5,12 +5,14 @@
 	                <input type="checkbox" class="ui-select todos form-control input-lg" name="idtodo" value="{{oTodo.idtodo}}" />
 	            </td>
                 <td>
-                    <a href="#modal-todo" class="ui-sendxhr showOnHover" data-url="/backend/crud/read/" data-selector="#modal-todo-content" data-entity="Todo" data-view="todo/read.tpl" data-toggle="modal" data-pk="{{oTodo.idtodo}}" title="{{tr['view']}}">
-                        {{oTodo.label|safe}} <span class="targetToShow glyphicon glyphicon-zoom-in"></span>
-                    </a>
+                    <h3 class="">
+                        <a href="#modal-todo" class="ui-sendxhr showOnHover" data-url="/backend/crud/read/" data-selector="#modal-todo-content" data-entity="Todo" data-view="todo/read.tpl" data-toggle="modal" data-pk="{{oTodo.idtodo}}" title="{{tr['view']}}">
+                            {{oTodo.label|safe}} <span class="targetToShow glyphicon glyphicon-zoom-in"></span>
+                        </a>
+                    </h3>
                 </td>
 	            <td>
-	               <p><span class="ui-timestamp" data-timestamp="{{oTodo.deadline}}"></span></p>
+	               <h3><span class="ui-timestamp" data-timestamp="{{oTodo.deadline}}"></span></h3>
 	            </td>
 	            <td class="text-center">
 					<div class="btn-group">

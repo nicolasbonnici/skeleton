@@ -81,6 +81,19 @@ $(document).ready(function() {
     	}  	
     });
     
+    // Modal close event with a updated form on it
+    $('.modal').on('hide', function() {
+        var sSelector = $(this).attr('id');
+        if ($(sSelector + ' form').size() !== 0) {
+            $.each($(sSelector + ' form'), function() {
+                if ($(this).data('bHasChange')) {
+                    alert('Warning!');
+                }
+            });
+        }
+    });
+
+    
     // popover
 	$('.ui-toggle-popover').popover({
 		container: 'body', 

@@ -1,7 +1,8 @@
 {% extends 'layout.tpl' %}
 
+{% block favicon %}/lib/img/aps/todo/icon.png{% endblock favicon %}
 {% block meta_title %}Todo!{% endblock meta_title %}
-{% block meta_description %}{% endblock meta_description %}
+{% block meta_description %}A simple note manager/reminder application{% endblock meta_description %}
 
 {% block js %}
 <script type="text/javascript" src="/lib/plugins/bootstrap-editable/js/bootstrap-editable.min.js"></script>
@@ -46,7 +47,7 @@ $(document).ready(function() {
 		<div class="col-md-12 column">
 			<div class="page-header">
 				<h1 class="showOnHover">
-					Todo! <small class="targetToShow">1.0</small>
+					<img src="/lib/img/apps/todo/icon.png" alt="App icon" />Todo! <small class="targetToShow">1.0</small>
 				</h1>
 			</div>
 		</div>
@@ -71,13 +72,13 @@ $(document).ready(function() {
 							<input type="checkbox" class="ui-select-all ui-toggle" data-toggle-selector=".ui-delete-todos" data-checkbox-class="todos" data-container="#todo-last-items" />
 						</th>
 						<th>
-							Title
+							<h3>Title</h3>
 						</th>
 						<th>
-							Deadline
+							<h3>Deadline</h3>
 						</th>
                         <th class="text-center">
-                            Actions
+                            <h3>Actions</h3>
                         </th>
 					</tr>
 				</thead>

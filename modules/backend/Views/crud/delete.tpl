@@ -1,5 +1,5 @@
-{% if bEntityDelete|Exists %}
-	{% if bEntityDelete %}
+{% if bDeleteEntity|Exists %}
+	{% if bDeleteEntity %}
           <h4>Suppression réussie!</h4>
           <p>Votre enregistrement à correctement été supprimé</p>
 	{% else %}

@@ -5,7 +5,7 @@
         <title>{% block meta_title %}Core{% endblock %}</title>
 
         <!-- Fav and touch icons -->
-        <link rel="shortcut icon" href="/lib/img/favicon.gif">              
+        <link rel="shortcut icon" href="{% block favicon %}/lib/img/favicon.gif{% endblock %}">              
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/lib/img/apple-touch-icon-144-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/lib/img/apple-touch-icon-114-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/lib/img/apple-touch-icon-72-precomposed.png">
