@@ -1,7 +1,7 @@
 (function($) {
         $.fn.userExperience = function(params) {
 
-                var ux = {
+                var Ux = {
 
                     initAppLayout: function() {
                         //*************************************************** @layout *************************************************
@@ -45,7 +45,7 @@
                                     initClosed: false
                                 },
                                 south: {
-                                    applyDefaultStyles: false,                                
+                                    applyDefaultStyles: false,
                                     spacing_closed: 0,
                                     spacing_open: 0,
                                     size: 90,
@@ -94,7 +94,7 @@
                                 $('.ui-pane-toggle').on('click', function() {
                                     
                                     if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                                        ux.layout.toggle($(this).attr('data-pane'));
+                                        Ux.layout.toggle($(this).attr('data-pane'));
                                     }
                                     
                                     return false;
@@ -105,7 +105,7 @@
                                 $('.ui-pane-open').on('click', function() {
                                     
                                     if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                                        ux.layout.open($(this).attr('data-pane'));
+                                        Ux.layout.open($(this).attr('data-pane'));
                                     }
                                     
                                     return false;
@@ -116,7 +116,7 @@
                                 $('.ui-pane-close').on('click', function() {
                                     
                                     if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                                        ux.layout.close($(this).attr('data-pane'));
+                                        Ux.layout.close($(this).attr('data-pane'));
                                     }
                                     
                                     return false;
@@ -127,7 +127,7 @@
                                 $('.ui-pane-show').on('click', function() {
                                     
                                     if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                                        ux.layout.show($(this).attr('data-pane'), false); 
+                                        Ux.layout.show($(this).attr('data-pane'), false); 
                                     }
                                     
                                     return false;
@@ -255,22 +255,22 @@
                                     success: function(rep) {
                                         switch(rep.status) {
                                             case 1:
-                                                ux.sendNotification(rep.content, 'success', 'glyphicon glyphicon-ok', false);
+                                                Ux.sendNotification(rep.content, 'success', 'glyphicon glyphicon-ok', false);
                                                 break;
                                             case 2:
-                                                ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-exclamation-sign', false);
+                                                Ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-exclamation-sign', false);
                                                 break;
                                             case 3:
-                                                ux.sendNotification(rep.content, 'warning', 'glyphicon glyphicon-time', false);
+                                                Ux.sendNotification(rep.content, 'warning', 'glyphicon glyphicon-time', false);
                                                 break;
                                             default:
-                                                ux.sendNotification(rep.content, 'info', 'glyphicon glyphicon-info', true);
+                                                Ux.sendNotification(rep.content, 'info', 'glyphicon glyphicon-info', true);
                                             break;                                                
                                         }
-                                        ux.loadView();
+                                        Ux.loadView();
                                     },
                                     error: function() {
-                                        ux.sendNotification('Unable to reach server...', 'error', 'glyphicon glyphicon-exclamation-sign', false);
+                                        Ux.sendNotification('Unable to reach server...', 'error', 'glyphicon glyphicon-exclamation-sign', false);
                                     }
                             };
                             
@@ -393,7 +393,7 @@
                             // Mettre en cache et vider l'objet qui contiendra la reponse
                             $domTarget.data('initialContent', $domTarget.html());                                    
                             $domTarget.empty();    
-                            ux.preload($domTarget.attr('id'));
+                            Ux.preload($domTarget.attr('id'));
 
                         },
                         success: function(rep){
@@ -402,22 +402,22 @@
                             } else {
                                 switch(rep.status) {
                                     case 1:
-                                        ux.sendNotification(rep.content, 'success', 'glyphicon glyphicon-check');
+                                        Ux.sendNotification(rep.content, 'success', 'glyphicon glyphicon-check');
                                         break;
                                     case 2:
-                                        ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-warning-sign');
+                                        Ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-warning-sign');
                                         break;
                                     case 3:
-                                        ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-warning-sign');
+                                        Ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-warning-sign');
                                         break;
                                     case 4:
-                                        ux.sendNotification(rep.content, 'info', 'glyphicon glyphicon-warning-sign');
+                                        Ux.sendNotification(rep.content, 'info', 'glyphicon glyphicon-warning-sign');
                                         break;
                                         
                                 }
                             }
                             if (oHandler.hasClass('refreshOnCallback')) {
-                                ux.loadView();
+                                Ux.loadView();
                             }
                         },
                         error: function(err){                            
@@ -469,16 +469,16 @@
                             } else {
                                 switch(rep.status) {
                                     case 1:
-                                        ux.sendNotification(rep.content, 'success', 'glyphicon glyphicon-check');
+                                        Ux.sendNotification(rep.content, 'success', 'glyphicon glyphicon-check');
                                         break;
                                     case 2:
-                                        ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-warning-sign');
+                                        Ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-warning-sign');
                                         break;
                                     case 3:
-                                        ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-warning-sign');
+                                        Ux.sendNotification(rep.content, 'error', 'glyphicon glyphicon-warning-sign');
                                         break;
                                     case 4:
-                                        ux.sendNotification(rep.content, 'info', 'glyphicon glyphicon-warning-sign');
+                                        Ux.sendNotification(rep.content, 'info', 'glyphicon glyphicon-warning-sign');
                                         break;
                                         
                                 }
@@ -492,11 +492,11 @@
                             $domTarget.removeData('initialContent');
                             
                             if (obj.hasClass('refreshOnCallback')) {
-                                ux.loadView();
+                                Ux.loadView();
                             }
                             
                             if (obj.hasClass('closeModalOnCallback')) {
-                                ux.closeModal();
+                                Ux.closeModal();
                             }
                         }
                     });
@@ -518,7 +518,7 @@
                             } else if (typeof($(this).data('url')) !== 'undefined') {
                                 sUrlTarget = $(this).data('url');
                             } else {
-                                ux.sendNotification('No url specified to load ui-loadable div #' + $(this).attr('id'), 'error', 'glyphicon glyphicon-warning', false);
+                                Ux.sendNotification('No url specified to load ui-loadable div #' + $(this).attr('id'), 'error', 'glyphicon glyphicon-warning', false);
                                 return false;
                             }
 
@@ -563,7 +563,7 @@
                     } else if (typeof(oItem.data('url')) !== 'undefined') {
                         sUrlTarget = oItem.data('url');
                     } else {
-                        ux.sendNotification('No url specified to load ui-loadable div #' + oItem.attr('id'), 'error', 'glyphicon glyphicon-warning', false);
+                        Ux.sendNotification('No url specified to load ui-loadable div #' + oItem.attr('id'), 'error', 'glyphicon glyphicon-warning', false);
                         return false;
                     }
                     
@@ -580,7 +580,7 @@
                             oItem.data('initialContent', oItem.html());                                   
                             $(sSelector).empty();
                             $container.data('grid-loaded', false);
-                            ux.sendNotification('Chargement en cours...', 'info', 'glyphicon glyphicon-info-sign');
+                            Ux.sendNotification('Chargement en cours...', 'info', 'glyphicon glyphicon-info-sign');
                         },
                         success: function(rep){
                             if (rep.status === 1) { // @see if XHR_STATUS_OK                                                                                                   
@@ -594,7 +594,7 @@
                         },
                         complete: function(){
                             $(sSelector).removeData('initialContent');
-                            ux.hideNotifications();
+                            Ux.hideNotifications();
                         }
                     });                       
                 },
@@ -635,40 +635,6 @@
                         });
                     });
                 },
-                
-
-//                initGrids: function() {
-//                    $('.ui-grid').each(function() {
-////                        if (!$(this).data('grid-loaded')) {
-//                            var iColumnsCount = 4;
-//                            var iTwitterBootstrapGridClass = 3;
-//                            if (parseInt($(this).data('columns')) > 0) {
-//                                iColumnsCount  = parseInt($(this).data('columns'));
-//                                iTwitterBootstrapGridClass = 12 % iColumnsCount;
-//                            }
-//                            
-//                            var sColumnTemplate = '<div class="column ui-grid-column col-md-' + iTwitterBootstrapGridClass +'"></div>';
-//                            for (var i = 0; i < iColumnsCount; i++) {
-//                                $(this).append(sColumnTemplate);
-//                            }
-// 
-//                            $(this).data('curCol', 0);
-//                            $('#' + $(this).attr('id') + ' .item').each(function(index) {
-//                                $(this).find('.ui-grid-column').eq($(this).data('curCol')).append($(this));
-//                                console.log($(this));
-//                                if ((($(this).data('curCol') + 1) > iColumnsCount)) {
-//                                    index = 0;
-//                                } else {
-//                                    index++;
-//                                }
-//                                $(this).data('curCol', index);
-//                                console.log(parseInt($(this).data('curCol')), parseInt(index));
-//                            });
-//                            
-////                            $(this).data('grid-loaded', true);
-////                        }
-//                    });
-//                },             
                 
                 /**
                  * Init forms element
@@ -739,6 +705,7 @@
                             $('#ui-tip').empty().hide();
                             $(this).attr('title', $(this).data('sTooltip'));
                         });
+                        // @todo bug
                         $(document).mousemove(function(event) {
                             if (!$('#ui-tip').hasClass('ui-tip-top') && event.pageY >= $('#ui-tip').offset().top) {
                                 $('#ui-tip').addClass('ui-tip-top');
@@ -750,17 +717,138 @@
                 },
                 
                 /**
+                 * Init carousel component
+                 */
+                initCarousels: function() {
+                    // init carousel
+                    $('.ui-carousel').each(function() {
+                        if (!$(this).data('carouselFired')) {
+                            $(this).carousel({
+                                interval: 2000,
+                                duration: 50
+                            });
+                            $(this).data('carouselFired', true);
+                        }
+                    });
+                },
+                
+                /**
+                 * Add Ux event listeners
+                 */
+                initEventListeners: function() {
+                    if (!$('body').data('UxListened')) {
+                        
+                        // Ux form helpers
+                        $('body').on('[placeholder]', 'focus',  function() {
+                            Ux.sendNotification($(this).attr('placeholder'), 'info', 'glyphicon glyphicon-info-sign');
+                        });                                      
+                        $('body').on('[placeholder]', 'blur',  function() {
+                            Ux.hideNotifications();
+                        });
+                        
+                        /**
+                         * ************* Events  ****************
+                         * Asynchrone request
+                         */ 
+                        
+                        // Envoyer une requete XHR lors d'un clic ou d'un change sur un select
+                        $('body').on('click', '.ui-sendxhr', function(){
+                            Ux.sendXHR($(this));
+                        });
+                        $('body').on('change', '.ui-sendxhronchange', function(){
+                            Ux.sendXHR($(this));
+                        });
+                        
+                        // Envoyer des formulaires en asynchrone
+                        $('body').on('click', '.ui-sendform', function() {      
+                            Ux.sendForm($(this));       
+                        });        
+                        
+                        // Envoyer des formulaires en asynchrone
+                        $('.ui-reload').on('click', function() {    
+                            if (typeof($(this).data('sreloadtarget')) !== 'undefined') {
+                                Ux.loadView($($(this).data('sreloadtarget')));      
+                            } else {
+                                Ux.loadView();
+                            }
+                            return false;
+                        });        
+                        
+                        // load on scroll
+                        $('.ui-loadscroll').scroll(function(){
+                            if ($(this).scrollTop() === ($(this).prop('scrollHeight') - $(this).outerHeight())){
+                                if ($(this).find('.ui-scroll-loadable')) {
+                                    $('.ui-scroll-loadable').each(function() {
+                                        Ux.sendNotification('Information', 'loading', 'info', 'glyphicon glyphicon-cog');
+                                        Ux.loadScroll($(this));                                 
+                                    });
+                                }
+                            }
+                            return false;
+                        });    
+
+                        /**
+                         * Ux bindings
+                         */
+                        
+                        // ui confirm @todo afficher une modale au lieu des dialogs natifs
+                        $('body').on('click', '.ui-confirm', function() {
+                            if (!confirm('Etes vous sure?')) {
+                                return false;
+                            }
+                        });
+                        
+                        // selectAll
+                        $('body').on('click', '.ui-select-all', function() {
+                            var sCheckboxSelector = $(this).data('checkbox-class');
+                            var bCheckState = $(this).is(':checked');
+                            if (typeof(sCheckboxSelector) !== 'undefined') {
+                                $('.ui-select.' + sCheckboxSelector).prop('checked', bCheckState);
+                            }
+                        });
+                        
+                        // toggle elements
+                        $('body').on('click', '.ui-toggle', function() {
+                            if ($($(this).data('toggle-selector')).size() !== 0) {
+                                $($(this).data('toggle-selector')).toggleClass('hide');
+                            }   
+                        });
+                        
+                        // Modal close event with a updated form on it
+                        $('.modal').on('hide', function() {
+                            var sSelector = $(this).attr('id');
+                            if ($(sSelector + ' form').size() !== 0) {
+                                $.each($(sSelector + ' form'), function() {
+                                    if ($(this).data('bHasChange')) {
+                                        alert('Warning!');
+                                    }
+                                });
+                            }
+                        });
+
+                        
+                        // popover
+                        $('.ui-toggle-popover').popover({
+                            container: 'body', 
+                            placement : 'auto', 
+                            html: true, 
+                            animation: true,
+                            content : function() {
+                                return $($(this).data('popover')).html();
+                            }
+                        });
+                        
+                        // Flag body
+                        $('body').data('UxListened', true);
+                    }
+                },
+                
+                /**
                  * Fire all ux components
                  */
-                initUi: function() {
-
-                    // Aide lors d'un focus sur input placehorder
-                    $('[placeholder]').on('focus', function() {
-                        ux.sendNotification($(this).attr('placeholder'), 'info', 'glyphicon glyphicon-info-sign');
-                    });                                      
-                    $('[placeholder]').on('blur', function() {
-                        ux.hideNotifications();
-                    });                                      
+                fireUx: function() {
+                    // Init events bindings
+                    this.initEventListeners();
                     
                     // Fire app layout
                     this.initAppLayout();
@@ -771,26 +859,20 @@
                     // Init forms
                     this.initForms();
                     
-                    // init timestamps to date
+                    // format timestamps to date
                     this.formatTimestamps();
 
                     // Init tooltip
                     this.initTooltip();
 
-                    
-                    // init carousel
-                    if ($('.ui-carousel').size() > 0) {
-                        $('.ui-carousel').carousel({
-                            interval: 2000,
-                            duration: 50
-                        });
-                    }
+                    // Init carroussel
+                    this.initCarousels();
 
                 }
-            }
+            };
 
             //~ // Permettre le chainage par jQuery
-            return ux;
+            return Ux;
         };
 })(jQuery);
 
