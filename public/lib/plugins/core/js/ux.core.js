@@ -604,21 +604,29 @@
                  */
                 initGrids: function() {
                     $('.ui-grid').each(function() {
-                        $container = $(this);
-                        if (!$container.data('grid-loaded')) {
+                        alert('ok');
+                        if (!$(this).data('grid-loaded')) {
+                            var iColumnsCount = 4;
+                            if (parseInt($(this).data('columns')) > 0) {
+                                iColumnsCount  = parseInt($(this).data('columns'));
+                                iTwitterBootstrapGridClass = 12 % iColumnsCount;
+                            }
                             
-                            $container.data('grid-loaded', true);      
-                            // On ajoute 4 colonnes @todo dynamiser avec un param
-                            $container.append('<div class="column ui-grid-column col-md-3"></div><div class="column ui-grid-column col-md-3"></div><div class="column ui-grid-column col-md-3"></div><div class="column ui-grid-column col-md-3"></div>');
+                            var sColumnTemplate = '<div class="column ui-grid-column col-md-' + iTwitterBootstrapGridClass +'"></div>';
+                            for (i = 0; i < iColumnsCount; $i++) {
+                                $(this).append(sColumnTemplate);
+                            }
+                            
+                            $(this).data('curCol',0);
+                            $('#' + $(this).attr('id') + ' .item').each(function(index) {
+                                $(this).find('.ui-grid-column').eq($(this).data('curCol')).append($(this));
+                                var iCurrentColumnIndex = (($(this).data('curCol') + 1) > iColumnsCount) ? 0 : ($(this).data('curCol') + 1); // @see reset @ > 3               
+                                $(this).data('curCol', iCurrentColumnIndex);
+                                console.log($(this).data('curCol'), iCurrentColumnIndex);
+                            });
+                            
+                            $(this).data('grid-loaded', true);
                         }
-                        
-                        $container.data('curCol',0);
-                        $('#' + $container.attr('id') + ' .item').each(function(index) {
-                            $container.find('.ui-grid-column').eq($container.data('curCol')).append($(this));
-                            var iCurrentColumnIndex = (($container.data('curCol') + 1) > 3) ? 0 : ($container.data('curCol') + 1); // @see reset @ > 3               
-                            $container.data('curCol', iCurrentColumnIndex);
-                            //console.log($container.data('curCol'), $('#ui-grid .item').length);
-                        });                        
                     });
                 },
                 

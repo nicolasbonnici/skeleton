@@ -29,11 +29,11 @@
         <link href="/lib/plugins/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
         <link href="/lib/plugins/bootstrap3/css/bootstrap-theme.min.css" rel="stylesheet">
         <link href="/lib/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet">
-        <link href="/lib/plugins/core/css/core.classes.css" rel="stylesheet">
+        <link href="/lib/css/core.classes.css" rel="stylesheet">
         <link href="/lib/plugins/pnotify/css/jquery.pnotify.default.css" rel="stylesheet">
         <link href="/lib/plugins/pnotify/css/jquery.pnotify.default.icons.css" rel="stylesheet">
-        <link href="/lib/plugins/core/css/core.ui.css" rel="stylesheet">        
-        <link href="/lib/css/style.css" rel="stylesheet">        
+        <link href="/lib/css/core.ui.css" rel="stylesheet">
+        <link href="/lib/css/style.css" rel="stylesheet">
                
         {% block css %}{% endblock %}            
     </head>

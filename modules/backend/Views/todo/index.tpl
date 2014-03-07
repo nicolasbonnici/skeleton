@@ -8,6 +8,19 @@
 <script type="text/javascript" src="/lib/plugins/summernote/js/summernote.js"></script>
 <script type="text/javascript" src="/lib/plugins/moment/js/moment.min.js"></script>
 <script type="text/javascript" src="/lib/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    // Show the delete btn for several checked checkbox
+    $('body').on('.ui-select.todos', 'click', function() {
+       alert($('.ui-select.todos:checked').size());
+       if ($('.ui-select.todos:checked').size() > 1) {
+           $('.ui-delete-todos').removeClass('hide');
+       } else {
+           $('.ui-delete-todos').addClass('hide');
+       }
+    });
+});
+</script>
 {% endblock %}
 
 {% block css %}

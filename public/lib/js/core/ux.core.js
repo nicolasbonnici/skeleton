@@ -599,28 +599,75 @@
                 },
                 
                 /**
-                 * Faire un plugin de ca
-                 * @todo ne pas recalculer tout systematiquement uniquement les item ajoutés via xhr
+                 * Vue en grid
+                 * @todo Faire un plugin de ca
+                 * @todo Ajouter un type de colonne hybride qui cale tout en largeur
                  */
                 initGrids: function() {
+                    var iColumnsIndex = 0;
+                    var iColumnsCount = 4;
+                    var iTwitterBootstrapGridClass = 3;
                     $('.ui-grid').each(function() {
-                        $container = $(this);
-                        if (!$container.data('grid-loaded')) {
+                        if (!$(this).data('grid-loaded')) {
+                            if (parseInt($(this).data('columns')) > 0) {
+                                iColumnsCount  = parseInt($(this).data('columns'));
+                                iTwitterBootstrapGridClass = 12 % iColumnsCount;
+                            }
                             
-                            $container.data('grid-loaded', true);      
-                            // On ajoute 4 colonnes @todo dynamiser avec un param
-                            $container.append('<div class="column ui-grid-column col-md-3"></div><div class="column ui-grid-column col-md-3"></div><div class="column ui-grid-column col-md-3"></div><div class="column ui-grid-column col-md-3"></div>');
+                            var sColumnTemplate = '<div class="column ui-grid-column col-md-' + iTwitterBootstrapGridClass +'"></div>';
+                            for (var i = 0; i < iColumnsCount; i++) {
+                                $(this).append(sColumnTemplate);
+                            }
+                            
+                            $(this).data('grid-loaded', true);
+                            $(this).data('curCol',0);
                         }
-                        
-                        $container.data('curCol',0);
-                        $('#' + $container.attr('id') + ' .item').each(function(index) {
-                            $container.find('.ui-grid-column').eq($container.data('curCol')).append($(this));
-                            var iCurrentColumnIndex = (($container.data('curCol') + 1) > 3) ? 0 : ($container.data('curCol') + 1); // @see reset @ > 3               
-                            $container.data('curCol', iCurrentColumnIndex);
-                            //console.log($container.data('curCol'), $('#ui-grid .item').length);
-                        });                        
+                        var sGridSelector = '#' + $(this).attr('id');
+                        $(sGridSelector + ' .item').each(function() {
+                            
+                            if ((iColumnsIndex + 1)  > iColumnsCount) {
+                                iColumnsIndex = 0;
+                            }
+                            $(sGridSelector + ' .ui-grid-column').eq(iColumnsIndex).append($(this));
+                            iColumnsIndex++;
+                            $(this).data('curCol', iColumnsIndex);                            
+                        });
                     });
                 },
+                
+
+//                initGrids: function() {
+//                    $('.ui-grid').each(function() {
+////                        if (!$(this).data('grid-loaded')) {
+//                            var iColumnsCount = 4;
+//                            var iTwitterBootstrapGridClass = 3;
+//                            if (parseInt($(this).data('columns')) > 0) {
+//                                iColumnsCount  = parseInt($(this).data('columns'));
+//                                iTwitterBootstrapGridClass = 12 % iColumnsCount;
+//                            }
+//                            
+//                            var sColumnTemplate = '<div class="column ui-grid-column col-md-' + iTwitterBootstrapGridClass +'"></div>';
+//                            for (var i = 0; i < iColumnsCount; i++) {
+//                                $(this).append(sColumnTemplate);
+//                            }
+// 
+//                            $(this).data('curCol', 0);
+//                            $('#' + $(this).attr('id') + ' .item').each(function(index) {
+//                                $(this).find('.ui-grid-column').eq($(this).data('curCol')).append($(this));
+//                                console.log($(this));
+//                                if ((($(this).data('curCol') + 1) > iColumnsCount)) {
+//                                    index = 0;
+//                                } else {
+//                                    index++;
+//                                }
+//                                $(this).data('curCol', index);
+//                                console.log(parseInt($(this).data('curCol')), parseInt(index));
+//                            });
+//                            
+////                            $(this).data('grid-loaded', true);
+////                        }
+//                    });
+//                },             
                 
                 /**
                  * Toggle button
