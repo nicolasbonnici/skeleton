@@ -39,8 +39,8 @@ class CrudController extends \Library\Core\Auth {
         $this->_view['iStatus'] = self::XHR_STATUS_ERROR;
 
         if (
-            count($this->aEntitiesScope) > 0
-            && !in_array($this->_params['entity'], $this->aEntitiesScope)
+            count($this->aEntitiesScope) > 0 &&
+            !in_array($this->_params['entity'], $this->aEntitiesScope)
         ) {
             throw new ControllerException('Entity restricted in CrudController scope', \modules\backend\Models\Crud::ERROR_FORBIDDEN_BY_ACL);
         }

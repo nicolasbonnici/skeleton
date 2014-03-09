@@ -688,35 +688,6 @@
                 },
                 
                 /**
-                 * Tooltip helper on title attribute
-                 */
-                initTooltip: function() {
-                    if (! $('body').data('tooltip-fired')) {
-                        $('body').data('tooltip-fired', true);
-                        // Tooltip
-                        if ($('#ui-tip').size() === 0) {
-                            $('body').append('<div id="ui-tip" class="transparentBlackBg blackTextShadow GPUrender ui-shadow"></div>');
-                        }
-                        $('body').on('mouseenter', '[title]', function() {
-                            $('#ui-tip').append('<p><span class="glyphicon glyphicon-info-sign"></span> ' + $(this).attr('title') + '</p>').show();
-                            $(this).data('sTooltip', $(this).attr('title')).attr('title', '');
-                        });
-                        $('body').on('mouseleave', '[title]', function() {
-                            $('#ui-tip').empty().hide();
-                            $(this).attr('title', $(this).data('sTooltip'));
-                        });
-                        // @todo bug
-                        $(document).mousemove(function(event) {
-                            if (!$('#ui-tip').hasClass('ui-tip-top') && event.pageY >= $('#ui-tip').offset().top) {
-                                $('#ui-tip').addClass('ui-tip-top');
-                            } else {
-                                $('#ui-tip').removeClass('ui-tip-top');
-                            }
-                        });
-                    }
-                },
-                
-                /**
                  * Init carousel component
                  */
                 initCarousels: function() {
@@ -838,6 +809,15 @@
                             }
                         });
                         
+//                        // Tooltip
+//                        $('a, button, input[type=submit]').tooltip({
+//                            placement: 'auto',
+//                            delay: 0,
+//                            title: function() {
+//                                return $(this).text();
+//                            }
+//                        });
+                        
                         // Flag body
                         $('body').data('UxListened', true);
                     }
@@ -861,9 +841,6 @@
                     
                     // format timestamps to date
                     this.formatTimestamps();
-
-                    // Init tooltip
-                    this.initTooltip();
 
                     // Init carroussel
                     this.initCarousels();

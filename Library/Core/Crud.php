@@ -13,8 +13,8 @@ abstract class Crud {
     /**
      * @var string
      */
-    const ENTITIES_NAMESPACE             = '\app\Entities\\';
-    const ENTITIES_COLLECTION_NAMESPACE = '\app\Entities\Collection\\';
+    const ENTITIES_NAMESPACE                = '\app\Entities\\';
+    const ENTITIES_COLLECTION_NAMESPACE     = '\app\Entities\Collection\\';
 
     /**
      * Exceptions error code

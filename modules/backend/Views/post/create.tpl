@@ -1,34 +1,38 @@
-	{% if bCreateNewPost|Exists %}
-	    {% if bCreateNewPost %}
-	    <div class="alert alert-success alert-dismissable">
-	      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-	      <h4>Todo créer avec succès!</h4>
-	      <p>Votre post est correctement enregistré, vous pouvez l'éditer dès à présent.</p>
-	      <p><button type="button" class="btn btn-primary" data-dismiss="modal">Fermer cette fenêtre</button></p>
+
+  <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h4 class="modal-title" id="myModalLabel">
+          Nouveau Post!
+      </h4>
+  </div>
+  
+  <div id="modal-create-content" class="modal-body">
+	<form role="form" id="newPostForm" action="/backend/crud/create/" data-entity="Post" data-view="crud/create.tpl" method="post">
+	    <div class="form-group">
+	        <label>Titre du post</label>
+            <input type="text" name="label" class="form-control input-lg" placeholder="Entrez le titre de votre post" value="{% if title|Exists %}{{title}}{% endif %}" />
+	    </div>   
+	    <div class="form-group">
+	        <label>Deadline</label>
+	        <div class="input-group date ui-datetimepicker">
+	            <input type="text" class="form-control input-lg" placeholder="La date butoire de ce post" />
+	            <span class="input-group-addon">
+	               <span class="glyphicon glyphicon-calendar"></span>
+	            </span>
+	        </div>
 	    </div>
-	    {% else %}
-	    <div class="alert alert-success alert-dismissable">
-	      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          <h4>Une erreur est survenue...</h4>
-          <p>Une erreur empèche l'enregistrement de votre post, veuillez vous assurer que les champs sont correctement remlis.</p>
+	    
+	    <div class="form-group">
+	        <label>Contenu</label>
+	        <div class="ui-editor" data-name="content" data-placeholder="Vous pouvez mettre en form votre post à l'aide de la barre d'outils de mise en forme">
+	        {% if content|Exists %}{{content}}{% endif %}
+	        </div>
 	    </div>
-	    {% endif %}
-	{% else %}
-        <form role="form" id="newPostForm" action="/backend/post/create/" method="post">
-            <div class="form-group">
-                <label>Titre</label> 
-                {#<a href="#" class="ui-editable" data-entity="Post" data-name="title" data-module="backend" data-controller="crud" data-action="update">
-                </a>#}
-                <input type="text" name="title" class="form-control input-lg" placeholder="Entrez le titre de votre post" value="{% if title|Exists %}{{title}}{% endif %}" />
-            </div>
-            <div class="form-group">
-                <label>Contenu</label>
-                <div class="ui-editor" data-name="content">
-                {% if content|Exists %}{{content}}{% endif %}
-                </div>
-                <p class="help-block">
-                    Vous pouvez mettre en form votre post à l'aide de la barre d'outils de mise en forme
-                </p>
-            </div>
-        </form> 		    
-    {% endif %}
+	</form> 		    
+  
+  </div> 
+
+  <div class="modal-footer">
+       <button type="button" class="btn btn-lg btn-default" data-dismiss="modal">{{tr['cancel']}}</button>
+       &nbsp;<button type="button" class="btn btn-lg btn-primary ui-sendform refreshOnCallback sendNotificationOnCallback" data-form="#newPostForm" title="Enregistrer ce post">{{tr['save']}}</button>
+  </div>    	
