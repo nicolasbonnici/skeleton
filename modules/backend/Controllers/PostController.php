@@ -20,12 +20,17 @@ class PostController extends \Library\Core\Auth {
         $this->render('post/index.tpl');
     }
 
-    public function createAction()
+    public function dashboardAction()
     {
-        $this->render('post/create.tpl');
+        $this->render('post/dashboard.tpl');
     }
 
-    public function readAction()
+    public function createPostAction()
+    {
+        $this->render('post/createPost.tpl');
+    }
+
+    public function readPostAction()
     {
         if (isset($this->_params['idpost']) && intval($this->_params['idpost']) > 0) {
             $oTodoModel = new \modules\backend\Models\Post(intval($this->_params['idpost']), $this->oUser);
@@ -35,10 +40,10 @@ class PostController extends \Library\Core\Auth {
             }
 
         }
-        $this->render('post/read.tpl');
+        $this->render('post/readPost.tpl');
     }
 
-    public function updateAction()
+    public function updatePostAction()
     {
         if (isset($this->_params['idpost']) && intval($this->_params['idpost']) > 0) {
             $oTodoModel = new \modules\backend\Models\Post(intval($this->_params['idpost']), $this->oUser);
@@ -48,15 +53,20 @@ class PostController extends \Library\Core\Auth {
             }
 
         }
-        $this->render('post/update.tpl');
+        $this->render('post/updatePost.tpl');
     }
 
-    public function deleteAction()
+    public function deletePostAction()
     {
         if (isset($this->_params['pk']) && intval($this->_params['pk']) > 0) {
             $this->_view['pk'] = $this->_params['pk'];
         }
-        $this->render('post/delete.tpl');
+        $this->render('post/deletePost.tpl');
+    }
+
+    public function postsAction()
+    {
+        $this->render('post/posts.tpl');
     }
 
 }

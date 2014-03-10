@@ -45,51 +45,35 @@ $(document).ready(function() {
 
 	<div class="row clearfix transparentBlackBg rounded well ui-transition ui-shadow">
 		<div class="col-md-12 column">
-			<div class="page-header">
-				<h1 class="showOnHover">
-					<img src="/lib/img/apps/post/icon.png" alt="App icon" />Blogging app <small class="targetToShow">1.0</small>
-				</h1>
-			</div>
+    		<h1 class="showOnHover">
+    			<img src="/lib/img/apps/post/icon.png" alt="App icon" />Blogging app <small class="targetToShow">1.0</small>
+    		</h1>
+            <ul class="nav nav-pills">
+              <li class="active"><a href="#" class="ui-sendxhr" data-url="/backend/post/dashboard/" data-selector="#dashboard" role="button">Dashboard</a></li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  Posts <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#modal-post" type="button" class="ui-sendxhr" data-url="/backend/post/createPost/" data-selector="#modal-post-content" role="button" data-toggle="modal">
+                            <span class="glyphicon glyphicon-file"></span> Nouveau
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#modal-post" type="button" class="ui-sendxhr" data-url="/backend/post/posts/" data-selector="#dashboard" role="button">
+                            <span class="glyphicon glyphicon-file"></span> Gérer
+                        </a>
+                    </li>
+                </ul>
+              </li>              
+              <li><a href="#">Comments</a></li>
+              <li><a href="#">Settings</a></li>
+            </ul>
 		</div>
-
-		<div class="col-md-12 column">
-			<div class="btn-group btn-group-lg">
-                 <button type="button" class="ui-reload btn btn-lg btn-default" title="Refresh!">
-                     <span class="glyphicon glyphicon-refresh"></span> Raffraichir
-                 </button>
-				 <button  href="#modal-post" type="button" class="hide btn btn-lg btn-danger ui-sendxhr ui-delete-posts" data-url="/backend/post/delete/" data-selector="#modal-create-content" role="button" data-toggle="modal">
-				    <span class="glyphicon glyphicon-trash"></span> Supprimer
-				 </button> 
-				 <button  href="#modal-post" type="button" class="btn btn-lg btn-info ui-sendxhr" data-url="/backend/post/create/" data-selector="#modal-post-content" role="button" data-toggle="modal">
-				    <span class="glyphicon glyphicon-file"></span> New post!
-				 </button> 
-			</div>
-
-			<table id="post-last-items" class="table table-responsive">
-				<thead>
-					<tr>
-						<th>
-							<input type="checkbox" class="ui-select-all ui-toggle" data-toggle-selector=".ui-delete-posts" data-checkbox-class="posts" data-container="#post-last-items" />
-						</th>
-						<th>
-							<h3>Title</h3>
-						</th>
-						<th>
-							<h3>Status</h3>
-						</th>
-						<th>
-							<h3>Last edited</h3>
-						</th>
-                        <th class="text-center">
-                            <h3>Actions</h3>
-                        </th>
-					</tr>
-				</thead>
-				<tbody id="postList" class="ui-loadable" data-entity="Post" data-view="post/list.tpl" data-parameters="" data-module="backend" data-controller="crud" data-action="listByUser">
-
-				</tbody>
-			</table>
-		</div>
+        
+		<div class="col-md-12 column" id="dashboard">
+        </div>
 	</div>
 
 {% endblock %}
