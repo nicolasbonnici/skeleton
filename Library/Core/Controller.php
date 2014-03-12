@@ -48,12 +48,12 @@ class Controller extends Acl {
             // @see pre dispatch action
             if (method_exists($this, '__preDispatch')) {
 
-//                 try {
+                try {
                     $this->__preDispatch();
-//                 } catch (Library\Core\ControllerException $oException) {
-//                     throw new ControllerException('Pre dispatch action throw an exception: ' . $oException->getMessage(), $oException->getCode());
-//                     exit;
-//                 }
+                } catch (Library\Core\ControllerException $oException) {
+                    throw new ControllerException('Pre dispatch action throw an exception: ' . $oException->getMessage(), $oException->getCode());
+                    exit;
+                }
 
             }
 
@@ -133,8 +133,8 @@ class Controller extends Acl {
         $this->_view['framework_started'] = FRAMEWORK_STARTED;
         $this->_view['current_timestamp'] = time();
 
-        // @see check if it's an XMLHTTPREQUEST
-        if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+        // check if it's an XMLHTTPREQUEST
+        if($this->isXHR()) {
             //var_dump($this->_view);
 
             $aResponse = json_encode(array(
@@ -158,53 +158,62 @@ class Controller extends Acl {
 
     }
 
-    public function buildModules() {
+// @todo migrer dans une couche model de /app
+//     public function buildModules() {
 
-        assert('is_dir(MODULES_PATH)');
+//         assert('is_dir(MODULES_PATH)');
 
-        $aMenu = array();
-        $aModules = array_diff(scandir(MODULES_PATH), array('..', '.'));
+//         $aMenu = array();
+//         $aModules = array_diff(scandir(MODULES_PATH), array('..', '.'));
 
-        foreach($aModules as $sModule) {
-            $aMenu[$sModule] = $this->buildControllers($sModule);
-        }
+//         foreach($aModules as $sModule) {
+//             $aMenu[$sModule] = $this->buildControllers($sModule);
+//         }
 
-        return $aMenu;
-    }
+//         return $aMenu;
+//     }
 
 
-    public function buildControllers($sModule) {
+//     public function buildControllers($sModule) {
 
-        assert('!empty($sModule) && is_string($sModule) && is_dir(MODULES_PATH . "/" . $this->_module . "/Controllers/")');
+//         assert('!empty($sModule) && is_string($sModule) && is_dir(MODULES_PATH . "/" . $this->_module . "/Controllers/")');
 
-        $aControllers = array();
-        $sControllerPath = MODULES_PATH . '/' . $sModule . '/Controllers/';
-        $aFiles = array_diff(scandir($sControllerPath), array('..', '.'));
+//         $aControllers = array();
+//         $sControllerPath = MODULES_PATH . '/' . $sModule . '/Controllers/';
+//         $aFiles = array_diff(scandir($sControllerPath), array('..', '.'));
 
-        foreach ($aFiles as $sController) {
-            if (preg_match('#Controller.php$#', $sController)) {
-                $aControllers[substr($sController, 0, strlen($sController) - strlen('Controller.php'))] = $this->buildActions($sModule, $sController);
-            }
-        }
+//         foreach ($aFiles as $sController) {
+//             if (preg_match('#Controller.php$#', $sController)) {
+//                 $aControllers[substr($sController, 0, strlen($sController) - strlen('Controller.php'))] = $this->buildActions($sModule, $sController);
+//             }
+//         }
 
-        return $aControllers;
-    }
+//         return $aControllers;
+//     }
 
-    public function buildActions($sModule, $sController) {
+//     public function buildActions($sModule, $sController) {
 
-        assert('!empty($sController) && is_string($sController) && !empty($sModule) && is_string($sModule)');
-        $aActions = array();
-        $aMethods = get_class_methods('\modules\\' . $sModule . '\Controllers\\' . substr($sController, 0, strlen($sController) - strlen('.php')));
-        if (count($aMethods) > 0) {
-            foreach ($aMethods as $sMethod) {
-                if (preg_match('#Action$#', $sMethod) && $sMethod !== 'getAction' && $sMethod !== 'setAction') {
-                    $aActions[] = substr($sMethod, 0, strlen($sMethod) - strlen('Action'));
-                }
-            }
-        }
+//         assert('!empty($sController) && is_string($sController) && !empty($sModule) && is_string($sModule)');
+//         $aActions = array();
+//         $aMethods = get_class_methods('\modules\\' . $sModule . '\Controllers\\' . substr($sController, 0, strlen($sController) - strlen('.php')));
+//         if (count($aMethods) > 0) {
+//             foreach ($aMethods as $sMethod) {
+//                 if (preg_match('#Action$#', $sMethod) && $sMethod !== 'getAction' && $sMethod !== 'setAction') {
+//                     $aActions[] = substr($sMethod, 0, strlen($sMethod) - strlen('Action'));
+//                 }
+//             }
+//         }
 
-        return $aActions;
+//         return $aActions;
 
+//     }
+
+    /**
+     * Tell if the request is a XmlHttpRequest
+     * @return boolean
+     */
+    protected function isXHR() {
+    	return (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
     }
 
     protected function loadRequest() {

@@ -3,13 +3,12 @@
 namespace modules\backend\Controllers;
 
 /**
- * Description of PostController
+ * Backoffice blogging app
  *
- * @author info
+ * @author niko
  */
-use app\Entities\PostCollection;
 
-class PostController extends \Library\Core\Auth {
+class BlogController extends \Library\Core\Auth {
 
     public function __preDispatch() {}
 
@@ -17,43 +16,43 @@ class PostController extends \Library\Core\Auth {
 
     public function indexAction()
     {
-        $this->render('post/index.tpl');
+        $this->render('blog/index.tpl');
     }
 
     public function dashboardAction()
     {
-        $this->render('post/dashboard.tpl');
+        $this->render('blog/dashboard.tpl');
     }
 
     public function createPostAction()
     {
-        $this->render('post/createPost.tpl');
+        $this->render('blog/createPost.tpl');
     }
 
     public function readPostAction()
     {
         if (isset($this->_params['idpost']) && intval($this->_params['idpost']) > 0) {
-            $oTodoModel = new \modules\backend\Models\Post(intval($this->_params['idpost']), $this->oUser);
+            $oTodoModel = new \modules\backend\Models\Blog(intval($this->_params['idpost']), $this->oUser);
             $oTodo = $oTodoModel->read();
             if (! is_null($oTodo) && $oTodo->isLoaded()) {
                 $this->_view['oTodo'] = $oTodo;
             }
 
         }
-        $this->render('post/readPost.tpl');
+        $this->render('blog/readPost.tpl');
     }
 
     public function updatePostAction()
     {
         if (isset($this->_params['idpost']) && intval($this->_params['idpost']) > 0) {
-            $oTodoModel = new \modules\backend\Models\Post(intval($this->_params['idpost']), $this->oUser);
+            $oTodoModel = new \modules\backend\Models\Blog(intval($this->_params['idpost']), $this->oUser);
             $oTodo = $oTodoModel->getEntity();
             if (! is_null($oTodo) && $oTodo->isLoaded()) {
                 $this->_view['oTodo'] = $oTodo;
             }
 
         }
-        $this->render('post/updatePost.tpl');
+        $this->render('blog/updatePost.tpl');
     }
 
     public function deletePostAction()
@@ -61,12 +60,12 @@ class PostController extends \Library\Core\Auth {
         if (isset($this->_params['pk']) && intval($this->_params['pk']) > 0) {
             $this->_view['pk'] = $this->_params['pk'];
         }
-        $this->render('post/deletePost.tpl');
+        $this->render('blog/deletePost.tpl');
     }
 
     public function postsAction()
     {
-        $this->render('post/posts.tpl');
+        $this->render('blog/posts.tpl');
     }
 
 }

@@ -38,11 +38,6 @@ class Router extends Singleton {
                         'controller' => 'user',
                         'action'    => 'profile'
                 ),
-                '/blog' => array(
-                        'module'    => 'frontend',
-                        'controller' => 'blog',
-                        'action'    => 'index'
-                ),
                 '/portfolio' => array(
                         'module'    => 'frontend',
                         'controller' => 'home',
@@ -57,6 +52,11 @@ class Router extends Singleton {
                         'module'    => 'frontend',
                         'controller' => 'home',
                         'action'    => 'contact'
+                ),
+                '/blog' => array(
+                        'module'    => 'backend',
+                        'controller' => 'blog',
+                        'action'    => 'index'
                 ),
                 '/todo' => array(
                         'module'        => 'backend',

@@ -30,7 +30,7 @@ class Auth extends Controller {
         ) {
             parent::__construct($this->oUser);
         } else {
-            Router::redirect('/frontend/auth/index/redirect/' . urlencode(str_replace('/', '*', '/' . Router::getModule() . '/' . Router::getController() . '/' . Router::getAction())));
+            Router::redirect($this->buildRedirectUrl());
         }
 
     }
@@ -52,6 +52,7 @@ class Auth extends Controller {
                 )
             );
         } catch(CoreEntityException $oException) {}
+
         if ($this->oUser->isLoaded()) {
 
             foreach ($this->oUser as $key=>$mValue) {
@@ -78,6 +79,15 @@ class Auth extends Controller {
      */
     private function generateToken() {
         return hash('SHA256', uniqid((double)microtime()*1000000, true));
+    }
+
+    /**
+     * Build the redirect url if the auth failed
+     * @return string
+     */
+    private function buildRedirectUrl()
+    {
+        return (($this->isXHR()) ? '/frontend/error/e403/' : '/frontend/auth/index/') . 'redirect/' . urlencode(str_replace('/', '*',  Router::getModule() . '/' . Router::getController() . '/' . Router::getAction()));
     }
 
 }

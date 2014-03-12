@@ -2,14 +2,17 @@
 
 namespace modules\backend\Models;
 
-class Posts {
+class Blog {
 
     /**
      * Post available status
      */
-    const STATUS_PUBLISHED        = 'published';
-    const STATUS_UNPUBLISHED    = 'unpublished';
-    const STATUS_NEED_AUTH        = 'needauth';
+    const POST_STATUS_PUBLISHED        = 'published';
+    const POST_STATUS_NEVER_PUBLISHED  = 'neverpublished'; // @todo jamais publié
+    const POST_STATUS_UNPUBLISHED      = 'unpublished';
+    const POST_STATUS_DELETED          = 'deleted';
+    const POST_STATUS_NEEDAUTH         = 'needauth';    // @todo pas accessible sans session
+    const POST_STATUS_PRIVATE          = 'private';     // @todo accessible uniquement pour l'auteur
 
     /**
      * Current user instance
