@@ -180,7 +180,7 @@
     
         <div class="ui-layout-center ui-scrollable">
             <div class="ui-layout-content transparentBg ui-loadscroll">        
-                <div class="container">                
+                <div class="container">
                     {% block main %}{% endblock %}
                 </div>
             </div>

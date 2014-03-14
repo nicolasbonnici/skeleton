@@ -9,5 +9,4 @@ $(document).ready(function() {
     $(document).ajaxStop(function() {
         Ux.fireUx();
     });
-
 });

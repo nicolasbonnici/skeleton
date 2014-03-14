@@ -194,7 +194,6 @@ class Router extends Singleton {
             header('Location: ' . $mUrl );
             exit();
         } elseif (is_array($mUrl)) {
-
             if (
                     array_key_exists('request', $mUrl) &&
                     isset(

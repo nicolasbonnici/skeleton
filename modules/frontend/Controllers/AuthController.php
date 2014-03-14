@@ -3,23 +3,22 @@
 namespace modules\frontend\Controllers;
 
 /**
- * Login controller
+ * LoginController
  *
  * @author info
  */
 class AuthController extends \Library\Core\Controller {
 
-    public function __preDispatch() {
+    public function __preDispatch() {}
 
-    }
+    public function __postDispatch() {}
 
-    public function __postDispatch() {
-
-    }
-
-    // @todo virer si session loggué
-    public function indexAction() {
-
+    /**
+     * Login form
+     */
+    public function indexAction()
+    {
+        // @todo rediriger si session existante
         if (isset($this->_params['email']) && isset($this->_params['password'])) {
 
             if($this->login()) {
@@ -35,8 +34,12 @@ class AuthController extends \Library\Core\Controller {
         $this->render('auth/index.tpl');
     }
 
-    public function logoutAction() {
-
+    /**
+     * Logout
+     */
+    public function logoutAction()
+    {
+        // @todo Cookie::delete() et setter une constante pour le nom de session via la config
         $oCookie = new \Library\Core\Cookie();
         //die(var_dump($oCookie->getCookieVar('PHPSESSID')));
 
@@ -44,24 +47,26 @@ class AuthController extends \Library\Core\Controller {
         \Library\Core\Router::redirect('/');
     }
 
-    protected function login() {
-            $oUser = new \app\Entities\User();
-
-            if (
-                $oUser->loadByParameters(array(
-                    'mail' => $this->_params['email'],
-                    'pass' => hash('SHA256', $this->_params['password'])
-                )) === true
-            ) {
-                $oUser->pass = null;
-                foreach ($oUser as $key=>$mValue) {
-                    $_SESSION[$key] = $mValue;
-                }
-                return true;
-
+    /**
+     * Open a user session
+     * @return boolean
+     */
+    protected function login()
+    {
+        $oUser = new \app\Entities\User();
+        try {
+            $oUser->loadByParameters(array(
+                'mail' => $this->_params['email'],
+                'pass' => hash('SHA256', $this->_params['password'])
+            ));
+            $oUser->pass = null;
+            foreach ($oUser as $key=>$mValue) {
+                $_SESSION[$key] = $mValue;
             }
-
+            return true;
+        } catch(\Library\Core\EntityException $oException) {
             return false;
+        }
     }
 
 }

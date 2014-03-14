@@ -2,19 +2,13 @@
 	    <div class="modal-header">
 	         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	         <h1 class="modal-title" id="myModalLabel">
-		        <a href="#" class="ui-editable" data-type="text" data-tpl="<input type='text'class='input-lg'>" data-entity="post" data-name="label" data-pk="{{oPost.idpost}}" data-url="/backend/crud/update/">
-                    {{oPost.label|safe}}
+		        <a href="#" class="ui-editable" data-type="text" data-tpl="<input type='text'class='input-lg'>" data-entity="post" data-name="title" data-pk="{{oPost.idpost}}" data-url="/backend/crud/update/">
+                    {{oPost.title|safe}}
                 </a> 
 	         </h1>
 	    </div>
 	    <div class="modal-body">
 	        <form role="form" data-entity="post" data-pk="{{oPost.idpost}}" id="updatepostForm" action="/backend/crud/update/" method="post">
-	            <div class="form-group">
-	                <label>Deadline</label>
-	                <a class="ui-editable bold" data-type="combodate" data-template="D MMM YYYY  HH:mm" data-format="YYYY-MM-DD HH:mm" data-viewformat="MMM D, YYYY, HH:mm" data-entity="post" data-pk="" data-url="">
-	                   <span class="ui-timestamp" data-timestamp="{{oPost.deadline}}"></span>
-	                </a>
-	            </div>
 	            <div class="form-group">
 	                <div class="ui-editor" data-name="content">
 	                {{oPost.content|safe}}

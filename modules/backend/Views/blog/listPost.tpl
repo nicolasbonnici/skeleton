@@ -25,18 +25,18 @@
                       </button>
                       <ul class="dropdown-menu" role="menu">
                         <li>
-                            <a href="#modal-post" class="ui-sendxhr" data-url="/backend/crud/read/" data-selector="#modal-post-content" data-entity="Post" data-view="post/read.tpl" data-toggle="modal" data-pk="{{oPost.idpost}}" title="{{tr['view']}}">
+                            <a href="#modal-post" class="ui-sendxhr" data-url="/backend/blog/readPost/" data-selector="#modal-post-content" data-entity="Post" data-toggle="modal" data-idpost="{{oPost.idpost}}" title="{{tr['view']}}">
                                 {{tr['view']}} <span class="glyphicon glyphicon-zoom-in"></span>
                             </a>
                         </li>
                         <li>
-                            <a href="#modal-post" class="ui-sendxhr" data-url="/backend/post/update/" data-selector="#modal-post-content" data-toggle="modal" data-idpost="{{oPost.idpost}}" title="{{tr['edit']}}">
+                            <a href="#modal-post" class="ui-sendxhr" data-url="/backend/blog/updatePost/" data-selector="#modal-post-content" data-toggle="modal" data-idpost="{{oPost.idpost}}" title="{{tr['edit']}}">
                                 {{tr['edit']}} <span class="glyphicon glyphicon-pencil"></span>
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#modal-post" class="ui-sendxhr" data-url="/backend/post/delete/" data-selector="#modal-post-content" data-toggle="modal" data-pk="{{oPost.idpost}}" title="{{tr['delete']}}">
+                            <a href="#modal-post" class="ui-sendxhr" data-url="/backend/blog/deletePost/" data-selector="#modal-post-content" data-toggle="modal" data-pk="{{oPost.idpost}}" title="{{tr['delete']}}">
                                 {{tr['delete']}} <span class="glyphicon glyphicon-trash"></span>
                             </a>
                         </li>

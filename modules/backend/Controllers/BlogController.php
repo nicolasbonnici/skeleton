@@ -32,10 +32,10 @@ class BlogController extends \Library\Core\Auth {
     public function readPostAction()
     {
         if (isset($this->_params['idpost']) && intval($this->_params['idpost']) > 0) {
-            $oTodoModel = new \modules\backend\Models\Blog(intval($this->_params['idpost']), $this->oUser);
-            $oTodo = $oTodoModel->read();
-            if (! is_null($oTodo) && $oTodo->isLoaded()) {
-                $this->_view['oTodo'] = $oTodo;
+            $oBlogModel = new \modules\backend\Models\Blog(intval($this->_params['idpost']), $this->oUser);
+            $oPost = $oBlogModel->read();
+            if (! is_null($oPost) && $oPost->isLoaded()) {
+                $this->_view['oPost'] = $oPost;
             }
 
         }
@@ -45,10 +45,10 @@ class BlogController extends \Library\Core\Auth {
     public function updatePostAction()
     {
         if (isset($this->_params['idpost']) && intval($this->_params['idpost']) > 0) {
-            $oTodoModel = new \modules\backend\Models\Blog(intval($this->_params['idpost']), $this->oUser);
-            $oTodo = $oTodoModel->getEntity();
-            if (! is_null($oTodo) && $oTodo->isLoaded()) {
-                $this->_view['oTodo'] = $oTodo;
+            $oBlogModel = new \modules\backend\Models\Blog(intval($this->_params['idpost']), $this->oUser);
+            $oPost = $oBlogModel->read();
+            if (! is_null($oPost) && $oPost->isLoaded()) {
+                $this->_view['oPost'] = $oPost;
             }
 
         }

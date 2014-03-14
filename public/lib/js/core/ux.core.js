@@ -1,151 +1,153 @@
+/**
+ * User Experience client component jQuery plugin
+ * @author Nico <nicolasbonnici@gmail.com>
+ */
+
 (function($) {
         $.fn.userExperience = function(params) {
+            var Ux = {
+                initAppLayout: function() {
+                    //*************************************************** @layout *************************************************
+                    // @see init layout application level (aka BO)
+                    if ($('body').hasClass('layout') && !$('body').data('ui-layout-loaded')) {
 
-                var Ux = {
-
-                    initAppLayout: function() {
-                        //*************************************************** @layout *************************************************
-
-                        // @see init layout application level (aka BO)
-                        if ($('body').hasClass('layout') && !$('body').data('ui-layout-loaded')) {
-
-                            $('body').data('ui-layout-loaded', true);
-                            
-                            this.appLayout = $('body').layout({
-                                useStateCookie: true,
-                                cookie: {
-                                    name:   "sociable.ux.layout", // optional
-                                    expires: 90 // days
+                        $('body').data('ui-layout-loaded', true);
+                        
+                        this.appLayout = $('body').layout({
+                            useStateCookie: true,
+                            cookie: {
+                                name:   "sociable.ux.layout", // optional
+                                expires: 90 // days
+                            },
+                            defaults: {
+                                applyDefaultStyles: false,
+                                fxName: 'drop',
+                                fxSpeed: 300,
+                                spacing_closed: 50,
+                                spacing_open: 10,
+                                resizerTip: 'Ouvrir/fermer',
+                                sliderTip: 'Redimmensionner',
+                                fxSettings_open: { easing: 'easeOutBounce' },
+                                fxSettings_close: { easing: 'easeOutBounce' },
+                                enableCursorHotkey: false
+                            },
+                            center: {
+                                applyDefaultStyles: false,
+                                spacing_closed: 0,
+                                spacing_open: 0,
+                                size: '100%'
+                            },
+                            north: {
+                                applyDefaultStyles: true,
+                                showOverflowOnHover: true,
+                                spacing_closed: 0,
+                                spacing_open: 0,
+                                togglerLength_open: 0,
+                                size: 52,
+                                initClosed: false
+                            },
+                            south: {
+                                applyDefaultStyles: false,
+                                spacing_closed: 0,
+                                spacing_open: 0,
+                                size: 90,
+                                togglerLength_closed: "100%",
+                                togglerLength_open: 50,
+                                initClosed:    true,
+                                onopen_end: function() {
+                                    return false;
                                 },
-                                defaults: {
-                                    applyDefaultStyles: false,
-                                    fxName: 'drop',
-                                    fxSpeed: 300,
-                                    spacing_closed: 50,
-                                    spacing_open: 10,
-                                    resizerTip: 'Ouvrir/fermer',
-                                    sliderTip: 'Redimmensionner',
-                                    fxSettings_open: { easing: 'easeOutBounce' },
-                                    fxSettings_close: { easing: 'easeOutBounce' },
-                                    enableCursorHotkey: false
+                                onclose_end: function() {
+                                    return false;
+                                }
+                            },
+                            east: {
+                                size:  150,
+                                applyDefaultStyles: false,
+                                initClosed: true,
+                                togglerLength_closed: 0,
+                                togglerLength_open: 0,
+                                spacing_open: 0,
+                                spacing_closed: 0,
+                                onopen_end: function() {
+                                    $('.ui-layout-east').toggleClass('ui-shadow');
                                 },
-                                center: {
-                                    applyDefaultStyles: false,
-                                    spacing_closed: 0,
-                                    spacing_open: 0,
-                                    size: '100%'
+                                onclose_end: function() {
+                                }
+                            },
+                            west: {
+                                size: 320,
+                                applyDefaultStyles: false,
+                                spacing_open: 0,
+                                spacing_closed: 0,
+                                togglerLength_closed: 0,
+                                initClosed: true,
+                                slideTrigger_close: 'mouseout',
+                                slideTrigger_open: 'mouseover',                                             
+                                onopen_end: function() {
+                                    $('.ui-layout-west').toggleClass('ui-shadow');
                                 },
-                                north: {
-                                    applyDefaultStyles: true,
-                                    showOverflowOnHover: true,
-                                    spacing_closed: 0,
-                                    spacing_open: 0,
-                                    togglerLength_open: 0,
-                                    size: 52,
-                                    initClosed: false
-                                },
-                                south: {
-                                    applyDefaultStyles: false,
-                                    spacing_closed: 0,
-                                    spacing_open: 0,
-                                    size: 90,
-                                    togglerLength_closed: "100%",                                    
-                                    togglerLength_open: 50,
-                                    initClosed:    true,
-                                    onopen_end: function() {
-                                        return false;
-                                    },
-                                    onclose_end: function() {
-                                        return false;
-                                    }                                    
-                                },
-                                east: {
-                                    size:  150,
-                                    applyDefaultStyles: false,
-                                    initClosed: true,
-                                    togglerLength_closed: 0,
-                                    togglerLength_open: 0,
-                                    spacing_open: 0,
-                                    spacing_closed: 0,
-                                    onopen_end: function() {
-                                        $('.ui-layout-east').toggleClass('ui-shadow');
-                                    },
-                                    onclose_end: function() {
-                                    }
-                                },
-                                west: {
-                                    size: 320,
-                                    applyDefaultStyles: false,
-                                    spacing_open: 0,
-                                    spacing_closed: 0,
-                                    togglerLength_closed: 0,
-                                    initClosed: true,
-                                    slideTrigger_close: 'mouseout',
-                                    slideTrigger_open: 'mouseover',                                             
-                                    onopen_end: function() {
-                                        $('.ui-layout-west').toggleClass('ui-shadow');
-                                    },
-                                    onclose_end: function() {
-                                    }                                    
+                                onclose_end: function() {
                                 }                                    
-                            });
-                            // toggle panes
-                            if ( $('.ui-pane-toggle').size() != 0 ) {
-                                $('.ui-pane-toggle').on('click', function() {
-                                    
-                                    if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                                        Ux.layout.toggle($(this).attr('data-pane'));
-                                    }
-                                    
-                                    return false;
-                                });                           
-                            }
-                            // open panes
-                            if ( $('.ui-pane-open').size() != 0 ) {
-                                $('.ui-pane-open').on('click', function() {
-                                    
-                                    if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                                        Ux.layout.open($(this).attr('data-pane'));
-                                    }
-                                    
-                                    return false;
-                                });                           
-                            }
-                            // close panes
-                            if ( $('.ui-pane-close').size() != 0 ) {
-                                $('.ui-pane-close').on('click', function() {
-                                    
-                                    if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                                        Ux.layout.close($(this).attr('data-pane'));
-                                    }
-                                    
-                                    return false;
-                                });                           
-                            }    
-                            // show panes
-                            if ( $('.ui-pane-show').size() != 0 ) {
-                                $('.ui-pane-show').on('click', function() {
-                                    
-                                    if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                                        Ux.layout.show($(this).attr('data-pane'), false); 
-                                    }
-                                    
-                                    return false;
-                                });                           
-                            }
-                            // Pin button
-                            if ( $('.ui-pane-pin').size() != 0 ) {    
-                                this.appLayout.addPinBtn('.ui-pane-pin', $('.ui-pane-pin').attr('data-pane'));
-                            }
+                            }                                    
+                        });
+                        // toggle panes
+                        if ( $('.ui-pane-toggle').size() != 0 ) {
+                            $('.ui-pane-toggle').on('click', function() {
+                                
+                                if (typeof($(this).attr('data-pane')) !== 'undefined') {
+                                    Ux.layout.toggle($(this).attr('data-pane'));
+                                }
+                                
+                                return false;
+                            });                           
+                        }
+                        // open panes
+                        if ( $('.ui-pane-open').size() != 0 ) {
+                            $('.ui-pane-open').on('click', function() {
+                                
+                                if (typeof($(this).attr('data-pane')) !== 'undefined') {
+                                    Ux.layout.open($(this).attr('data-pane'));
+                                }
+                                
+                                return false;
+                            });                           
+                        }
+                        // close panes
+                        if ( $('.ui-pane-close').size() != 0 ) {
+                            $('.ui-pane-close').on('click', function() {
+                                
+                                if (typeof($(this).attr('data-pane')) !== 'undefined') {
+                                    Ux.layout.close($(this).attr('data-pane'));
+                                }
+                                
+                                return false;
+                            });                           
+                        }    
+                        // show panes
+                        if ( $('.ui-pane-show').size() != 0 ) {
+                            $('.ui-pane-show').on('click', function() {
+                                
+                                if (typeof($(this).attr('data-pane')) !== 'undefined') {
+                                    Ux.layout.show($(this).attr('data-pane'), false); 
+                                }
+                                
+                                return false;
+                            });                           
+                        }
+                        // Pin button
+                        if ( $('.ui-pane-pin').size() != 0 ) {    
+                            this.appLayout.addPinBtn('.ui-pane-pin', $('.ui-pane-pin').attr('data-pane'));
+                        }
 
-                            // Sauvegrder en cookie l etat du layout
-                            $(window).unload(function() { 
-                                    // Sauvegarder l'organisation du layout
-                                this.appLayout.save('layout');  
-                            }); 
-                                                        
+                        // Sauvegrder en cookie l etat du layout
+                        $(window).unload(function() { 
+                                // Sauvegarder l'organisation du layout
+                            this.appLayout.save('layout');  
+                        }); 
+                                                    
 
-                        }   
+                    }   
                         
                 },
                 
@@ -215,7 +217,7 @@
                     if ($('.ui-editable').size() > 0 && typeof($.fn.editable) !== 'undefined') {
                         
                         // @see setup editable plugin
-                        $.fn.editable.defaults.mode = 'popup';
+                        $.fn.editable.defaults.mode = 'inline';
                         $.fn.editable.inputs = '<form class="form-inline editableform margin">' +
                                                     '<div class="control-group">' +
                                                         '<div class="editable-input input-lg form-control"></div>' +
@@ -428,6 +430,9 @@
                         },
                         complete: function(){
                             $domTarget.removeData('initialContent');
+                            if (oHandler.hasClass('loadOnCallback')) {
+                                Ux.loadView($($(oHandler).data('load-selector')));
+                            }
                         }
                     });
                 },
@@ -490,6 +495,8 @@
                         },
                         complete: function(){
                             $domTarget.removeData('initialContent');
+                            
+                            // @todo faire la gestion du reload d'un fragment de DOM precis comme sendXHR
                             
                             if (obj.hasClass('refreshOnCallback')) {
                                 Ux.loadView();
@@ -569,7 +576,7 @@
                     
                     var sSelector = '#'+oItem.attr('id');
                     
-                    var aData = $(sSelector).data();                    
+                    var aData = $(sSelector).data();
                     
                     $.ajax({
                         type: 'POST',
@@ -808,15 +815,6 @@
                                 return $($(this).data('popover')).html();
                             }
                         });
-                        
-//                        // Tooltip
-//                        $('a, button, input[type=submit]').tooltip({
-//                            placement: 'auto',
-//                            delay: 0,
-//                            title: function() {
-//                                return $(this).text();
-//                            }
-//                        });
                         
                         // Flag body
                         $('body').data('UxListened', true);
