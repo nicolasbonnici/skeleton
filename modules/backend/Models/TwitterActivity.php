@@ -15,21 +15,6 @@ class TwitterActivity extends \Library\Core\Feed {
     const TWITTER_OAUTH_CONSUMER_SECRET         = 'hSmfX9oOWBBYJyQmxSvyI0aUMqoac3xze4utWunyrE';
 
     /**
-     * Instance constructor
-     */
-    public function __construct(\app\Entities\Feed $oTwitterFeed)
-    {
-        if (! $oTwitterFeed->isLoaded()) {
-            throw new TwitterActivityException('Feed entity not instantiated');
-        } elseif ($oTwitterFeed->domain !== self::TWITTER_DOMAIN) {
-            throw new TwitterActivityException('This feed is not a valid Twitter feed entity, bad domain: ' . $oTwitterFeed->domain);
-        } else {
-            $this->oFeedItems = new \app\Entities\Collection\FeedItemCollection();
-            $this->oFeed = $oTwitterFeed;
-        }
-    }
-
-    /**
      * Parse twitter activity items then persist delta
      * @param boolean $bSaveNewActivities    TRUE to to record FeedItem delta
      * @param string $sRequestMethod        Twitter API request method POST|GET
@@ -44,6 +29,7 @@ class TwitterActivity extends \Library\Core\Feed {
 
         // @see loader les derniers enregistrements de la db pour persister le diff des nouvelles activités
         if ($bSaveNewActivities) {
+            $oAddedFeedActivities = new \Library\Core\Collection();
             $aDbElements = array();
             $oDatabaseLastFeedItems = new \app\Entities\Collection\FeedItemCollection();
             $oDatabaseLastFeedItems->loadByParameters(array('feed_idfeed' => $this->oFeed->getId(), 'status' => 'publish'), array('created'=>'DESC'), array(0,50));
@@ -78,7 +64,8 @@ class TwitterActivity extends \Library\Core\Feed {
             $oPermalinks = $oItem->entities->urls;
 
             foreach($oPermalinks as $oPermalink) {
-                // @see La structure en base ne permet pas de stocker plus d'un permalink par feedItem
+                // La structure en base ne permet pas de stocker plus d'un permalink par feedItem
+                // @todo Utiliser la future application de gestion des medias dans ce cas
                 $sPermalink = (string)$oPermalink->expanded_url;
                 break;
             }
@@ -86,7 +73,6 @@ class TwitterActivity extends \Library\Core\Feed {
             $oFeedItem->feed_idfeed = $this->oFeed->getId();
 
             if ($bSaveNewActivities) {
-                $oAddedFeedActivities = new \Library\Core\Collection();
                 if (!in_array($oFeedItem->created, $aDbElements)) {
                     $oFeedItem->title = htmlentities($oFeedItem->title, ENT_QUOTES, "UTF-8");
                     // @see persist delta into database
@@ -96,15 +82,17 @@ class TwitterActivity extends \Library\Core\Feed {
 
                 }
 
+            } else {
+
             }
 
             $this->oFeedItems->add($this->oFeedItems->count()+1, $oFeedItem);
         }
 
         if (isset($oAddedFeedActivities) && ($oAddedFeedActivities->count() > 0)) {
-            return (int)$oAddedFeedActivities->count();
+            return $oAddedFeedActivities;
         }
-        return null;
+        return $this->oFeedItems;
     }
 }
 

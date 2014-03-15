@@ -25,23 +25,51 @@ abstract class Feed {
     /**
      * Instance constructor
      */
-    public function __construct()
+    public function __construct(\app\Entities\Feed $oFeed)
     {
-        $this->oFeed = $oFeed = new \app\Entities\Feed();
-        $this->oFeedItems = new \app\Entities\Collection\FeedItemCollection();
+        if (! $oFeed->isLoaded()) {
+            throw new FeedException('Feed entity not instantiated');
+        } else {
+            $this->oFeedItems = new \app\Entities\Collection\FeedItemCollection();
+            $this->oFeed = $oFeed;
+        }
     }
 
     /**
-     * Parse items from feed
-     * @param boolean $bPersistNewFeedItem    TRUE to store feed items delta
-     * @param integer $iDelta                Feed items depth
-     * @return integer|null                    Number of persisted \app\Entities\FeedItem from feed lastest activities
+     * Load feed's FeedItems
+     *
+     * @param array $aParameters
+     * @param array $aOrderBy
+     * @param array $aLimit
+     * @return boolean              TRUE if feed items was found FALSE otherwhise
      */
-    public function parse($bPersistNewFeedItem = false, $iDelta = 256) {}
+    protected function loadFeedITems(array $aParameters = array(), array $aOrderBy = array('created' => 'DESC'), array $aLimit = array(0, 10))
+    {
+        assert('$this->oFeed->isLoaded()');
+        $aParameters['feed_idfeed'] = $this->oFeed->getId();
+        $this->oFeedItems->loadByParameters($aParameters, $aOrderBy, $aLimit);
+        return ($this->oFeedItems->count() > 0);
+    }
 
-    public function generate() {}
+    /**
+     * Parse items from feed source url
+     *
+     * @param boolean $bPersistNewFeedItem                  TRUE to store feed items delta
+     * @param integer $iDelta                               Feed items query depth from the latest
+     * @return \app\Entities\Collection\FeedItemCollection  Persisted \app\Entities\FeedItem if $bPersist = TRUE otherwhise lastest {$iDelta} feed activities
+     */
+    protected function parse($bPersistNewFeedItem = false, $iDelta = 256) {}
 
-    public function getFeedItems()
+    /**
+     * @todo Une methode qui construit et retourne un flux en différents format depuis une collection d'entités
+     */
+    protected function generate() {}
+
+    /**
+     * Feed items accessor
+     * @return \app\Entities\Collection\FeedItemCollection
+     */
+    protected function getFeedItems()
     {
         return $this->oFeedItems;
     }

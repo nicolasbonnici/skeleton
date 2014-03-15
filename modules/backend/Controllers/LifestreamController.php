@@ -35,7 +35,7 @@ class LifestreamController extends \Library\Core\Auth {
                 switch ($oFeed->domain) {
                 	case 'twitter.com':
                 	        $oTwitterActivity = new \modules\backend\Models\TwitterActivity($oFeed);
-                	        die(var_dump($oTwitterActivity->parse()));
+                	        die(var_dump($oTwitterActivity->parse(true)));
                 	        break;
                 	default:
                 	    break;
