@@ -163,13 +163,16 @@ class Bootstrap {
     public static function initView($sTpl, $aViewParams, $bToString) {
 
         $sHaangaPath = LIBRARY_PATH . 'Haanga/';
-        $sViewsPath = MODULES_PATH . \Library\Core\Router::getModule() . '/Views/';
+        $aViewsPaths = array(
+            APP_PATH . 'Views/',
+            MODULES_PATH . \Library\Core\Router::getModule() . '/Views/'
+        );
         $sCachePath = CACHE_PATH . \Library\Core\Router::getModule() . '/Views';
 
         require_once $sHaangaPath . 'Haanga.php';
 
         \Haanga::configure(array(
-            'template_dir' => $sViewsPath,
+            'template_dir' => $aViewsPaths,
             'cache_dir' => $sCachePath
         ));
 

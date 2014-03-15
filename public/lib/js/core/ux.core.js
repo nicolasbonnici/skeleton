@@ -70,7 +70,6 @@
                                 spacing_open: 0,
                                 spacing_closed: 0,
                                 onopen_end: function() {
-                                    $('.ui-layout-east').toggleClass('ui-shadow');
                                 },
                                 onclose_end: function() {
                                 }
@@ -85,56 +84,40 @@
                                 slideTrigger_close: 'mouseout',
                                 slideTrigger_open: 'mouseover',                                             
                                 onopen_end: function() {
-                                    $('.ui-layout-west').toggleClass('ui-shadow');
                                 },
                                 onclose_end: function() {
                                 }                                    
                             }                                    
                         });
                         // toggle panes
-                        if ( $('.ui-pane-toggle').size() != 0 ) {
-                            $('.ui-pane-toggle').on('click', function() {
-                                
-                                if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                                    Ux.layout.toggle($(this).attr('data-pane'));
-                                }
-                                
-                                return false;
-                            });                           
-                        }
+                        $('body').on('click', '.ui-pane-toggle', function() {
+                            
+                            if (typeof($(this).attr('data-pane')) !== 'undefined') {
+                                Ux.appLayout.toggle($(this).attr('data-pane'));
+                            }
+                        });                           
                         // open panes
-                        if ( $('.ui-pane-open').size() != 0 ) {
-                            $('.ui-pane-open').on('click', function() {
-                                
-                                if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                                    Ux.layout.open($(this).attr('data-pane'));
-                                }
-                                
-                                return false;
-                            });                           
-                        }
+                        $('body').on('click', '.ui-pane-open', function() {
+                            
+                            if (typeof($(this).attr('data-pane')) !== 'undefined') {
+                                Ux.appLayout.open($(this).attr('data-pane'));
+                            }
+                        });                           
                         // close panes
-                        if ( $('.ui-pane-close').size() != 0 ) {
-                            $('.ui-pane-close').on('click', function() {
-                                
-                                if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                                    Ux.layout.close($(this).attr('data-pane'));
-                                }
-                                
-                                return false;
-                            });                           
-                        }    
+                        $('body').on('click', '.ui-pane-close', function() {
+                            
+                            if (typeof($(this).attr('data-pane')) !== 'undefined') {
+                                Ux.appLayout.close($(this).attr('data-pane'));
+                            }
+                            
+                        });                           
                         // show panes
-                        if ( $('.ui-pane-show').size() != 0 ) {
-                            $('.ui-pane-show').on('click', function() {
-                                
-                                if (typeof($(this).attr('data-pane')) !== 'undefined') {
-                                    Ux.layout.show($(this).attr('data-pane'), false); 
-                                }
-                                
-                                return false;
-                            });                           
-                        }
+                        $('body').on('click', '.ui-pane-show', function() {
+                            if (typeof($(this).attr('data-pane')) !== 'undefined') {
+                                Ux.appLayout.show($(this).attr('data-pane'), false); 
+                            }
+                            
+                        });                           
                         // Pin button
                         if ( $('.ui-pane-pin').size() != 0 ) {    
                             this.appLayout.addPinBtn('.ui-pane-pin', $('.ui-pane-pin').attr('data-pane'));
@@ -418,9 +401,6 @@
                                         
                                 }
                             }
-                            if (oHandler.hasClass('refreshOnCallback')) {
-                                Ux.loadView();
-                            }
                         },
                         error: function(err){                            
                             // Restore cached content
@@ -430,9 +410,15 @@
                         },
                         complete: function(){
                             $domTarget.removeData('initialContent');
+                            
                             if (oHandler.hasClass('loadOnCallback')) {
                                 Ux.loadView($($(oHandler).data('load-selector')));
                             }
+                            
+                            if (oHandler.hasClass('refreshOnCallback')) {
+                                Ux.loadView();
+                            }
+                            
                         }
                     });
                 },
@@ -496,12 +482,13 @@
                         complete: function(){
                             $domTarget.removeData('initialContent');
                             
-                            // @todo faire la gestion du reload d'un fragment de DOM precis comme sendXHR
+                            if (obj.hasClass('loadOnCallback')) {
+                                Ux.loadView($($(oHandler).data('load-selector')));
+                            }
                             
                             if (obj.hasClass('refreshOnCallback')) {
                                 Ux.loadView();
                             }
-                            
                             if (obj.hasClass('closeModalOnCallback')) {
                                 Ux.closeModal();
                             }
@@ -717,10 +704,10 @@
                     if (!$('body').data('UxListened')) {
                         
                         // Ux form helpers
-                        $('body').on('[placeholder]', 'focus',  function() {
+                        $('body').on('focus', '[placeholder]', function() {
                             Ux.sendNotification($(this).attr('placeholder'), 'info', 'glyphicon glyphicon-info-sign');
                         });                                      
-                        $('body').on('[placeholder]', 'blur',  function() {
+                        $('body').on('blur', '[placeholder]', function() {
                             Ux.hideNotifications();
                         });
                         
@@ -803,7 +790,6 @@
                                 });
                             }
                         });
-
                         
                         // popover
                         $('.ui-toggle-popover').popover({
@@ -819,6 +805,13 @@
                         // Flag body
                         $('body').data('UxListened', true);
                     }
+                    
+                    // Tooltip
+                    $('.ui-tip').tooltip({
+                        placement: 'auto',
+                        delay: 0
+                    });
+                    
                 },
                 
                 /**

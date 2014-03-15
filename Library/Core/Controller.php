@@ -125,6 +125,7 @@ class Controller extends Acl {
         $this->_view["sAction"] = $this->_action;
 
         // debug
+        $this->_view["sEnv"] = ENV;
         $this->_view["aLoadedClass"] = \Bootstrap::getLoadedClass();
         $this->_view["render_time"] = microtime(true);
         $this->_view["sDeBugHelper"] = '../../../app/Views/helpers/debug.tpl';

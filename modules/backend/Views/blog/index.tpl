@@ -88,7 +88,7 @@ span.reminder-txt {}
                 </a>
               </li>
               <li>
-                <a href="#" class="ui-sendxhr loadOnCallback" data-load-selector="#dashboard" data-url="/backend/blog/posts/" data-selector="#dashboard" role="button" title="Gérer les posts">
+                <a href="#" class="ui-sendxhr refreshOnCallback" data-url="/backend/blog/posts/" data-selector="#dashboard" role="button" title="Gérer les posts">
                     <span class="glyphicon glyphicon-globe"></span> <strong>Posts</strong>
                 </a>
               </li>

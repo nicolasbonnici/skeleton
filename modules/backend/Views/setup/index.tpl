@@ -27,7 +27,6 @@
 	<div class="row clearfix">
 		<div class="col-md-12 column">
 			<div class="row clearfix">
-			
 				<div class="col-md-3 column">
 					<div class="list-group">
 						 <a href="#" class="list-group-item active"><span class="glyphicon glyphicon-dashboard"></span> {{tr['admin_panel']}}</a>
@@ -96,4 +95,4 @@
 		</div>
 	</div>
 </div>
-		{% endblock %}
+{% endblock %}

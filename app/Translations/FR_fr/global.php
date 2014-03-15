@@ -42,7 +42,7 @@ $tr['login_helper'] = 'Entrez les identifiants que vous avez fournit lors de vot
  */
 $tr['my_account'] = 'Mon compte';
 $tr['administration'] = "Administration";
-$tr['profile'] = "Profil de l'utilisateur";
+$tr['profile'] = "Profil";
 $tr['avatar'] = "Avatar";
 $tr['username'] = "Nom d'utilisateur";
 $tr['email'] = "Adresse email";
