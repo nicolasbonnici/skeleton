@@ -2,28 +2,31 @@
 
 namespace modules\backend\Models;
 
-class TwitterActivity implements \Library\Core\Feed {
+class TwitterActivity extends \Library\Core\Feed {
 
     /**
      * Twitter setup
      */
-    const TWITTER_USERNAME                    = 'nicolasbonnici';
-    const TWITTER_OAUTH_ACCESS_TOKEN         = '17471981-qdnKvIpNmOMgRYEX93uG7uS7rrtOOZCY8YRNd9NWE';
-    const TWITTER_OAUTH_CONSUMER_KEY         = 'ZWgTx1j7VvOv75b3ofg';
-    const TWITTER_OAUTH_ACCESS_TOKEN_SECRET = 'DF3lR7CypxHnZXaTAuoDlcoR6WVmNOcRR2LpHu2Q';
-    const TWITTER_OAUTH_CONSUMER_SECRET        = 'hSmfX9oOWBBYJyQmxSvyI0aUMqoac3xze4utWunyrE';
+    const TWITTER_DOMAIN                        = 'twitter.com';
+    const TWITTER_USERNAME                      = 'nicolasbonnici';
+    const TWITTER_OAUTH_ACCESS_TOKEN            = '17471981-qdnKvIpNmOMgRYEX93uG7uS7rrtOOZCY8YRNd9NWE';
+    const TWITTER_OAUTH_CONSUMER_KEY            = 'ZWgTx1j7VvOv75b3ofg';
+    const TWITTER_OAUTH_ACCESS_TOKEN_SECRET     = 'DF3lR7CypxHnZXaTAuoDlcoR6WVmNOcRR2LpHu2Q';
+    const TWITTER_OAUTH_CONSUMER_SECRET         = 'hSmfX9oOWBBYJyQmxSvyI0aUMqoac3xze4utWunyrE';
 
     /**
      * Instance constructor
      */
     public function __construct(\app\Entities\Feed $oTwitterFeed)
     {
-        if (! $oFeed->isLoaded()) {
-            throw new TwitterActivityException('Twitter Activity feed entity is empty. You need to hydratate instance!');
+        if (! $oTwitterFeed->isLoaded()) {
+            throw new TwitterActivityException('Feed entity not instantiated');
+        } elseif ($oTwitterFeed->domain !== self::TWITTER_DOMAIN) {
+            throw new TwitterActivityException('This feed is not a valid Twitter feed entity, bad domain: ' . $oTwitterFeed->domain);
+        } else {
+            $this->oFeedItems = new \app\Entities\Collection\FeedItemCollection();
+            $this->oFeed = $oTwitterFeed;
         }
-
-        $this->oFeedItems = new \app\Entities\Collection\FeedItemCollection();
-        $this->oFeed = $oTwitterFeed;
     }
 
     /**
@@ -37,14 +40,13 @@ class TwitterActivity implements \Library\Core\Feed {
     {
 
         assert('\Library\Core\Validator::integer($iDelta, 0, 500) === \Library\Core\Validator::STATUS_OK');
-        assert('$this->oTwitterFeed->isLoaded()');
-        assert('$this->oFeedItems->isLoaded()');
+        assert('$this->oFeed->isLoaded()');
 
         // @see loader les derniers enregistrements de la db pour persister le diff des nouvelles activités
         if ($bSaveNewActivities) {
             $aDbElements = array();
             $oDatabaseLastFeedItems = new \app\Entities\Collection\FeedItemCollection();
-            $oDatabaseLastFeedItems->loadByParameters(array('feed_idfeed' => $this->oTwitterFeed->getId(), 'status' => 'publish'), array('created'=>'DESC'), array(0,50));
+            $oDatabaseLastFeedItems->loadByParameters(array('feed_idfeed' => $this->oFeed->getId(), 'status' => 'publish'), array('created'=>'DESC'), array(0,50));
             // Indexer les items dans un array pour mapper plus vite
             foreach ($oDatabaseLastFeedItems as $oDbFeedItem) {
                 if (isset($oDbFeedItem->created, $oDbFeedItem->title)) {
@@ -55,16 +57,16 @@ class TwitterActivity implements \Library\Core\Feed {
 
         $sGetfield = '?screen_name=' . self::TWITTER_USERNAME . '&count=' . $iDelta;
         $aSettings = array(
-                'oauth_access_token' => self::TWITTER_OAUTH_ACCESS_TOKEN,
+                'oauth_access_token'        => self::TWITTER_OAUTH_ACCESS_TOKEN,
                 'oauth_access_token_secret' => self::TWITTER_OAUTH_ACCESS_TOKEN_SECRET,
-                'consumer_key' => self::TWITTER_OAUTH_CONSUMER_KEY,
-                'consumer_secret' => self::TWITTER_OAUTH_CONSUMER_SECRET
+                'consumer_key'              => self::TWITTER_OAUTH_CONSUMER_KEY,
+                'consumer_secret'           => self::TWITTER_OAUTH_CONSUMER_SECRET
         );
 
         $twitter = new \Library\Twitter\TwitterAPI($aSettings);
         $json = $twitter->setGetfield($sGetfield)
-        ->buildOauth($this->oTwitterFeed->url, $sRequestMethod)
-        ->performRequest();
+            ->buildOauth($this->oFeed->url, $sRequestMethod)
+            ->performRequest();
 
         foreach(json_decode($json) as $oItem) {
             $oFeedItem = new \app\Entities\FeedItem();
@@ -81,7 +83,7 @@ class TwitterActivity implements \Library\Core\Feed {
                 break;
             }
             $oFeedItem->permalink = $sPermalink;
-            $oFeedItem->feed_idfeed = $this->oTwitterFeed->getId();
+            $oFeedItem->feed_idfeed = $this->oFeed->getId();
 
             if ($bSaveNewActivities) {
                 $oAddedFeedActivities = new \Library\Core\Collection();
@@ -103,11 +105,6 @@ class TwitterActivity implements \Library\Core\Feed {
             return (int)$oAddedFeedActivities->count();
         }
         return null;
-    }
-
-    public function getFeedItems()
-    {
-        return $this->oFeedItems;
     }
 }
 

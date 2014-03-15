@@ -802,15 +802,15 @@
                             }
                         });
                         
+                        // Tooltip
+                        $('.ui-tip').tooltip({
+                            placement: 'auto',
+                            delay: 0
+                        });
+                        
                         // Flag body
                         $('body').data('UxListened', true);
                     }
-                    
-                    // Tooltip
-                    $('.ui-tip').tooltip({
-                        placement: 'auto',
-                        delay: 0
-                    });
                     
                 },
                 

@@ -11,7 +11,7 @@ class Controller extends Acl {
 
     const XHR_STATUS_OK                 = 1;
     const XHR_STATUS_ERROR              = 2;
-    const XHR_STATUS_ACCESS_DENIED        = 3;
+    const XHR_STATUS_ACCESS_DENIED      = 3;
     const XHR_STATUS_SESSION_EXPIRED    = 4;
 
     protected $_config;
@@ -71,11 +71,6 @@ class Controller extends Acl {
                     exit;
                 }
 
-                if (ENV === 'dev') {
-                    //echo 'Execution time: ' . (microtime(true) - FRAMEWORK_STARTED);
-                    //var_dump(\Bootstrap::getLoadedClass())
-                }
-
             }
 
         } else {
@@ -127,12 +122,13 @@ class Controller extends Acl {
         // debug
         $this->_view["sEnv"] = ENV;
         $this->_view["aLoadedClass"] = \Bootstrap::getLoadedClass();
-        $this->_view["render_time"] = microtime(true);
         $this->_view["sDeBugHelper"] = '../../../app/Views/helpers/debug.tpl';
 
         // Benchmark
+        $this->_view["render_time"] = microtime(true);
         $this->_view['framework_started'] = FRAMEWORK_STARTED;
         $this->_view['current_timestamp'] = time();
+        $this->_view['rendered_time'] = round($this->_view["render_time"] - FRAMEWORK_STARTED, 3);
 
         // check if it's an XMLHTTPREQUEST
         if($this->isXHR()) {

@@ -3,12 +3,12 @@
 namespace Library\Core;
 
 /**
- * Feed generator and parser class
+ * Feed generator and parser abstract class
  *
  * @author Nicolas Bonnici <nicolasbonnici@gmail.com>
  *
  */
-interface Feed {
+abstract class Feed {
 
     /**
      * Feed instance

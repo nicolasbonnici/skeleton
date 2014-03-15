@@ -2,16 +2,16 @@
 
 namespace modules\backend\Models;
 
-class GithubActivity implements \Library\Core\Feed {
+class GithubActivity extends \Library\Core\Feed {
 
     /**
      * Github setup
      */
-    const TWITTER_USERNAME                    = 'nicolasbonnici';
+    const TWITTER_USERNAME                   = 'nicolasbonnici';
     const TWITTER_OAUTH_ACCESS_TOKEN         = '17471981-qdnKvIpNmOMgRYEX93uG7uS7rrtOOZCY8YRNd9NWE';
     const TWITTER_OAUTH_CONSUMER_KEY         = 'ZWgTx1j7VvOv75b3ofg';
-    const TWITTER_OAUTH_ACCESS_TOKEN_SECRET = 'DF3lR7CypxHnZXaTAuoDlcoR6WVmNOcRR2LpHu2Q';
-    const TWITTER_OAUTH_CONSUMER_SECRET        = 'hSmfX9oOWBBYJyQmxSvyI0aUMqoac3xze4utWunyrE';
+    const TWITTER_OAUTH_ACCESS_TOKEN_SECRET  = 'DF3lR7CypxHnZXaTAuoDlcoR6WVmNOcRR2LpHu2Q';
+    const TWITTER_OAUTH_CONSUMER_SECRET      = 'hSmfX9oOWBBYJyQmxSvyI0aUMqoac3xze4utWunyrE';
 
     /**
      * Twitter feed instance
