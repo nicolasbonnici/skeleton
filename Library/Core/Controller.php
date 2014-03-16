@@ -155,56 +155,6 @@ class Controller extends Acl {
 
     }
 
-// @todo migrer dans une couche model de /app
-//     public function buildModules() {
-
-//         assert('is_dir(MODULES_PATH)');
-
-//         $aMenu = array();
-//         $aModules = array_diff(scandir(MODULES_PATH), array('..', '.'));
-
-//         foreach($aModules as $sModule) {
-//             $aMenu[$sModule] = $this->buildControllers($sModule);
-//         }
-
-//         return $aMenu;
-//     }
-
-
-//     public function buildControllers($sModule) {
-
-//         assert('!empty($sModule) && is_string($sModule) && is_dir(MODULES_PATH . "/" . $this->_module . "/Controllers/")');
-
-//         $aControllers = array();
-//         $sControllerPath = MODULES_PATH . '/' . $sModule . '/Controllers/';
-//         $aFiles = array_diff(scandir($sControllerPath), array('..', '.'));
-
-//         foreach ($aFiles as $sController) {
-//             if (preg_match('#Controller.php$#', $sController)) {
-//                 $aControllers[substr($sController, 0, strlen($sController) - strlen('Controller.php'))] = $this->buildActions($sModule, $sController);
-//             }
-//         }
-
-//         return $aControllers;
-//     }
-
-//     public function buildActions($sModule, $sController) {
-
-//         assert('!empty($sController) && is_string($sController) && !empty($sModule) && is_string($sModule)');
-//         $aActions = array();
-//         $aMethods = get_class_methods('\modules\\' . $sModule . '\Controllers\\' . substr($sController, 0, strlen($sController) - strlen('.php')));
-//         if (count($aMethods) > 0) {
-//             foreach ($aMethods as $sMethod) {
-//                 if (preg_match('#Action$#', $sMethod) && $sMethod !== 'getAction' && $sMethod !== 'setAction') {
-//                     $aActions[] = substr($sMethod, 0, strlen($sMethod) - strlen('Action'));
-//                 }
-//             }
-//         }
-
-//         return $aActions;
-
-//     }
-
     /**
      * Tell if the request is a XmlHttpRequest
      * @return boolean

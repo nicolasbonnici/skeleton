@@ -9,15 +9,16 @@ namespace modules\backend\Controllers;
  */
 class SetupController extends \Library\Core\Auth {
 
-    public function __preDispatch() {
+    public function __preDispatch() {}
 
-    }
+    public function __postDispatch() {}
 
-    public function __postDispatch() {
-
-    }
-
-    public function indexAction() {
+    public function indexAction()
+    {
+        $oApp = new \Library\Core\App();
+        $this->_view['core_version'] = \Library\Core\App::APP_VERSION;
+        $this->_view['core_release_name'] = \Library\Core\App::APP_RELEASE_NAME;
+        $this->_view['php_version'] = $oApp->getPhpVersion();
         $this->render('setup/index.tpl');
     }
 

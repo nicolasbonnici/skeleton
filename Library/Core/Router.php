@@ -53,6 +53,11 @@ class Router extends Singleton {
                         'controller' => 'home',
                         'action'    => 'contact'
                 ),
+                '/lifestream' => array(
+                        'module'    => 'backend',
+                        'controller' => 'lifestream',
+                        'action'    => 'index'
+                ),
                 '/blog' => array(
                         'module'    => 'backend',
                         'controller' => 'blog',
