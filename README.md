@@ -1,4 +1,4 @@
-sociableCore
+Skeleton
 ============
 
 A simple skeleton project that implement the sociableCore framework (https://github.com/nicolasbonnici/sociableCore)
