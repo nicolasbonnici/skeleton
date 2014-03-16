@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Core",
+        "version": "master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "git@github.com:nicolasbonnici/Core.git",
+            "reference": "master"
+        },
+        "type": "library",
+        "installation-source": "source"
+    }
+]

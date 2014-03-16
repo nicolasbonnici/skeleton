@@ -1,0 +1,24 @@
+{
+    "name": "nicolasbonnici/Skeleton",
+    "description": "Skeleton project",
+    "homepage": "http://dev.nbonnici.info/",
+    "config": {
+        "vendor-dir": "Library"
+    },
+    "repositories": [{
+        "type": "package",
+        "package": {
+            "name": "Core",
+            "version": "master",
+            "source": {
+                "url": "git@github.com:nicolasbonnici/Core.git",
+                "type": "git",
+                "reference": "master"
+            }
+        }
+    }],    
+    "require": {
+        "php": ">=5.3.0",
+        "Core": "dev-master"
+    }    
+}
