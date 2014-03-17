@@ -6,6 +6,6 @@ error_reporting(-1);
 define('FRAMEWORK_STARTED', microtime(true));
 
 // @see boostrap application
-require_once __DIR__ . '/../app/Bootstrap.php';
-Bootstrap::getInstance();
+require_once __DIR__ . '/../Library/Core/Bootstrap.php';
+\Library\Core\Bootstrap::getInstance();
 ?>

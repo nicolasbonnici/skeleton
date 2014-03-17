@@ -51,7 +51,6 @@ class GithubActivity extends \Library\Core\Feed {
         assert('\Library\Core\Validator::integer($iDelta, 0, 500) === \Library\Core\Validator::STATUS_OK');
         assert('$this->oGithubFeed->isLoaded()');
         assert('$this->oGithubFeedItems->isLoaded()');
-die(var_dump(simplexml_load_string($this->oTwitterFeed->url));)
         // @see loader les derniers enregistrements de la db pour persister le diff des nouvelles activités
         if ($bSaveNewActivities) {
             $aDbElements = array();

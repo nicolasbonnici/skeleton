@@ -26,8 +26,8 @@ class TodoController extends \Library\Core\Auth {
     public function readAction()
     {
         if (isset($this->_params['idtodo']) && intval($this->_params['idtodo']) > 0) {
-               $oTodoModel = new \modules\backend\Models\Todo(intval($this->_params['idtodo']), $this->oUser);
-               $oTodo = $oTodoModel->read();
+            $oTodoModel = new \modules\backend\Models\Todo(intval($this->_params['idtodo']), $this->oUser);
+            $oTodo = $oTodoModel->getEntity();
             if (! is_null($oTodo) && $oTodo->isLoaded()) {
                 $this->_view['oTodo'] = $oTodo;
             }
@@ -39,7 +39,7 @@ class TodoController extends \Library\Core\Auth {
     public function updateAction()
     {
         if (isset($this->_params['idtodo']) && intval($this->_params['idtodo']) > 0) {
-               $oTodoModel = new \modules\backend\Models\Todo(intval($this->_params['idtodo']), $this->oUser);
+            $oTodoModel = new \modules\backend\Models\Todo(intval($this->_params['idtodo']), $this->oUser);
             $oTodo = $oTodoModel->getEntity();
             if (! is_null($oTodo) && $oTodo->isLoaded()) {
                 $this->_view['oTodo'] = $oTodo;
