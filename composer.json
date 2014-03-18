@@ -9,10 +9,34 @@
         {
             "type": "package",
             "package": {
+                "name": "frontend",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/frontend.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "auth",
                 "version": "master",
                 "source": {
                     "url": "git@github.com:nicolasbonnici/auth.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "user",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/user.git",
                     "type": "git",
                     "reference": "master"
                 }
@@ -45,6 +69,30 @@
         {
             "type": "package",
             "package": {
+                "name": "tag",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/tag.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "category",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/category.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "crud",
                 "version": "master",
                 "source": {
@@ -65,14 +113,44 @@
                     "reference": "master"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "sample",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/sample.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "setup",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/setup.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
         }
     ],    
     "require": {
         "php": ">=5.3.0",
         "auth": "dev-master",
+        "user": "dev-master",
         "crud": "dev-master",
         "blog": "dev-master",
+        "tag": "dev-master",
+        "category": "dev-master",
         "lifestream": "dev-master",
-        "todo": "dev-master"
+        "frontend": "dev-master",
+        "todo": "dev-master",
+        "sample": "dev-master",
+        "setup": "dev-master"
     }    
 }
