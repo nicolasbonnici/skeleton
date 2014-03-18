@@ -1,19 +1,29 @@
 #!/bin/bash
 # @todo usefull command like clear-cache install update pull pull-core pull-bundles .............. :)
+
 echo "sociableCore framework v1.0"
+
+SCURSPATH="$(pwd)"
+
 PS3='Run a command (help for more infos)'
 options=("clear-cache-client" "clear-tmp" "install" "update" "pull" "pull-core" "pull-bundle" "quit")
 select opt in "${options[@]}"
 do
     case $opt in
         "pull-bundle")
-            echo "Let's commit that awesome code right to those bundles repository!"
-            cd ./../../bundles/
-            for sBundle in "./*"
+            echo "Let's commit that awesome code right to those bundles repositories!"
+            cd ./bundles/
+            for path in ./*; 
             do
-                sCommitMessage = "Auto generated commit message for $(sBundle) by sociableCore framework console app"
-                echo "Envoi des modifications du bundle $sBundle en cours"
-                cd $sBundle/ && git commit -am echo $sCommitMessage && git push origin master && cd ./../
+                [ -d "${path}" ] || continue # if not a directory, skip
+                sBundleDirName="$(basename "${path}")"
+                if [[ $sBundleDirName != "composer" ]]
+                    then
+                    SCOMMITMSG="Auto generated commit message for $sBundleDirName by sociableCore framework console app"
+                    echo "Envoi des modifications du bundle $sBundleDirName en cours"
+                    cd $SCURSPATH/$SBUNDLEDIRNAME/bundles/ && git commit -am '$SCOMMITMSG' && git push origin master
+                    #echo "cd $SBUNDLEDIRNAME/ && git commit -am '$SCOMMITMSG' && git push origin master && cd ./../"
+                fi
             done
             echo "Tout les bundles sont désormais correctement versionnés ou en statut de pull-request. Merci -.-"
             ;;
