@@ -3,18 +3,62 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f472d12797ea429e86e7387c8a69b223",
+    "hash": "ccb4b20a292ddfc87f5ad6381391a667",
     "packages": [
         {
-            "name": "Core",
+            "name": "auth",
             "version": "master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:nicolasbonnici/Core.git",
+                "url": "git@github.com:nicolasbonnici/auth.git",
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-16 23:53:02"
+            "time": "2014-03-18 01:59:15"
+        },
+        {
+            "name": "blog",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/blog.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-18 01:59:54"
+        },
+        {
+            "name": "crud",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/crud.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-18 02:03:24"
+        },
+        {
+            "name": "lifestream",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/lifestream.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-18 01:57:32"
+        },
+        {
+            "name": "todo",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/todo.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-18 01:55:22"
         }
     ],
     "packages-dev": [
@@ -25,7 +69,11 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "core": 20
+        "auth": 20,
+        "crud": 20,
+        "blog": 20,
+        "lifestream": 20,
+        "todo": 20
     },
     "platform": {
         "php": ">=5.3.0"
