@@ -9,7 +9,7 @@ do
         "pull-bundle")
             echo "Let's commit that awesome code right to those bundles repository!"
             cd ./../../bundles/
-            for sBundle in "./"*
+            for sBundle in "./*"
             do
                 echo "Envoi des modifications du bundle $sBundle en cours"
                 cd $sBundle/ && git add . && git commit -a -m "Mise à jour des namespaces"
