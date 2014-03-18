@@ -3,7 +3,7 @@
 
 echo "sociableCore framework v1.0"
 
-SCURSPATH="$(pwd)"
+SCURPATH="$(pwd)"
 
 PS3='Run a command (type 8 for help)'
 options=("clear-cache-client" "clear-tmp" "install" "update" "pull" "pull-core" "pull-bundle" "help" "quit")
@@ -12,17 +12,16 @@ do
     case $opt in
         "pull-bundle")
             echo "Let's commit that awesome code right to those bundles repositories!"
-            cd ./bundles/
+            cd $SCURPATH/bundles/
             for path in ./*; 
             do
-                [ -d "${path}" ] || continue # if not a directory, skip
                 sBundleDirName="$(basename "${path}")"
                 if [[ $sBundleDirName != "composer" ]]
                     then
-                    SCOMMITMSG="Auto generated commit message for $sBundleDirName by sociableCore framework console app"
+                    SCOMMITMSG="Auto generated commit message for $sBundleDirName bundle by sociableCore framework console app"
                     echo "Envoi des modifications du bundle $sBundleDirName en cours"
-                    cd $SCURSPATH/$SBUNDLEDIRNAME/bundles/ && git commit -am '$SCOMMITMSG' && git push origin master
-                    #echo "cd $SBUNDLEDIRNAME/ && git commit -am '$SCOMMITMSG' && git push origin master && cd ./../"
+                    echo "cd "$SCURPATH"/bundles/"$sBundleDirName" && git commit -am  \""$SCOMMITMSG"\" && git push origin master"
+                    cd $SCURPATH/bundles/$sBundleDirName && git commit -am '$SCOMMITMSG' && git push origin master
                 fi
             done
             echo "Tout les bundles sont désormais correctement versionnés ou en statut de pull-request. Merci -.-"
