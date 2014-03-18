@@ -12,7 +12,7 @@ do
             for sBundle in "./*"
             do
                 echo "Envoi des modifications du bundle $sBundle en cours"
-                cd $sBundle/ && git add . && git commit -a -m "Mise à jour des namespaces"
+                cd $sBundle/ && git add . && git commit -am "Mise à jour des namespaces"
                 cd ./../
             done
             echo "Tout les bundles sont désormais correctement versionnés ou en statut de pull-request. Merci -.-"
