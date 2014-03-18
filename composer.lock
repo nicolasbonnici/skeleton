@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "a1b9cef3946026e8333f336b3b5e1ea0",
+    "hash": "39b7b95a6b0808012633a9fbf18fe430",
     "packages": [
         {
             "name": "auth",
@@ -14,7 +14,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 02:16:06"
+            "time": "2014-03-18 04:36:06"
         },
         {
             "name": "blog",
@@ -25,7 +25,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 02:17:11"
+            "time": "2014-03-18 04:36:46"
         },
         {
             "name": "category",
@@ -36,7 +36,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 03:04:12"
+            "time": "2014-03-18 04:36:59"
         },
         {
             "name": "crud",
@@ -47,7 +47,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 02:17:46"
+            "time": "2014-03-18 04:37:14"
         },
         {
             "name": "frontend",
@@ -58,7 +58,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 03:05:29"
+            "time": "2014-03-18 04:37:29"
         },
         {
             "name": "lifestream",
@@ -69,7 +69,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 02:18:27"
+            "time": "2014-03-18 04:37:41"
         },
         {
             "name": "sample",
@@ -80,7 +80,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 03:06:19"
+            "time": "2014-03-18 04:37:55"
         },
         {
             "name": "setup",
@@ -102,7 +102,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 03:07:17"
+            "time": "2014-03-18 04:38:07"
         },
         {
             "name": "todo",
@@ -113,7 +113,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 02:18:58"
+            "time": "2014-03-18 04:38:17"
         },
         {
             "name": "user",
@@ -124,7 +124,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 03:07:56"
+            "time": "2014-03-18 04:38:26"
         }
     ],
     "packages-dev": [
