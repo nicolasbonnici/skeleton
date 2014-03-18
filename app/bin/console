@@ -11,9 +11,9 @@ do
             cd ./../../bundles/
             for sBundle in "./*"
             do
+                sCommitMessage = "Auto generated commit message for $sBundle by sociableCore framework console app"
                 echo "Envoi des modifications du bundle $sBundle en cours"
-                cd $sBundle/ && git add . && git commit -am "Auto generated commit message for $sBundle by sociableCore framework console app" && git push origin master
-                cd ./../
+                cd $sBundle/ && git commit -am echo $sCommitMessage && git push origin master && cd ./../
             done
             echo "Tout les bundles sont désormais correctement versionnés ou en statut de pull-request. Merci -.-"
             ;;
