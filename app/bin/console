@@ -5,8 +5,8 @@ echo "sociableCore framework v1.0"
 
 SCURSPATH="$(pwd)"
 
-PS3='Run a command (help for more infos)'
-options=("clear-cache-client" "clear-tmp" "install" "update" "pull" "pull-core" "pull-bundle" "quit")
+PS3='Run a command (type 8 for help)'
+options=("clear-cache-client" "clear-tmp" "install" "update" "pull" "pull-core" "pull-bundle" "help" "quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -35,8 +35,9 @@ do
             sudo rm -fR ./../tmp/cache/*
             ;;
         "help")
-            echo "Maybe you need to call your mommy... -.-"
-            break
+            echo "1) clear-cache-client  4) update        7) pull-bundle"
+            echo "2) clear-tmp           5) pull          8) help"
+            echo "3) install             6) pull-core     9) quit"
             ;;
         "quit")
             break
