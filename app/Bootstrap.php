@@ -135,7 +135,7 @@ class Bootstrap {
      * @throws CoreException
      */
     private static function initController() {
-        $_controller = 'modules\\' . \Library\Core\Router::getModule() . '\Controllers\\' . ucfirst(\Library\Core\Router::getController()) . 'Controller';
+        $_controller = 'bundles\\' . \Library\Core\Router::getModule() . '\Controllers\\' . ucfirst(\Library\Core\Router::getController()) . 'Controller';
         if (class_exists($_controller)) {
 
             new $_controller();

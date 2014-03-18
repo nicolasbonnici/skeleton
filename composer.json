@@ -3,7 +3,7 @@
     "description": "Skeleton project",
     "homepage": "http://dev.nbonnici.info/",
     "config": {
-        "vendor-dir": "modules"
+        "vendor-dir": "bundles"
     },
     "repositories": [
         {

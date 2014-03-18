@@ -1,0 +1,36 @@
+#!/bin/bash
+# @todo usefull command like clear-cache install update pull pull-core pull-bundles .............. :)
+echo "sociableCore framework v1.0"
+PS3='Run a command (help for more infos)'
+options=("clear-cache-client" "clear-tmp" "install" "update" "pull" "pull-core" "pull-bundle" "quit")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "pull-bundle")
+            echo "Let's commit that awesome code right to those bundles repository!"
+            cd ./../../bundles/
+            for sBundle in "./"*
+            do
+                echo "Envoi des modifications du bundle $sBundle en cours"
+                cd $sBundle/ && git add . && git commit -a -m "Mise à jour des namespaces"
+                cd ./../
+            done
+            echo "Tout les bundles sont désormais correctement versionnés ou en statut de pull-request. Merci -.-"
+            ;;
+        "option 2")
+            echo "you chose choice 2"
+            ;;
+        "clear-cache-client")
+            echo "Suppresion du cache client pour tout les bundles."
+            sudo rm -fR ./../tmp/cache/*
+            ;;
+        "help")
+            echo "Maybe you need to call your mommy... -.-"
+            break
+            ;;
+        "quit")
+            break
+            ;;
+        *) echo invalid option;;
+    esac
+done
