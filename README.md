@@ -17,8 +17,4 @@ Note that the path for your php installation may be different on your distributi
 
 Installation
 
-Just clone this repo and add a new folder in the root of the project called tmp/ and chmod it to 0777.
-
-mkdir ./tmp/ && chmod 777 -R ./tmp/
-
-Then perform a composer install, to install framework components and app bundles (you can edit dependancy to install on the composer.json file at the root)
+Just clone this repo and run ./app/bin/console and choose install
