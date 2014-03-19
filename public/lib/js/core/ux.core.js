@@ -213,11 +213,11 @@
                         $('.ui-editable').each(function() {
                             var sUrl = '';
                             if (
-                                typeof($(this).data('module')) !== 'undefined' && 
+                                typeof($(this).data('bundle')) !== 'undefined' && 
                                 typeof($(this).data('controller')) !== 'undefined' && 
                                 typeof($(this).data('action')) !== 'undefined' 
                             ) {
-                                sUrl = '/'+$(this).data('module')+'/'+$(this).data('controller')+'/'+$(this).data('action');
+                                sUrl = '/'+$(this).data('bundle')+'/'+$(this).data('controller')+'/'+$(this).data('action');
                             } else if (typeof($(this).data('url')) !== 'undefined') {
                                 sUrl = $(this).data('url');
                             } else {
@@ -321,7 +321,7 @@
                     var aData = $(sSelector).data();
                     $.ajax({
                         type: 'POST',
-                        url: '/'+$obj.attr('data-module')+'/'+$obj.attr('data-controller')+'/'+$obj.attr('data-action'),
+                        url: '/'+$obj.attr('data-bundle')+'/'+$obj.attr('data-controller')+'/'+$obj.attr('data-action'),
                         data: aData,
                         beforeSend : function(preload) {
                             $obj.data('initialContent', $obj.html());
@@ -352,11 +352,11 @@
 
                     var sUrl = '';
                     if (
-                        typeof(oHandler.data('module')) !== 'undefined' && 
+                        typeof(oHandler.data('bundle')) !== 'undefined' && 
                         typeof(oHandler.data('controller')) !== 'undefined' && 
                         typeof(oHandler.data('action')) !== 'undefined' 
                     ) {
-                        sUrl = '/'+oHandler.data('module')+'/'+oHandler.data('controller')+'/'+oHandler.data('action');
+                        sUrl = '/'+oHandler.data('bundle')+'/'+oHandler.data('controller')+'/'+oHandler.data('action');
                     } else if (typeof(oHandler.data('url')) !== 'undefined') {
                         sUrl = oHandler.data('url');
                     } else {
@@ -504,11 +504,11 @@
 
                             var sUrlTarget = '';
                             if (
-                                typeof($(this).data('module')) !== 'undefined' && 
+                                typeof($(this).data('bundle')) !== 'undefined' && 
                                 typeof($(this).data('controller')) !== 'undefined' && 
                                 typeof($(this).data('action')) !== 'undefined' 
                             ) {
-                                sUrlTarget = '/'+$(this).data('module')+'/'+$(this).data('controller')+'/'+$(this).data('action');
+                                sUrlTarget = '/'+$(this).data('bundle')+'/'+$(this).data('controller')+'/'+$(this).data('action');
                             } else if (typeof($(this).data('url')) !== 'undefined') {
                                 sUrlTarget = $(this).data('url');
                             } else {
@@ -549,11 +549,11 @@
                     
                     var sUrlTarget = '';
                     if (
-                            typeof(oItem.data('module')) !== 'undefined' && 
+                            typeof(oItem.data('bundle')) !== 'undefined' && 
                             typeof(oItem.data('controller')) !== 'undefined' && 
                             typeof(oItem.data('action')) !== 'undefined' 
                     ) {
-                        sUrlTarget = '/'+oItem.data('module')+'/'+oItem.data('controller')+'/'+oItem.data('action');
+                        sUrlTarget = '/'+oItem.data('bundle')+'/'+oItem.data('controller')+'/'+oItem.data('action');
                     } else if (typeof(oItem.data('url')) !== 'undefined') {
                         sUrlTarget = oItem.data('url');
                     } else {
