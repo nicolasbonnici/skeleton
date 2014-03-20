@@ -48,10 +48,10 @@
                                                 <div class="col-md-12 column">
                                                     <ul class="nav nav-pills nav-stacked">
                                                         <li>
-                                                            <a href="#modal-user" data-toggle="modal" class="btn btn-lg btn-link ui-sendxhr" data-url="/backend/user/profile" data-selector="#modal-user-content"><span class="glyphicon glyphicon-user"></span> {{tr['my_account']}}</a>
+                                                            <a href="#modal-user" data-toggle="modal" class="btn btn-lg btn-link ui-sendxhr" data-url="/user/home/profile" data-selector="#modal-user-content"><span class="glyphicon glyphicon-user"></span> {{tr['my_account']}}</a>
                                                         </li>
                                                         <li>
-                                                            <a href="/backend/setup/" class="btn btn-lg btn-link"><span class="glyphicon glyphicon-cog"></span> {{tr['administration']}}</a>
+                                                            <a href="/setup" class="btn btn-lg btn-link"><span class="glyphicon glyphicon-cog"></span> {{tr['administration']}}</a>
                                                         </li>
                                                         <li>
                                                             <a href="#" class="btn btn-lg btn-link ui-pane-toggle ui-tip" data-pane="east" title="Mes applications">
@@ -94,7 +94,7 @@
                                         <div id="login-popover" class="hide">
                                             <div class="row clearfix">
                                                 <div class="col-md-12 column">
-                                                    <form class="form-horizontal well" role="form" method="POST" action="/frontend/auth/">
+                                                    <form class="form-horizontal well" role="form" method="POST" action="/auth">
                                                         <div class="form-group">
                                                              <label for="emailInput" class="col-sm-2 control-label">Email</label>
                                                             <div class="col-sm-10">
