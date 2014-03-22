@@ -148,10 +148,11 @@
 
 .clear { clear: both; }
 
-.minFontSize { font-size: 11px; }
-.midFontSize { font-size: 14px; }
-.bigFontSize { font-size: 18px; }
-.maxFontSize { font-size: 52px; }
+.text-sm { font-size: 11px; }
+.text { font-size: 14px; }
+.text-md { font-size: 18px; }
+.text-lg { font-size: 24px; }
+.text-bg { font-size: 32px; }
 
 .whiteTextShadow {
 	text-shadow: 1px 1px #fff;

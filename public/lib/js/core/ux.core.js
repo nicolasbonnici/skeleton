@@ -188,7 +188,10 @@
                  */ 
                 initEditors: function() {
                     if ($('.ui-editor').size() > 0) {
-                        $('.ui-editor').summernote({focus: true});                        
+                        $('.ui-editor').summernote({
+                            height: 350,
+                            focus: true
+                        });
                     }
                 },                              
                 
@@ -233,7 +236,6 @@
                                         return params;
                                     },
                                     url: sUrl,
-                                    title: 'Entrez la nouvelle valeur',
                                     placement: 'bottom',
                                     placeholder: $(this).data('placeholder'),
                                     inputclass: 'form-control input-lg',

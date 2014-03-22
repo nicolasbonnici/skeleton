@@ -137,6 +137,18 @@
                     "reference": "master"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "error",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/error.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
         }
     ],    
     "require": {
@@ -152,5 +164,6 @@
         "todo": "dev-master",
         "sample": "dev-master",
         "setup": "dev-master"
+        "error": "dev-master"
     }    
 }
