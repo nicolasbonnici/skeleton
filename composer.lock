@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "39b7b95a6b0808012633a9fbf18fe430",
+    "hash": "38abe77da6ca6612109cbd1cdeff1e1d",
     "packages": [
         {
             "name": "auth",
@@ -14,7 +14,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 04:36:06"
+            "time": "2014-03-22 13:49:36"
         },
         {
             "name": "blog",
@@ -25,7 +25,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-21 00:26:49"
+            "time": "2014-03-22 13:49:38"
         },
         {
             "name": "category",
@@ -47,7 +47,18 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-21 00:26:52"
+            "time": "2014-03-22 13:49:41"
+        },
+        {
+            "name": "error",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/error.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-22 13:39:29"
         },
         {
             "name": "frontend",
@@ -58,7 +69,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-21 00:33:20"
+            "time": "2014-03-22 13:49:44"
         },
         {
             "name": "lifestream",
@@ -69,7 +80,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 04:37:41"
+            "time": "2014-03-22 13:49:47"
         },
         {
             "name": "sample",
@@ -145,7 +156,8 @@
         "frontend": 20,
         "todo": 20,
         "sample": 20,
-        "setup": 20
+        "setup": 20,
+        "error": 20
     },
     "platform": {
         "php": ">=5.3.0"

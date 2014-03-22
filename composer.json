@@ -163,7 +163,7 @@
         "frontend": "dev-master",
         "todo": "dev-master",
         "sample": "dev-master",
-        "setup": "dev-master"
+        "setup": "dev-master",
         "error": "dev-master"
     }    
 }
