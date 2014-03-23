@@ -690,9 +690,10 @@
                     // init carousel
                     $('.ui-carousel').each(function() {
                         if (!$(this).data('carouselFired')) {
+                            var iAutoplay = (($(this).hasClass('noAutoplay')) ? 0 : 1200);
                             $(this).carousel({
-                                interval: 2000,
-                                duration: 50
+                                interval: iAutoplay,
+                                duration: 500
                             });
                             $(this).data('carouselFired', true);
                         }

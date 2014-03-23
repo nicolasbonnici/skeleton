@@ -9,8 +9,8 @@
                                     <li{% if sAction|Exists && sAction == 'portfolioAction' %} class="active"{% endif %}>
                                         <a href="/portfolio" class="ui-tip" data-toggle="tooltip" data-placement="bottom" title="{{tr['portfolio_tip']}}"><span class="glyphicon glyphicon-folder-open"></span> {{tr['portfolio']}}</a>
                                     </li>
-                                    <li{% if sAction|Exists && sAction == 'contactAction' %} class="active"{% endif %}>
-                                        <a href="/contact" class="ui-tip" data-toggle="tooltip" data-placement="bottom" title="{{tr['contact_tip']}}"><span class="glyphicon glyphicon-envelope"></span> {{tr['contact']}}</a>
+                                    <li{% if sAction|Exists && sAction == 'aboutAction' %} class="active"{% endif %}>
+                                        <a href="/a-propos" class="ui-tip" data-toggle="tooltip" data-placement="bottom" title="{{tr['about_tip']}}"><span class="glyphicon glyphicon-envelope"></span> {{tr['about']}}</a>
                                     </li>
                                     <li>
                                         <a href="#" class="ui-toggle-popover ui-tip" data-popover="#searchPopover" title="{{tr['search_tip']}}">
