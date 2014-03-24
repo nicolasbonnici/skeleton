@@ -134,6 +134,10 @@
                         
                 },
                 
+                toggle: function($oItem) {
+                    $oItem.togglrClass('hide');
+                },
+                
                 /**
                  * Send a notification
                  * 
@@ -792,6 +796,11 @@
                                     }
                                 });
                             }
+                        });
+                        
+                        // Toggle items
+                        $('body').on('.ui-toggle', 'click', function() {
+                           Ux.toggle($($(this).data('toggle-selector'))); 
                         });
                         
                         // popover
