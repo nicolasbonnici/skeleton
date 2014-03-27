@@ -6,12 +6,14 @@ body {
 	background-size: cover;
 }
 
+.ui-grid {
+}
+
 .icon-feed {
 	width: 16px;
 }
 
 .item {
-	
 }
 
 .item.twitter {

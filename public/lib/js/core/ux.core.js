@@ -330,6 +330,7 @@
                         url: '/'+$obj.attr('data-bundle')+'/'+$obj.attr('data-controller')+'/'+$obj.attr('data-action'),
                         data: aData,
                         beforeSend : function(preload) {
+                            Ux.sendNotification('Information', 'loading', 'info', 'glyphicon glyphicon-cog');
                             $obj.data('initialContent', $obj.html());
                         },
                         success: function(rep){
@@ -606,8 +607,8 @@
                  */
                 initGrids: function() {
                     var iColumnsIndex = 0;
-                    var iColumnsCount = 4;
-                    var iTwitterBootstrapGridClass = 3;
+                    var iColumnsCount = 3;
+                    var iTwitterBootstrapGridClass = 4;
                     $('.ui-grid').each(function() {
                         var sGridSelector = '#' + $(this).attr('id');
                         if (!$(this).data('grid-loaded')) {
@@ -631,7 +632,7 @@
                             }
                             $(sGridSelector + ' .ui-grid-column').eq(iColumnsIndex).append($(this));
                             iColumnsIndex++;
-                            $(this).data('curCol', iColumnsIndex);                            
+                            $(this).data('curCol', iColumnsIndex);
                         });
                     });
                 },
@@ -751,7 +752,6 @@
                             if ($(this).scrollTop() === ($(this).prop('scrollHeight') - $(this).outerHeight())){
                                 if ($(this).find('.ui-scroll-loadable')) {
                                     $('.ui-scroll-loadable').each(function() {
-                                        Ux.sendNotification('Information', 'loading', 'info', 'glyphicon glyphicon-cog');
                                         Ux.loadScroll($(this));                                 
                                     });
                                 }
