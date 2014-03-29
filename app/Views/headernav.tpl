@@ -13,7 +13,7 @@
                                         <a href="/a-propos" class="ui-tip" data-toggle="tooltip" data-placement="bottom" title="{{tr['about_tip']}}"><span class="glyphicon glyphicon-user"></span> {{tr['about']}}</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="ui-toggle-popover ui-tip" data-popover="#searchPopover" title="{{tr['search_tip']}}">
+                                        <a href="#" class="ui-toggle-popover ui-tip" data-popover="#searchPopover">
                                             <span class="glyphicon glyphicon-search"></span> {{tr['search']}}
                                         </a>                                    
 

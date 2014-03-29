@@ -607,8 +607,8 @@
                  */
                 initGrids: function() {
                     var iColumnsIndex = 0;
-                    var iColumnsCount = 4;
-                    var iTwitterBootstrapGridClass = 3;
+                    var iColumnsCount = 4; 
+                    var iTwitterBootstrapGridClass = 3; // %12
                     $('.ui-grid').each(function() {
                         var sGridSelector = '#' + $(this).attr('id');
                         if (!$(this).data('grid-loaded')) {

@@ -28,7 +28,7 @@ body {
 
 .item.google {
 	background: #404040 url('http://google.com/favicon.ico') right bottom no-repeat;;
-	color: #404040;
+	color: #fff;
 	border: none; 
 }
 .item.google a {
@@ -37,9 +37,9 @@ body {
 }
 
 .item.googleplus {
-	color: #404040;
+	color: #fff;
 	border: none; 
-	background: #fff url('http://plus.google.com/favicon.ico') right bottom no-repeat;
+	background: #ccc url('http://plus.google.com/favicon.ico') right bottom no-repeat;
 }
 .item.googleplus a {
 	font-weight: bold;
