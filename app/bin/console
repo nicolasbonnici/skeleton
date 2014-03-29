@@ -79,7 +79,7 @@ do
             for path in ./*; 
             do
                 sBundleDirName="$(basename "${path}")"
-                if [[ $sBundleDirName != "composer" && $sBundleDirName != "autoload.php.json" ]]
+                if [[ $sBundleDirName != "composer" && $sBundleDirName != "autoload.php" ]]
                     then
                     sCommitMessage="Auto generated commit message for $sBundleDirName bundle by sociableCore framework console app, see diff for more infos"
                     echo "Envoi des modifications du bundle $sBundleDirName en cours"
