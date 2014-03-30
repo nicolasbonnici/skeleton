@@ -19,8 +19,8 @@
                                     </li>
                                     <li id="search" class="hide">           
                                         <div class="col-sm-8">
-                                            <form id="general-search" role="search" method="post" action="/search/home/process/">
-                                                <input type="text" name="search" class="form-control input-lg" placeholder="{{tr['search_helper']}}" />
+                                            <form id="general-search" role="search" method="post" action="/search/home/process/" data-sendform-reponse-selector=".ui-layout-west .ui-layout-west-xhr">
+                                                <input type="text" name="search" class="form-control input-lg submitOnEnter" placeholder="{{tr['search_helper']}}" />
                                             </form>
                                         </div>
                                         <div class="col-sm-4">

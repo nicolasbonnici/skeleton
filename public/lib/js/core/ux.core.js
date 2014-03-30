@@ -439,10 +439,12 @@
                     }
                     var $formTarget = $(sFormSelector);
                     var $domTarget = $(sFormSelector).parent();
-
+                    if ($formTarget.data('sendform-reponse-selector')) {
+                        $domTarget = $($formTarget.data('sendform-reponse-selector'));
+                    }
+                    
                     // Serialiser le formulaire, ses attributs data et les contenteditable qu'il contient
                     var aFormInputs = $formTarget.serializeArray();
-                    console.log($formTarget.serialize());
                     oParams = $.extend($formTarget.data(), obj.data());
                     if($(sFormSelector+' div[contenteditable=true]').size() != 0) {
                         $(sFormSelector+' .ui-editor').each(function() {
@@ -460,7 +462,7 @@
                         beforeSend : function(preload) {
                             // Mettre en cache et vider l'objet qui contiendra la reponse
                             $domTarget.data('initialContent', $domTarget.html());    
-
+                            $domTarget.empty();
                         },
                         success: function(rep){
                             if (!obj.hasClass('sendNotificationOnCallback')) {

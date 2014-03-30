@@ -49,6 +49,17 @@
             <div class="ui-layout-content transparentBlackBg">
                 <div class="row">
                     <div class="col-md-12">
+                        <div class="row">
+                    
+                            <div class="col-md-12 text-right">
+                                <a href="#" class="btn btn-md btn-info ui-pane-toggle" data-pane="west" title="">
+                                    <span class="glyphicon glyphicon-arrow-left"></span>
+                                </a>
+                            </div>
+                    
+                        </div>
+                        <div class="ui-layout-west-xhr"></div>
+                    
                     </div>
                 </div>
             </div>
@@ -96,6 +107,14 @@
         <script type="text/javascript" src="/lib/plugins/pnotify/js/jquery.pnotify.js"></script>
         <script type="text/javascript" src="/lib/js/core/ux.core.js"></script>
         <script type="text/javascript" src="/lib/js/core/core.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() {
+           $('body').on('submit', '#general-search', function() {
+              $('.ui-sendform [data-form=#general-search]').trigger('click');
+              return false; 
+           });
+        });
+        </script>
         {% block js %}{% endblock %}
     
     </body>

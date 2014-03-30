@@ -83,7 +83,7 @@ do
                     then
                     sCommitMessage="Auto generated commit message for $sBundleDirName bundle by sociableCore framework console app, see diff for more infos"
                     echo "Envoi des modifications du bundle $sBundleDirName en cours"
-                    cd "$sCurPath/bundles/$sBundleDirName" && git pull && git add . && git commit -am '$sCommitMessage' && git push origin master
+                    cd "$sCurPath/bundles/$sBundleDirName" && git pull && git add . && git commit -am \""$sCommitMessage"\" && git push origin master
                 fi
             done
             echo "Tout les bundles sont désormais correctement versionnés ou en statut de pull-request selon vos droits utilisateurs"
