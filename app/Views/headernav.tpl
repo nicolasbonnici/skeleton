@@ -19,12 +19,12 @@
                                     </li>
                                     <li id="search" class="hide">           
                                         <div class="col-sm-8">
-                                            <form id="general-search" role="search" method="post" action="/search/home/process/" data-sendform-reponse-selector=".ui-layout-west .ui-layout-west-xhr">
-                                                <input type="text" name="search" class="form-control input-lg submitOnEnter" placeholder="{{tr['search_helper']}}" />
+                                            <form id="general-search" role="search" method="post" action="/search/{% if aSession|Exists %}auth{% else %}home{% endif %}/process/" data-sendform-reponse-selector=".ui-layout-west .ui-layout-west-xhr">
+                                                <input type="text" name="search" class="form-control input-lg" placeholder="{{tr['search_helper']}}" />
                                             </form>
                                         </div>
                                         <div class="col-sm-4">
-                                            <a href="#" class="btn btn-lg btn-info ui-sendform" data-form="#general-search">
+                                            <a href="#" class="btn btn-lg btn-info ui-sendform ui-pane-open" data-pane="west" data-form="#general-search">
                                                 <span class="glyphicon glyphicon-search"></span>
                                             </a>
                                         </div>                                                                                      

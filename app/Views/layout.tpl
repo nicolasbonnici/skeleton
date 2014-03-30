@@ -52,7 +52,7 @@
                         <div class="row">
                     
                             <div class="col-md-12 text-right">
-                                <a href="#" class="btn btn-md btn-info ui-pane-toggle" data-pane="west" title="">
+                                <a href="#" class="btn btn-lg btn-info ui-pane-toggle" data-pane="west" title="">
                                     <span class="glyphicon glyphicon-arrow-left"></span>
                                 </a>
                             </div>
@@ -109,9 +109,9 @@
         <script type="text/javascript" src="/lib/js/core/core.js"></script>
         <script type="text/javascript">
         $(document).ready(function() {
-           $('body').on('submit', '#general-search', function() {
-              $('.ui-sendform [data-form=#general-search]').trigger('click');
-              return false; 
+           $('body').on('submit', 'form#general-search', function() {
+              $('.ui-sendform[data-form=#general-search]').trigger('click');
+              return false;
            });
         });
         </script>

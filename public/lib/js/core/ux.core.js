@@ -438,6 +438,7 @@
                         sFormSelector = obj.attr('href');
                     }
                     var $formTarget = $(sFormSelector);
+                    console.log(sFormSelector);
                     var $domTarget = $(sFormSelector).parent();
                     if ($formTarget.data('sendform-reponse-selector')) {
                         $domTarget = $($formTarget.data('sendform-reponse-selector'));
