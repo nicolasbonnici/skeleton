@@ -4,7 +4,7 @@
                             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                                 <ul class="nav navbar-nav">
                                     <li{% if sAction|Exists && sAction == 'indexAction' %} class="active"{% endif %}>
-                                        <a href="/" class="ui-tip" title="{{tr['homepage_tip']}}" data-toggle="tooltip" data-placement="bottom" title="Accueil"><span class="glyphicon glyphicon-home"></span> {{tr['homepage']}}</a>
+                                        <a href="/" class="ui-tip" data-toggle="tooltip" data-placement="bottom" title="{{tr['homepage_tip']}}"><span class="glyphicon glyphicon-home"></span> {{tr['homepage']}}</a>
                                     </li>
                                     <li{% if sAction|Exists && sAction == 'portfolioAction' %} class="active"{% endif %}>
                                         <a href="/portfolio" class="ui-tip" data-toggle="tooltip" data-placement="bottom" title="{{tr['portfolio_tip']}}"><span class="glyphicon glyphicon-folder-open"></span> {{tr['portfolio']}}</a>
@@ -19,18 +19,16 @@
 
                                         <div id="searchPopover" class="hide">
                                             <div class="row clearfix">
-                                                <div class="col-md-12 column well">
                                                     <form class="" role="search">
-                                                        <div class="form-group">
-                                                           <input type="text" class="form-control input-lg" placeholder="{{tr['search_helper']}}" />
-                                                        </div> 
-                                                        <div class="form-group text-right">
-                                                           <button type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" class="form-control input-lg" placeholder="{{tr['search_helper']}}" />
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-search"></span></button>
                                                         </div>                                                 
                                                     </form>
-                                                </div>
                                                 <div class="col-md-12 column">
-                                                    <p>Résultats</p>
+
                                                 </div>
                                             </div>
                                         </div>

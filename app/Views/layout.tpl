@@ -2,7 +2,7 @@
 <html lang="{{lang|Substr: '0,2'|lower}}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{% block meta_title %}Core{% endblock %}</title>
+        <title>{% block meta_title %}{% endblock %}</title>
 
         <!-- Fav and touch icons -->
         <link rel="shortcut icon" href="{% block favicon %}/lib/img/favicon.gif{% endblock %}">              

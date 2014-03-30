@@ -27,13 +27,13 @@ body {
 }
 
 .item.google {
-	background: #404040 url('http://google.com/favicon.ico') right bottom no-repeat;;
+	background: #ccc url('http://google.com/favicon.ico') right bottom no-repeat;;
 	color: #fff;
 	border: none; 
 }
 .item.google a {
 	font-weight: bold;
-	color: #48acde;
+	color: #4285F4;
 }
 
 .item.googleplus {
@@ -43,5 +43,5 @@ body {
 }
 .item.googleplus a {
 	font-weight: bold;
-	color: #427fed;
+	color: #4285F4;
 }
