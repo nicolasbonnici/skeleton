@@ -13,26 +13,21 @@
                                         <a href="/a-propos" class="ui-tip" data-toggle="tooltip" data-placement="bottom" title="{{tr['about_tip']}}"><span class="glyphicon glyphicon-user"></span> {{tr['about']}}</a>
                                     </li>
                                     <li>
-                                        <a href="#" class="ui-toggle-popover ui-tip" data-popover="#searchPopover">
+                                        <a href="#" class="ui-tip ui-toggle ui-focus" data-toggle-selector="#search" data-focus-selector="#search input[type=text]:first" data-popover="#searchPopover">
                                             <span class="glyphicon glyphicon-search"></span> {{tr['search']}}
-                                        </a>                                    
-
-                                        <div id="searchPopover" class="hide">
-                                            <div class="row clearfix">
-                                                    <form class="" role="search">
-                                                        <div class="col-sm-8">
-                                                            <input type="text" class="form-control input-lg" placeholder="{{tr['search_helper']}}" />
-                                                        </div>
-                                                        <div class="col-sm-1">
-                                                            <button type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-                                                        </div>                                                 
-                                                    </form>
-                                                <div class="col-md-12 column">
-
-                                                </div>
-                                            </div>
+                                        </a>   
+                                    </li>
+                                    <li id="search" class="hide">           
+                                        <div class="col-sm-8">
+                                            <form id="general-search" role="search" method="post" action="/search/home/process/">
+                                                <input type="text" name="search" class="form-control input-lg" placeholder="{{tr['search_helper']}}" />
+                                            </form>
                                         </div>
-                                                                                
+                                        <div class="col-sm-4">
+                                            <a href="#" class="btn btn-lg btn-info ui-sendform" data-form="#general-search">
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </a>
+                                        </div>                                                                                      
                                     </li>                                    
                                 </ul>
                                 <ul class="nav navbar-nav navbar-right">

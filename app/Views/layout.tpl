@@ -2,7 +2,7 @@
 <html lang="{{lang|Substr: '0,2'|lower}}">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>{% block meta_title %}{% endblock %}</title>
+        <title>{{sAppName}} | {% block meta_title %}{% endblock %}</title>
 
         <!-- Fav and touch icons -->
         <link rel="shortcut icon" href="{% block favicon %}/lib/img/favicon.gif{% endblock %}">              
@@ -80,7 +80,7 @@
             </div>
         </div>
     
-        <div class="modal fade" id="modal-user" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modal-user" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content" id="modal-user-content">
                     <p>&nbsp;</p>

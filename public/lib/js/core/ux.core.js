@@ -442,6 +442,7 @@
 
                     // Serialiser le formulaire, ses attributs data et les contenteditable qu'il contient
                     var aFormInputs = $formTarget.serializeArray();
+                    console.log($formTarget.serialize());
                     oParams = $.extend($formTarget.data(), obj.data());
                     if($(sFormSelector+' div[contenteditable=true]').size() != 0) {
                         $(sFormSelector+' .ui-editor').each(function() {
@@ -644,7 +645,7 @@
                     $('form').each(function() {
                         if (!$(this).data('HasChangesListnenerFired')) {
                             $(this).data('bHasChange', false);
-                            $('body').on($(this).attr('id'), 'change', function() {
+                            $('body').on('change', $(this).attr('id'), function() {
                                $(this).data('bHasChange', true); 
                             });
                             $(this).data('HasChangesListnenerFired', true);
@@ -818,6 +819,11 @@
                         $('.ui-tip').tooltip({
                             placement: 'auto',
                             delay: 0
+                        });
+                        
+                        // Give focus to a selector
+                        $('body').on('click', '.ui-focus', function() {
+                           $($(this).data('focus-selector')).focus(); 
                         });
                         
                         // Flag body
