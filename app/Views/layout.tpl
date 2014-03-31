@@ -52,7 +52,7 @@
                         <div class="row">
                     
                             <div class="col-md-12 text-right">
-                                <a href="#" class="btn btn-lg btn-info ui-pane-toggle" data-pane="west" title="">
+                                <a href="#" class="btn btn-lg btn-primary ui-pane-toggle" data-pane="west" title="">
                                     <span class="glyphicon glyphicon-arrow-left"></span>
                                 </a>
                             </div>
