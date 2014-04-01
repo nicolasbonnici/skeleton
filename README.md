@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Skeleton
 ============
 
@@ -18,3 +19,9 @@ Note that the path for your php installation may be different on your distributi
 Installation
 
 Just clone this repo and run ./app/bin/console and choose install
+=======
+skeleton
+========
+
+skeleton
+>>>>>>> 28c4e050e6d22be662eb5605b29a3b6f892b050e

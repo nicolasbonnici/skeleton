@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "45871db944d1a54db6fddb4651ba7a07",
+    "hash": "bb5f6d056a3686e311844984b368b485",
     "packages": [
         {
             "name": "auth",
@@ -14,7 +14,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-22 13:49:36"
+            "time": "2014-04-01 01:48:03"
         },
         {
             "name": "blog",
@@ -25,7 +25,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-23 18:29:10"
+            "time": "2014-04-01 01:48:07"
         },
         {
             "name": "category",
@@ -47,7 +47,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-22 13:49:41"
+            "time": "2014-04-01 01:48:14"
         },
         {
             "name": "error",
@@ -58,7 +58,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-27 05:39:50"
+            "time": "2014-04-01 01:48:18"
         },
         {
             "name": "frontend",
@@ -69,7 +69,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-29 16:40:35"
+            "time": "2014-04-01 01:48:23"
         },
         {
             "name": "lifestream",
@@ -80,7 +80,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-23 18:29:16"
+            "time": "2014-04-01 01:48:27"
         },
         {
             "name": "sample",
@@ -91,7 +91,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 04:37:55"
+            "time": "2014-04-01 01:48:32"
         },
         {
             "name": "search",
@@ -102,7 +102,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-29 15:38:21"
+            "time": "2014-04-01 01:48:36"
         },
         {
             "name": "setup",
@@ -113,58 +113,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-21 00:26:56"
-        },
-        {
-            "name": "swiftmailer/swiftmailer",
-            "version": "v5.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "748c01c1144713ac0118396935d10b6ceec91b68"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/748c01c1144713ac0118396935d10b6ceec91b68",
-                "reference": "748c01c1144713ac0118396935d10b6ceec91b68",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.1-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "lib/swift_required.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Chris Corbyn"
-                }
-            ],
-            "description": "Swiftmailer, free feature-rich PHP mailer",
-            "homepage": "http://swiftmailer.org",
-            "keywords": [
-                "mail",
-                "mailer"
-            ],
-            "time": "2014-03-18 09:03:27"
+            "time": "2014-04-01 01:48:41"
         },
         {
             "name": "tag",
@@ -175,7 +124,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 04:38:07"
+            "time": "2014-04-01 01:25:58"
         },
         {
             "name": "todo",
@@ -186,7 +135,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-23 18:29:19"
+            "time": "2014-04-01 01:48:48"
         },
         {
             "name": "user",
@@ -197,7 +146,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-03-18 04:38:26"
+            "time": "2014-04-01 01:48:52"
         }
     ],
     "packages-dev": [
@@ -208,7 +157,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "swiftmailer/swiftmailer": 0,
         "auth": 20,
         "user": 20,
         "crud": 20,
