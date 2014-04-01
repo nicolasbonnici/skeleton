@@ -27,6 +27,8 @@ do
             echo "All dependancies found!"
             echo "Setup the tmp directory, for View cache and server logs"
             cd "$sCurPath/" && mkdir ./tmp/ && chmod -R 777 ./tmp/
+            echo "Setup the bundles directory"
+            cd "$sCurPath/" && mkdir ./bundles/ && chmod -R 755 ./tmp/
             echo "Framework installation..."
             cd "$sCurPath/$sLibrariesPath" && git clone $sCoreRepository
             echo "Registered bundles installation..."
