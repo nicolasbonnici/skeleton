@@ -1,0 +1,232 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
+    "hash": "45871db944d1a54db6fddb4651ba7a07",
+    "packages": [
+        {
+            "name": "auth",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/auth.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-22 13:49:36"
+        },
+        {
+            "name": "blog",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/blog.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-23 18:29:10"
+        },
+        {
+            "name": "category",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/category.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-29 16:40:26"
+        },
+        {
+            "name": "crud",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/crud.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-22 13:49:41"
+        },
+        {
+            "name": "error",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/error.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-27 05:39:50"
+        },
+        {
+            "name": "frontend",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/frontend.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-29 16:40:35"
+        },
+        {
+            "name": "lifestream",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/lifestream.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-23 18:29:16"
+        },
+        {
+            "name": "sample",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/sample.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-18 04:37:55"
+        },
+        {
+            "name": "search",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/search.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-29 15:38:21"
+        },
+        {
+            "name": "setup",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/setup.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-21 00:26:56"
+        },
+        {
+            "name": "swiftmailer/swiftmailer",
+            "version": "v5.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/swiftmailer/swiftmailer.git",
+                "reference": "748c01c1144713ac0118396935d10b6ceec91b68"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/748c01c1144713ac0118396935d10b6ceec91b68",
+                "reference": "748c01c1144713ac0118396935d10b6ceec91b68",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.1-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "lib/swift_required.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Chris Corbyn"
+                }
+            ],
+            "description": "Swiftmailer, free feature-rich PHP mailer",
+            "homepage": "http://swiftmailer.org",
+            "keywords": [
+                "mail",
+                "mailer"
+            ],
+            "time": "2014-03-18 09:03:27"
+        },
+        {
+            "name": "tag",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/tag.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-18 04:38:07"
+        },
+        {
+            "name": "todo",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/todo.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-23 18:29:19"
+        },
+        {
+            "name": "user",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/user.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-03-18 04:38:26"
+        }
+    ],
+    "packages-dev": [
+
+    ],
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "swiftmailer/swiftmailer": 0,
+        "auth": 20,
+        "user": 20,
+        "crud": 20,
+        "search": 20,
+        "blog": 20,
+        "tag": 20,
+        "category": 20,
+        "lifestream": 20,
+        "frontend": 20,
+        "todo": 20,
+        "sample": 20,
+        "setup": 20,
+        "error": 20
+    },
+    "platform": {
+        "php": ">=5.3.0"
+    },
+    "platform-dev": [
+
+    ]
+}

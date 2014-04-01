@@ -1,0 +1,187 @@
+{
+    "name": "nicolasbonnici/Skeleton",
+    "description": "Skeleton project",
+    "homepage": "http://dev.nbonnici.info/",
+    "config": {
+        "vendor-dir": "bundles"
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "frontend",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/frontend.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "auth",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/auth.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "search",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/search.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "user",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/user.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "lifestream",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/lifestream.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "blog",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/blog.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "tag",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/tag.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "category",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/category.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "crud",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/crud.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "todo",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/todo.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "sample",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/sample.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "setup",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/setup.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "error",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/error.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
+    "extra": {
+        "installer-paths": {
+            "Library/{$name}": ["swiftmailer/swiftmailer"]
+        }
+    },
+    "require": {
+        "php": ">=5.3.0",
+        "auth": "dev-master",
+        "user": "dev-master",
+        "crud": "dev-master",
+        "search": "dev-master",
+        "blog": "dev-master",
+        "tag": "dev-master",
+        "category": "dev-master",
+        "lifestream": "dev-master",
+        "frontend": "dev-master",
+        "todo": "dev-master",
+        "sample": "dev-master",
+        "setup": "dev-master",
+        "error": "dev-master"
+    }    
+}

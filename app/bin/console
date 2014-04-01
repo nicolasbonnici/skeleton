@@ -1,0 +1,105 @@
+#!/bin/bash
+# @author Nicolas Bonnici <nicolasbonnici@gmail.com>
+# @dependancy composer
+# @todo Refactoriser ce code virer le case break deguelasse et construire une classe ou au moins des methodes pour factoriser tout ce bordel
+
+sFrameworkRelease="sociableCore framework"
+sCoreConsoleRelease="sociableConsole 1.0"
+sCoreRepository="git@github.com:nicolasbonnici/Core.git"
+
+sCurPath="$(pwd)"
+
+sLibrariesPath="/Library"
+sFrameworkPath="/Core"
+
+
+echo $sFrameworkRelease" - "$sCoreConsoleRelease
+
+PS3='Choose your command (type 7 for more help or 8 to exit)'
+options=("install" "update" "update core" "update bundles" "cache clear"  "commit&push bundles" "help" "quit")
+select opt in "${options[@]}"
+do
+    case $opt in
+        "install")
+            echo "Check for server dependancies..."
+            # @todo perform server tests, php version is already checked by composer
+            # install composer en globale si pas trouver
+            echo "All dependancies found!"
+            echo "Setup the tmp directory, for View cache and server logs"
+            cd "$sCurPath/" && mkdir ./tmp/ && chmod -R 777 ./tmp/
+            echo "Setup the bundles directory"
+            cd "$sCurPath/" && mkdir ./bundles/ && chmod -R 755 ./tmp/
+            echo "Framework installation..."
+            cd "$sCurPath/$sLibrariesPath" && git clone $sCoreRepository
+            echo "Registered bundles installation..."
+            cd "$sCurPath/" && composer install
+            echo "The framework and all registered bundles were successfully installed!"
+            ;;
+        "update")
+            echo "Mise à jour de composer..."
+            composer self-update
+            echo "Check for project updates"
+            cd "$sCurPath/" && git pull
+            echo "Check for framework updates"
+            cd "$sCurPath/$sLibrariesPath/$sFrameworkPath" && git pull
+            echo "Check for bundles updates..."
+            cd $sCurPath/
+            composer update
+            cd "$sCurPath/bundles/"
+            for path in ./*; 
+            do
+                sBundleDirName="$(basename "${path}")"
+                if [[ $sBundleDirName != "composer" && $sBundleDirName != "autoload.php" ]]
+                    then
+                    cd "$sCurPath/bundles/$sBundleDirName" && git pull
+                fi
+            done
+            echo "Tout les bundles sont désormais à jour!"
+            ;;
+        "update core")
+            echo "Check for framework updates"
+            cd "$sCurPath/$sLibrariesPath/$sFrameworkPath" && git pull
+            ;;
+        "update bundles")
+            echo "Check for bundles updates..."
+            cd "$sCurPath/"
+            composer update
+            cd "$sCurPath/bundles/"
+            for path in ./*; 
+            do
+                sBundleDirName="$(basename "${path}")"
+                if [[ $sBundleDirName != "composer" && $sBundleDirName != "autoload.php" ]]
+                    then
+                    cd "$sCurPath/bundles/$sBundleDirName" && git pull
+                fi
+            done
+            echo "Tout les bundles sont désormais à jour!"
+            ;;
+        "commit&push bundles")
+            echo "Check for bundles staging modifications to push to the repository..."
+            cd "$sCurPath/bundles/"
+            for path in ./*; 
+            do
+                sBundleDirName="$(basename "${path}")"
+                if [[ $sBundleDirName != "composer" && $sBundleDirName != "autoload.php" ]]
+                    then
+                    sCommitMessage="Auto generated commit message for $sBundleDirName bundle by sociableCore framework console app, see diff for more infos"
+                    echo "Envoi des modifications du bundle $sBundleDirName en cours"
+                    cd "$sCurPath/bundles/$sBundleDirName" && git pull && git add . && git commit -am \""$sCommitMessage"\" && git push origin master
+                fi
+            done
+            echo "Tout les bundles sont désormais correctement versionnés ou en statut de pull-request selon vos droits utilisateurs"
+            ;;
+        "cache clear")
+            echo "Suppresion du cache client pour tout les bundles."
+            sudo rm -vfR $sCurPath/tmp/*
+            ;;
+        "help")
+            echo "@todo Documentation de l'outil"
+            ;;
+        "quit")
+            break
+            ;;
+        *) echo invalid option;;
+    esac
+done
