@@ -30,7 +30,7 @@ do
             echo "Framework installation..."
             cd "$sCurPath/$sLibrariesPath" && git clone $sCoreRepository
             echo "Registered bundles installation..."
-            cd "$sCurPath/" && composer install
+            cd $sCurPath"/ && mkdir ./bundles/ && composer install"
             echo "The framework and all registered bundles were successfully installed!"
             ;;
         "update")
