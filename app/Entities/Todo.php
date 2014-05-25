@@ -18,10 +18,9 @@ class Todo extends \Library\Core\Entity {
      * @var integer
      */
     protected $iCacheDuration = 60;
+    protected $bIsSearchable = true;
 
     protected $aLinkedEntities;
     protected $bIsDeletable = true;
 
 }
-
-?>

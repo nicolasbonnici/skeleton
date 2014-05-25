@@ -1,0 +1,16 @@
+<?php
+/**
+ *	Portfolio perso
+ */
+
+/**
+ *	Contact
+ */
+$tr['your_fullname'] = 'Votre nom complet';
+$tr['your_fullname_error'] = 'Veuillez entrer votre nom complet';
+$tr['your_email'] = 'Votre adresse email';
+$tr['your_email_error'] = 'Veuillez entrer une adresse email valide';
+$tr['your_message'] = 'Votre adresse email';
+$tr['your_message_error'] = 'Veuillez entrer une adresse email valide';
+?>
+

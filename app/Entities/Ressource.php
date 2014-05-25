@@ -17,10 +17,8 @@ class Ressource extends \Library\Core\Entity {
      * Object caching duration in seconds
      * @var integer
      */
-    protected $iCacheDuration = 120; 
-    
-    protected $aLinkedEntities;
-    
-}
+    protected $iCacheDuration = 120;
 
-?>
+    protected $aLinkedEntities;
+
+}

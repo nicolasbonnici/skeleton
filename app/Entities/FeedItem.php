@@ -17,7 +17,9 @@ class FeedItem extends \Library\Core\Entity {
      * Object caching duration in seconds
      * @var integer
      */
-    protected $iCacheDuration = 50;    
+    protected $iCacheDuration = 50;
+
+    protected $bIsSearchable = true;
 
     protected $aLinkedEntities = array(
         'feed' => array(
@@ -27,7 +29,5 @@ class FeedItem extends \Library\Core\Entity {
     		'mappedByField' => 'feed_idfeed'
         )
     );
-    
-}
 
-?>
+}

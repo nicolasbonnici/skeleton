@@ -1,27 +1,29 @@
 <VirtualHost *:80>
     ServerName core.local
     ServerAdmin nicolasbonnici@gmail.com
-    DocumentRoot /var/www/Core/public
+    DocumentRoot /var/www/nbonnici.info/public
     
     ErrorLog /var/log/apache2/error.log
-
-    # Possible values include: debug, info, notice, warn, error, crit,
-    # alert, emerg.
-    LogLevel debug
-
-    CustomLog /var/www/Core/tmp/logs/server-errors.log combined
-    
-    <Directory /var/www/Core/public/>
+        
+    <Directory /var/www/nbonnici.info/public/>
         Options Indexes FollowSymLinks MultiViews
         AllowOverride None
         Order allow,deny
         allow from all
+        
+        <FilesMatch "\.(ttf|otf|eot|woff)$">
+          <IfModule mod_headers.c>
+            Header set Access-Control-Allow-Origin "*"
+          </IfModule>
+        </FilesMatch>
+
         <IfModule mod_rewrite.c>
             RewriteEngine On
             RewriteCond %{REQUEST_FILENAME} !-f
-	    RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteCond %{REQUEST_FILENAME} !-d
 
-	    RewriteRule ^(.*)$ index.php?_url=$1 [PT,L]
+        RewriteRule ^(.*)$ index.php?_url=$1 [PT,L]
         </IfModule>
     </Directory>
 </VirtualHost>
+

@@ -16,106 +16,219 @@
         <meta name="application-name" content="{% block meta_app %}sociableCore{% endblock %}" />
         <meta name="author" content="{% block meta_author %}Nicolas BONNICI{% endblock %}" />        
 
-        <!--link rel="stylesheet/less" href="less/bootstrap.less" type="text/css" /-->
-        <!--link rel="stylesheet/less" href="less/responsive.less" type="text/css" /-->
-        <!--script src="js/less-1.3.3.min.js"></script-->
-        <!--append ‘#!watch’ to the browser URL, then refresh the page. -->
-
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
-          <script src="js/html5shiv.js"></script>
+          <script src="/lib/js/html5shiv.js"></script>
         <![endif]-->
 
+        <!-- Plugins -->
         <link href="/lib/plugins/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
         <link href="/lib/plugins/bootstrap3/css/bootstrap-theme.min.css" rel="stylesheet">
-        <link href="/lib/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet">
-        <link href="/lib/css/core.classes.css" rel="stylesheet">
-        <link href="/lib/plugins/pnotify/css/jquery.pnotify.default.css" rel="stylesheet">
-        <link href="/lib/plugins/pnotify/css/jquery.pnotify.default.icons.css" rel="stylesheet">
-        <link href="/lib/css/core.ui.css" rel="stylesheet">
+
+        <!-- sociableUx -->
+        <link href="/lib/css/style.min.css" rel="stylesheet">
+
+        <!-- Custom styling -->
         <link href="/lib/css/style.css" rel="stylesheet">
                
-        {% block css %}{% endblock %}            
+        {% block css %}{% endblock %}
     </head>
-    <body class="layout">
-    
-        <div class="ui-layout-north ui-shadow">
-            <div class="ui-layout-content container noOverflow">
-            {% include 'headernav.tpl' %}
-            </div>
-        </div>
-    
-        <div class="ui-layout-west ui-shadow ui-scrollable">
-            <div class="ui-layout-content transparentBlackBg">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row">
-                    
-                            <div class="col-md-12 text-right">
-                                <a href="#" class="btn btn-lg btn-primary ui-pane-toggle" data-pane="west" title="">
-                                    <span class="glyphicon glyphicon-arrow-left"></span>
-                                </a>
-                            </div>
-                    
-                        </div>
-                        <div class="ui-layout-west-xhr"></div>
-                    
+    <body>
+        <nav id="toolbar" class="greyBg gpu-render ui-noSelect ui-transition ui-shadow navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+
+                    <div class="navbar-header">
+                      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-menu">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </button>
                     </div>
                 </div>
+                <div class="navbar-collapse collapse" id="app-menu">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#" id="open-left" class="ui-tip showOnHover" title="Afficher le menu">
+                                <span class="glyphicon glyphicon-th-list"></span>&nbsp;<span class="targetToShow blackTextShadow">Menu</span>
+                            </a>
+                        </li>
+                        <li{% if sAction|Exists && sAction == 'indexAction' && sBundle === 'frontend' %} class="active transparentBlackBg ui-shadow-inset"{% endif %}>
+                            <a href="/" class="ui-tip showOnHover" data-toggle="ui-tip" data-placement="bottom" title="Retourner sur l'accueil de {{sAppName}}">
+                                <span class="glyphicon glyphicon-home"></span>&nbsp;<span class="targetToShow blackTextShadow">{{tr['homepage']}}</span>
+                            </a>
+                        </li>
+                        
+                        <li{% if sAction|Exists && sAction == 'portfolioAction' %} class="active transparentBlackBg"{% endif %}>
+                            <a href="/portfolio" class="ui-tip showOnHover" data-toggle="tooltip" data-placement="bottom" title="{{tr['portfolio_tip']}}">
+                                <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<span class="targetToShow blackTextShadow">{{tr['portfolio']}}</span>
+                            </a>
+                        </li>
+                        
+                        <li{% if sAction|Exists && sAction == 'activitiesAction' %} class="active transparentBlackBg"{% endif %}>
+                            <a href="/activities" class="ui-tip showOnHover" data-toggle="tooltip" data-placement="bottom" title="{{tr['lifestream_tip']}}">
+                                <span class="glyphicon glyphicon-link"></span>&nbsp;<span class="targetToShow blackTextShadow">{{tr['lifestream']}}</span>
+                            </a>
+                        </li>
+            
+                        <li>
+                            <a href="#" data-toggle-selector="#app-search" title="Rechercher un contenu" class="ui-toggle ui-tip ui-toggle ui-focus showOnHover" data-focus-selector="#app-global-search input[type=text]:first">
+                                <span class="glyphicon glyphicon-search"></span>&nbsp;<span class="targetToShow blackTextShadow">{{tr['search']}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                        {% if aSession|Exists %}
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" class="blackTextShadow ui-tip" title="Menu utilisateur">
+                                <img src="{{sGravatarSrc16}}" class="ui-nav-avatar" alt="Avatar" /> {{aSession['firstname']}} {{aSession['lastname']}} <strong class="caret"></strong>
+                            </a>
+                            <ul class="dropdown-menu transparentBlackBg rounded-bottom ui-shadow text-left padding">
+                                <li>
+                                    <a href="#modal" data-toggle="modal" class="btn btn-lg btn-link ui-sendxhr" data-url="/user/home/profile" data-selector="#modal-content"><span class="glyphicon glyphicon-user"></span> {{tr['my_account']}}</a>
+                                </li>
+                                <li>
+                                    <a href="/admin" class="btn btn-lg btn-link"><span class="glyphicon glyphicon-cog"></span> {{tr['administration']}}</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="btn btn-lg btn-link ui-pane-toggle ui-tip" data-pane="east" title="Mes applications">
+                                        <span class="glyphicon glyphicon-cloud-download"></span> Apps
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-lg btn-link ui-pane-toggle" data-pane="west" title="{{tr['toggle_menu_tip']}}">                                  
+                                        <span class="glyphicon glyphicon-arrow-right"></span> {{tr['toggle_menu']}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-lg btn-link ui-pane-show" data-pane="west" title="{{tr['toggle_menu_tip']}}">                                  
+                                        <span class="glyphicon glyphicon-arrow-right"></span> test
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-lg btn-link ui-pane-toggle" data-pane="north" title="{{tr['toggle_menu_tip']}}">                                  
+                                        <span class="glyphicon glyphicon-arrow-up"></span> Toggle header
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="btn btn-lg btn-link ui-pane-toggle" data-pane="south" title="{{tr['toggle_menu_tip']}}">                                  
+                                        <span class="glyphicon glyphicon-arrow-down"></span> Debug
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="/logout" class="btn btn-lg btn-link" title="Se déconnecter">{{tr['logout']}}</a>
+                                </li>
+                            </ul>
+                        {% else %}
+                            <a href="/login" class="showOnHover">
+                                <span class="glyphicon glyphicon-log-in"></span> <span class="targetToShow blackTextShadow"><strong>{{tr['login']}}</strong></span>
+                            </a>
+                        {% endif %}
+                    </li>
+                </ul>
             </div>
-        </div>
-    
-        <div class="ui-layout-center ui-scrollable">
-            <div class="ui-layout-content transparentBg ui-loadscroll">        
-                <div class="container">
-                    {% block main %}{% endblock %}
+          </div>
+        </nav>
+
+        <div class="snap-drawers greyPatternBg gpu-render">
+            <div class="snap-drawer col-md-12 snap-drawer-left noOverflowX">
+                <div id="app-header" class="col-md-12 showOnHover">
+                    <img src="{{sAppIcon}}" class="app-logo pull-left" alt="{{sBundle}} bundle icon"/>
+                    <h4 class="pull-right blackTextShadow">{{sAppName}}<small class="targetToShow blackTextShadow"></small></h4>
                 </div>
-            </div>
-        </div>
-    
-        <div class="ui-layout-east ui-shadow ui-scrollable">
-            <div class="ui-layout-content transparentBlackBg">
-                <div class="row">
+                
+                <div id="app-search-content" class="row clearfix">
                     <div class="col-md-12 column">
-                       <div class="btn-group-vertical">
-                            
-                       </div>
+                        <form id="app-global-search" data-url="/search/home/process" class="form-horizontal" role="search" method="post" action="/search/home/process/" data-sendform-reponse-selector="#app-search-results">
+                            <div class="form-group">
+                              <div class="col-md-11 control-label" for="search">
+                                        <input id="ux-global-search-input" type="text" name="search" class="form-control input-lg" placeholder="{{tr['search_helper']}}" />
+                                        <input type="hidden" name="entities" value="" />
+                              
+                              </div>  
+                              <div class="col-md-1">
+                                        <a href="#" class="btn btn-lg btn-info ui-sendform" data-form="#app-global-search"><span class="glyphicon glyphicon-search"></span></a>
+                              </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
+                
+                <div id="app-search-results" class="row clearfix"> </div>
+                <ul class="nav nav-pills nav-stacked blackTextShadow">
+                {% if aSession|Exists %}
+                  <li><a href="#">Home</a></li>
+                  <li><a href="#">Profile</a></li>
+                  <li><a href="#">Messages</a></li>
+                 {% endif %}
+                  <li><a href="#activityDebug" class="ui-toggle" data-toggle-selector=".app-menu">Debug</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div class="app-menu hide" id="home"></div>
+                  <div class="app-menu hide" id="profile"></div>
+                  <div class="app-menu hide" id="messages"></div>
+                  <div class="app-menu hide" id="activityDebug">
+                    {% include sDeBugHelper %}
+                  </div>
+                </div>
+            </div>
+            <div class="snap-drawer snap-drawer-right">
+                {% if aSession|Exists && aAppBundles|Exists %}
+                    <div class="list-group app-bundles">
+                    {% for sBundleName, aBundleDetails in aAppBundles %}
+                        <a href="/{{sBundleName}}" class="list-group-item app-bundle-item blackTextShadow text-right{% if sBundle === sBundleName %} active{% endif %}">
+                            {{sBundleName}} <img src="/lib/bundles/{{sBundleName}}/img/icon.png" class="app-bundle-icon" alt="Bundle icon" />
+                        </a>
+                    {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="list-group app-bundles">
+                    {% for sBundleName, aBundleDetails in aAppBundles %}
+                        {% if (sBundleName === 'auth') OR (sBundleName === 'search') OR (sBundleName === 'admin') %} 
+                        <a href="/{{sBundleName}}" class="list-group-item app-bundle-item blackTextShadow text-right{% if sBundle === sBundleName %} active{% endif %}">
+                            {{sBundleName}} <img src="/lib/bundles/{{sBundleName}}/img/icon.png" class="app-bundle-icon" alt="Bundle icon" />
+                        </a>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         </div>
-    
-        <div class="ui-layout-south ui-shadow">
-            <div class="ui-layout-content container-fluid">
-                <div id="activityDebug" class="row">{% include sDeBugHelper %}</div>
-            </div>
+        
+        <div id="ux-content" class="snap-content ui-loadscroll noOverflowX ui-shadow">
+                {% block main %}{% endblock %}
         </div>
     
-        <div class="modal fade" id="modal-user" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="modal" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
-                <div class="modal-content" id="modal-user-content">
+                <div class="modal-content" id="modal-content">
                     <p>&nbsp;</p>
                 </div>
             </div>
         </div>
         {% block modal %}{% endblock %}
         
-        <script type="text/javascript" src="/lib/js/jquery-1.11.min.js"></script>
-        <script type="text/javascript" src="/lib/plugins/layout/js/jquery.layout.min.js"></script>
+        <!--  sociableUX -->
+        <script type="text/javascript" src="/lib/plugins/jquery/js/jquery-1.11.min.js"></script>
         <script type="text/javascript" src="/lib/plugins/bootstrap3/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/lib/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-        <script type="text/javascript" src="/lib/plugins/pnotify/js/jquery.pnotify.js"></script>
-        <script type="text/javascript" src="/lib/js/core/ux.core.js"></script>
-        <script type="text/javascript" src="/lib/js/core/core.js"></script>
-        <script type="text/javascript">
-        $(document).ready(function() {
-           $('body').on('submit', 'form#general-search', function() {
-              $('.ui-sendform[data-form=#general-search]').trigger('click');
-              return false;
-           });
-        });
-        </script>
+        <script type="text/javascript" src="/lib/js/script.min.js"></script>
         {% block js %}{% endblock %}
+        
+        <!--  Google Analytics @todo passer en conf et dans le build js -->
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        
+          ga('create', 'UA-49761357-1', 'nbonnici.info');
+          ga('send', 'pageview');
+        
+        </script>
     
     </body>
 </html>

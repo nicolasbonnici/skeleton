@@ -17,17 +17,8 @@ class User extends \Library\Core\Entity {
      * Object caching duration in seconds
      * @var integer
      */
-    protected $iCacheDuration = 120; 
-    
-    protected $aLinkedEntities = array(
-        'role' => array(
-            'loadByDefault' => false,
-            'relationship' => 'oneToOne', // @see oneToOne|manyToOne|manyToMany
-    		'entity' => 'Role',
-    		'mappedByField' => 'role_idrole'
-        )
-    );
-    
-}
+    protected $iCacheDuration = 120;
 
-?>
+    protected $aLinkedEntities;
+
+}

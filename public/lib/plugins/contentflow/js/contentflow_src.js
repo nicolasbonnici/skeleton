@@ -76,6 +76,8 @@ var ContentFlowGlobal = {
     },
 
     addStylesheet: function (path) {
+        // Bad practice!!
+        return false;
         if (this.Browser.Gecko19) {
             var link = document.createElement('link');
             link.setAttribute('rel', 'stylesheet');
@@ -91,6 +93,8 @@ var ContentFlowGlobal = {
     },
 
     addStylesheets: function  (basePath, filenames) {
+        // Bad practice
+        return false;
         for (var i=0; i<filename.length; i++)
             this.addStylesheet(basepath+filenames[i]);
     },

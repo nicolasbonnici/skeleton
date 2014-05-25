@@ -1,0 +1,34 @@
+<?php
+namespace bundles\frontend\Models;
+
+class Frontend
+{
+    /**
+     * Scan a local directory then return array of it to display frontend carousel's thumbs
+     *
+     * @param string $sAbsolutePath
+     * @param array $aPatterns
+     * @return array
+     */
+    public static function buildThumbs($sAbsolutePath, array $aPatterns)
+    {
+        $aOutput = array();
+        if (\Library\Core\Directories::exists($sAbsolutePath)) {
+            $aThumbs = scandir($sAbsolutePath);
+            foreach ($aThumbs as $sFolderItem) {
+                if ($sFolderItem !== '.' && $sFolderItem !== '..' && $sFolderItem !== 'src') {
+                    foreach ($aPatterns as $sPattern) {
+                        if (substr($sFolderItem, 0, strlen($sPattern)) === $sPattern) {
+                            $aOutput[$sPattern][] = $sFolderItem;
+                        }
+                    }
+                }
+            }
+        }
+        return $aOutput;
+    }
+}
+
+class FrontendModelException extends \Exception
+{
+}

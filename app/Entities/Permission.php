@@ -4,9 +4,9 @@ namespace app\Entities;
 
 /**
  * Block entity
- * 
+ *
  * Wrapper for any entity that have a title/content/created field [CMS]
- * 
+ *
  * @author infradmin
  */
 class Permission extends \Library\Core\Entity {
@@ -19,8 +19,8 @@ class Permission extends \Library\Core\Entity {
      * Object caching duration in seconds
      * @var integer
      */
-    protected $iCacheDuration = 60;    
-    
+    protected $iCacheDuration = 60;
+
     protected $aLinkedEntities = array(
         'role' => array(
             'loadByDefault' => false,
@@ -35,7 +35,5 @@ class Permission extends \Library\Core\Entity {
     		'mappedByField' => 'ressource_idressource'
         )
     );
-    
-}
 
-?>
+}

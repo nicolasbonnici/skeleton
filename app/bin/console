@@ -2,35 +2,45 @@
 # @author Nicolas Bonnici <nicolasbonnici@gmail.com>
 # @dependancy composer
 # @todo Refactoriser ce code virer le case break deguelasse et construire une classe ou au moins des methodes pour factoriser tout ce bordel
+# @todo faire un safe update pour uniquement faire un git fetch
 
 sFrameworkRelease="sociableCore framework"
 sCoreConsoleRelease="sociableConsole 1.0"
-sCoreRepository="git@github.com:nicolasbonnici/Core.git"
 
+# Paths config
 sCurPath="$(pwd)"
+sPublicPath="public"
+sLibrariesPath="Library"
+sFrameworkPath="Core"
+sUxPath="$sPublicPath/lib/sociableUx"
+sBundlesPath="bundles"
 
-sLibrariesPath="/Library"
-sFrameworkPath="/Core"
+# Git repositories to load
+sCoreRepository="git@github.com:nicolasbonnici/Core.git"
+sCoreClientRepository="git@github.com:nicolasbonnici/sociableUx.git"
 
 
 echo $sFrameworkRelease" - "$sCoreConsoleRelease
 
-PS3='Choose your command (type 7 for more help or 8 to exit)'
-options=("install" "update" "update core" "update bundles" "cache clear"  "commit&push bundles" "help" "quit")
+PS3='Choose your command (type 8 for more help or 9 to exit)'
+options=("install" "update" "update core" "update bundles" "deploy assets" "cache clear"  "commit&push bundles" "help" "quit")
 select opt in "${options[@]}"
 do
     case $opt in
         "install")
             echo "Check for server dependancies..."
             # @todo perform server tests, php version is already checked by composer
-            # install composer en globale si pas trouver
+            # @todo install composer en globale si pas trouver
             echo "All dependancies found!"
             echo "Setup the tmp directory, for View cache and server logs"
             cd "$sCurPath/" && mkdir ./tmp/ && chmod -R 777 ./tmp/
             echo "Setup the bundles directory"
-            cd "$sCurPath/" && mkdir ./bundles/ && chmod -R 755 ./tmp/
+            cd "$sCurPath/" && mkdir ./$sBundlesPath/ && chmod -R 755 ./tmp/
             echo "Framework installation..."
             cd "$sCurPath/$sLibrariesPath" && git clone $sCoreRepository
+            echo "Ux installation..."
+            cd "$sCurPath/" && mkdir "$sCurPath/$sUxPath" 
+            cd "$sCurPath/$sUxPath" && git clone $sCoreClientRepository ./
             echo "Registered bundles installation..."
             cd "$sCurPath/" && composer install
             echo "The framework and all registered bundles were successfully installed!"
@@ -42,16 +52,18 @@ do
             cd "$sCurPath/" && git pull
             echo "Check for framework updates"
             cd "$sCurPath/$sLibrariesPath/$sFrameworkPath" && git pull
+            echo "Check for Ux updates"
+            cd "$sCurPath/$sUxPath" && git pull
             echo "Check for bundles updates..."
             cd $sCurPath/
             composer update
-            cd "$sCurPath/bundles/"
+            cd "$sCurPath/$sBundlesPath/"
             for path in ./*; 
             do
                 sBundleDirName="$(basename "${path}")"
                 if [[ $sBundleDirName != "composer" && $sBundleDirName != "autoload.php" ]]
                     then
-                    cd "$sCurPath/bundles/$sBundleDirName" && git pull
+                    cd "$sCurPath/$sBundlesPath/$sBundleDirName" && git pull
                 fi
             done
             echo "Tout les bundles sont désormais à jour!"
@@ -64,16 +76,35 @@ do
             echo "Check for bundles updates..."
             cd "$sCurPath/"
             composer update
-            cd "$sCurPath/bundles/"
+            cd "$sCurPath/$sBundlesPath/"
             for path in ./*; 
             do
                 sBundleDirName="$(basename "${path}")"
                 if [[ $sBundleDirName != "composer" && $sBundleDirName != "autoload.php" ]]
                     then
-                    cd "$sCurPath/bundles/$sBundleDirName" && git pull
+                    cd "$sCurPath/$sBundlesPath/$sBundleDirName" && git pull
                 fi
             done
             echo "Tout les bundles sont désormais à jour!"
+            ;;
+        "deploy assets")
+            echo "Clear current deployed assets"
+            cd "$sCurPath/"
+            sudo rm -vfR "$sCurPath/public/lib/$sBundlesPath/"*
+            chmod 777 -R "$sCurPath/public/lib/$sBundlesPath/"
+            echo "Creating symlinks in public folder to bundle's assets"
+            cd "$sCurPath/$sBundlesPath/"
+            for path in ./*; 
+            do
+                sBundleDirName="$(basename "${path}")"
+                if [[ $sBundleDirName != "composer" && $sBundleDirName != "autoload.php" ]]
+                    then
+                    cd "$sCurPath/$sBundlesPath/$sBundleDirName" &&
+                    mkdir "./../../public/lib/$sBundlesPath/$sBundleDirName" && 
+                    ln -s "$sCurPath/$sBundlesPath/$sBundleDirName/Assets/"* "./../../public/lib/$sBundlesPath/$sBundleDirName/"
+                fi
+            done
+            echo "Tout les assets des bundles sont désormais deployés"
             ;;
         "commit&push bundles")
             echo "Check for bundles staging modifications to push to the repository..."
@@ -85,14 +116,16 @@ do
                     then
                     sCommitMessage="Auto generated commit message for $sBundleDirName bundle by sociableCore framework console app, see diff for more infos"
                     echo "Envoi des modifications du bundle $sBundleDirName en cours"
-                    cd "$sCurPath/bundles/$sBundleDirName" && git pull && git add . && git commit -am \""$sCommitMessage"\" && git push origin master
+                    cd "$sCurPath/$sBundlesPath/$sBundleDirName" && git pull && git add . && git commit -am \""$sCommitMessage"\" && git push origin master
                 fi
             done
             echo "Tout les bundles sont désormais correctement versionnés ou en statut de pull-request selon vos droits utilisateurs"
             ;;
         "cache clear")
             echo "Suppresion du cache client pour tout les bundles."
-            sudo rm -vfR $sCurPath/tmp/*
+            sudo rm -vfR $sCurPath/tmp/cache/
+            echo "Suppression et build des assets"
+            sudo rm -vfR "$sCurPath/$sUxPath/build/"*
             ;;
         "help")
             echo "@todo Documentation de l'outil"

@@ -1,0 +1,80 @@
+<?php
+namespace bundles\lifestream\Controllers;
+
+/**
+ * Lifestream FeedsController
+ * A social network activities and flux parser
+ *
+ * @author Nicolas Bonnici
+ */
+class FeedsController extends \Library\Core\Auth
+{
+
+    public function __preDispatch()
+    {}
+
+    public function __postDispatch()
+    {}
+
+    public function indexAction()
+    {
+        // @todo loader et envoyé à la vue les feeds dispos
+
+        $this->oView->render($this->aView, 'feeds/index.tpl');
+    }
+
+    public function parseAction()
+    {
+        if (isset($this->aParams['idfeed']) && intval($this->aParams['idfeed']) > 0) {
+            $oLifestream = new \bundles\lifestream\Models\Lifestream(intval($this->aParams['idfeed']), $this->oUser);
+            $oLifestream->parse(true);
+            $oLifestream->loadEntities(array(
+                'status' => 1
+            ));
+            $this->aView['oFeeds'] = $oLifestream->getEntities();
+        }
+        $this->render('feeds/parse.tpl');
+    }
+
+    /**
+     * Create a feed entity
+     */
+    public function createFeedAction()
+    {
+        if (isset($this->aParams['title'], $this->aParams['url'], $this->aParams['domain'], $this->aParams['icon'])) {
+            $oFeed = new \app\Entities\Feed();
+
+            $oFeed->title = $this->aParams['title'];
+            $oFeed->url = $this->aParams['url'];
+            $oFeed->domain = $this->aParams['domain'];
+            $oFeed->icon = $this->aParams['icon'];
+
+            $this->aView['create'] = $oFeed->add();
+        }
+
+        $this->oView->render($this->aView, 'lifestream/create.tpl');
+    }
+
+    /**
+     * Update a feed entity
+     */
+    public function updateFeedAction()
+    {
+        if (isset($this->aParams['idfeed']) && ! empty($this->aParams['idfeed'])) {
+
+            // load then update item and send bool to the view
+            try {
+                $oFeed = new \app\Entities\Feed($this->aParams['idfeed']);
+            } catch (Exception $oException) {
+                $oFeed = null;
+            }
+
+            $this->aView['oFeed'] = $oFeed;
+        }
+
+        $this->oView->render($this->aView, 'lifestream/updateFeed.tpl');
+    }
+}
+
+?>
+

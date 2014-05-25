@@ -19,6 +19,8 @@ class Post extends \Library\Core\Entity {
      */
     protected $iCacheDuration = 50;
 
+    protected $bIsSearchable = true;
+
     protected $aLinkedEntities = array(
         'category' => array(
             'loadByDefault' => false,
@@ -35,4 +37,3 @@ class Post extends \Library\Core\Entity {
     );
 }
 
-?>

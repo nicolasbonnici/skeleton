@@ -1,44 +1,19 @@
 body {
-    background: url(../img/bg.jpg) no-repeat center center fixed; -webkit-background-size: cover;
-    -moz-background-size: cover; -o-background-size: cover; background-size: cover;
+
+}
+
+#ux-content {
+    background: #404040 url(../img/bg.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover; 
+    -o-background-size: cover; 
+    background-size: cover;
 }
 
 #search {
     margin: 2px 0 0 0;
 }
 
-.ui-grid {
-    
-}
-
 .icon-feed {
     width: 16px;
-}
-
-.item {
-    
-}
-
-.item.twitter {
-    color: #fff; border: none; background: #404040 url('http://twitter.com/favicon.ico') 5px 20px no-repeat;
-}
-
-.item.twitter a {
-    font-weight: bold; color: #48acde;
-}
-
-.item.google {
-    background: #ccc url('http://google.com/favicon.ico') right bottom no-repeat;; color: #fff; border: none;
-}
-
-.item.google a {
-    font-weight: bold; color: #4285F4;
-}
-
-.item.googleplus {
-    color: #fff; border: none; background: #ccc url('http://plus.google.com/favicon.ico') right bottom no-repeat;
-}
-
-.item.googleplus a {
-    font-weight: bold; color: #4285F4;
 }

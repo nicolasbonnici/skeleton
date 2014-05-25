@@ -1,17 +1,14 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace app\Entities;
 
 /**
  * Description of Tag
  *
  * @author infradmin
  */
-class Tag {
-    
+class Tag  extends \Library\Core\Entity {
+
     const ENTITY = 'Tag';
     const TABLE_NAME = 'tag';
     const PRIMARY_KEY = 'idtag';
@@ -20,13 +17,9 @@ class Tag {
      * Object caching duration in seconds
      * @var integer
      */
-    protected $iCacheDuration = 50;    
-    
-    protected static $aLinkedEntities = array(
+    protected $iCacheDuration = 50;
+    protected $bIsSearchable = true;
 
-    );    
-    
+    protected $aLinkedEntities = array();
+
 }
-
-
-?>
