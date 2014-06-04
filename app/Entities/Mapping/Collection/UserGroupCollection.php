@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Entities\Collection;
+namespace app\Entities\Mapping\Collection;
 
 /**
  * UserGroup collection

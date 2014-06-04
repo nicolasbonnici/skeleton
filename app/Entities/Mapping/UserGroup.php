@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Entities;
+namespace app\Entities\Mapping;
 
 /**
  * \app\Entity\UserGroup Entity
