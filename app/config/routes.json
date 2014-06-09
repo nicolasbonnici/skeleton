@@ -1,0 +1,32 @@
+{
+    "/login": {
+        "bundle": "auth",
+        "controller": "home",
+        "action": "index"
+    },
+    "/logout": {
+        "bundle": "auth",
+        "controller": "logout",
+        "action": "index"
+    },
+    "/profile": {
+        "bundle": "user",
+        "controller": "home",
+        "action": "profile"
+    },
+    "/portfolio": {
+        "bundle": "frontend",
+        "controller": "home",
+        "action": "portfolio"
+    },
+    "/a-propos": {
+        "bundle": "frontend",
+        "controller": "home",
+        "action": "about"
+    },
+    "/activities": {
+        "bundle": "frontend",
+        "controller": "home",
+        "action": "activities"
+    }
+}

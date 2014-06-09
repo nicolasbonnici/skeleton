@@ -8,5 +8,3 @@ namespace app\Entities\Mapping\Collection;
  * @author infradmin
  */
 class UserGroupCollection extends \Library\Core\EntitiesCollection {}
-
-?>
