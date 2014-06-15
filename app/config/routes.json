@@ -14,16 +14,6 @@
         "controller": "home",
         "action": "profile"
     },
-    "/portfolio": {
-        "bundle": "frontend",
-        "controller": "home",
-        "action": "portfolio"
-    },
-    "/a-propos": {
-        "bundle": "frontend",
-        "controller": "home",
-        "action": "about"
-    },
     "/activities": {
         "bundle": "frontend",
         "controller": "home",

@@ -3,19 +3,8 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "1199ca7425d05c800657f778d2702b73",
+    "hash": "dff258bfa14d5fe5fa0d0e48c0802de4",
     "packages": [
-        {
-            "name": "admin",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:nicolasbonnici/admin.git",
-                "reference": "master"
-            },
-            "type": "library",
-            "time": "2014-04-11 18:55:36"
-        },
         {
             "name": "auth",
             "version": "master",
@@ -25,18 +14,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-04-10 03:16:41"
-        },
-        {
-            "name": "blog",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:nicolasbonnici/blog.git",
-                "reference": "master"
-            },
-            "type": "library",
-            "time": "2014-04-07 00:50:58"
+            "time": "2014-05-15 19:03:34"
         },
         {
             "name": "category",
@@ -47,7 +25,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-04-10 03:16:48"
+            "time": "2014-05-25 23:39:40"
         },
         {
             "name": "crud",
@@ -58,7 +36,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-04-10 03:16:52"
+            "time": "2014-05-25 23:39:43"
         },
         {
             "name": "error",
@@ -69,40 +47,18 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-04-06 15:07:20"
+            "time": "2014-05-15 19:03:47"
         },
         {
-            "name": "frontend",
+            "name": "localp.in",
             "version": "master",
             "source": {
                 "type": "git",
-                "url": "git@github.com:nicolasbonnici/frontend.git",
+                "url": "git@github.com:nicolasbonnici/localp.in.git",
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-04-11 19:37:49"
-        },
-        {
-            "name": "lifestream",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:nicolasbonnici/lifestream.git",
-                "reference": "master"
-            },
-            "type": "library",
-            "time": "2014-04-07 00:51:13"
-        },
-        {
-            "name": "sample",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:nicolasbonnici/sample.git",
-                "reference": "master"
-            },
-            "type": "library",
-            "time": "2014-04-10 03:17:03"
+            "time": "2014-06-10 04:53:30"
         },
         {
             "name": "search",
@@ -113,18 +69,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-04-06 15:07:40"
-        },
-        {
-            "name": "setup",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:nicolasbonnici/setup.git",
-                "reference": "master"
-            },
-            "type": "library",
-            "time": "2014-04-07 00:51:21"
+            "time": "2014-05-23 18:11:49"
         },
         {
             "name": "tag",
@@ -135,18 +80,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-04-06 15:07:51"
-        },
-        {
-            "name": "todo",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:nicolasbonnici/todo.git",
-                "reference": "master"
-            },
-            "type": "library",
-            "time": "2014-04-11 18:56:14"
+            "time": "2014-05-22 22:20:47"
         },
         {
             "name": "user",
@@ -157,7 +91,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-04-06 15:08:02"
+            "time": "2014-04-27 06:17:45"
         }
     ],
     "packages-dev": [
@@ -168,19 +102,13 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "localp.in": 20,
         "auth": 20,
         "user": 20,
-        "admin": 20,
         "crud": 20,
         "search": 20,
-        "blog": 20,
         "tag": 20,
         "category": 20,
-        "lifestream": 20,
-        "frontend": 20,
-        "todo": 20,
-        "sample": 20,
-        "setup": 20,
         "error": 20
     },
     "platform": {
