@@ -11,6 +11,8 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/lib/img/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="/lib/img/apple-touch-icon-57-precomposed.png">
 
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+
         <meta name="description" content="{% block meta_description %}{% endblock %}" />
         <meta name="keywords" content="{% block meta_keyword %}{% endblock %}" />
         <meta name="application-name" content="{% block meta_app %}sociableCore{% endblock %}" />

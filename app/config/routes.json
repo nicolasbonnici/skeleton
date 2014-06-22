@@ -15,17 +15,17 @@
         "action": "profile"
     },
     "/portfolio": {
-        "bundle": "frontend",
+        "bundle": "nbonnici",
         "controller": "home",
         "action": "portfolio"
     },
     "/a-propos": {
-        "bundle": "frontend",
+        "bundle": "nbonnici",
         "controller": "home",
         "action": "about"
     },
     "/activities": {
-        "bundle": "frontend",
+        "bundle": "nbonnici",
         "controller": "home",
         "action": "activities"
     }
