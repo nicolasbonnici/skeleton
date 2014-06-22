@@ -24,7 +24,7 @@
                 "name": "blog",
                 "version": "master",
                 "source": {
-                    "url": "git@github.com:nicolasbonnici/glog.git",
+                    "url": "git@github.com:nicolasbonnici/blog.git",
                     "type": "git",
                     "reference": "master"
                 }
