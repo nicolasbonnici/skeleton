@@ -113,10 +113,12 @@
         "tag": "dev-master",
         "category": "dev-master",
         "lifestream": "dev-master",
-        "nbonnici": "dev-master",
         "todo": "dev-master",
         "sample": "dev-master",
         "setup": "dev-master",
+        "nbonnici": "dev-master",
+        "blog": "dev-master",
+        "admin": "dev-master",
         "error": "dev-master"
     }    
 }
