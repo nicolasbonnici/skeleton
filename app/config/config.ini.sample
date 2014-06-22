@@ -1,19 +1,27 @@
 [app]
-name = 'Skeleton project'
-secret_key = 'asecretkey'
+name = 'yourdomain.com'
+secret_key = 'yoursecretkey'
+
+[routing]
+default_bundle = 'frontend'
+default_controller = 'home'
+default_action = 'index'
+default_backend_bundle = 'backend'
+default_backend_controller = 'home'
+default_backend_action = 'index'
 
 [env]
-dev     = 'dev.domain.tld'
-test    = 'test.domain.tld'
-preprod = 'preprod.domain.tld'
-prod    = 'domain.tld'
+dev     = 'yourdomain.local'
+test    = 'test.yourdomain.com'
+preprod = 'preprod.yourdomain.com'
+prod    = 'yourdomain.com'
 
 [database]
-driver = 'mysql'
-host = 'your_database_host'
-name = 'your_database_name'
-user = 'your database_user'
-pass = 'your database_pass'
+driver = 'your_sgbd'
+host = 'your_host'
+name = 'database_name'
+user = 'database_username'
+pass = 'data_password'
 
 [social]
 twitter.user = 'your username'
