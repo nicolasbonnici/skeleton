@@ -21,6 +21,30 @@
         {
             "type": "package",
             "package": {
+                "name": "blog",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/glog.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "admin",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/admin.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "auth",
                 "version": "master",
                 "source": {
