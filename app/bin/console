@@ -47,16 +47,16 @@ do
             ;;
         "update")
             echo "Mise à jour de composer..."
-            composer self-update
+            sudo composer self-update
             echo "Check for project updates"
-            cd "$sCurPath/" && git pull
+            cd "$sCurPath/" && git checkout . && git pull
             echo "Check for framework updates"
             cd "$sCurPath/$sLibrariesPath/$sFrameworkPath" && git pull
             echo "Check for Ux updates"
             cd "$sCurPath/$sUxPath" && git pull
             echo "Check for bundles updates..."
             cd $sCurPath/
-            composer update
+            composer install
             cd "$sCurPath/$sBundlesPath/"
             for path in ./*; 
             do
@@ -75,7 +75,7 @@ do
         "update bundles")
             echo "Check for bundles updates..."
             cd "$sCurPath/"
-            composer update
+            composer install
             cd "$sCurPath/$sBundlesPath/"
             for path in ./*; 
             do
