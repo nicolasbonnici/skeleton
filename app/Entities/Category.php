@@ -21,5 +21,4 @@ class Category extends \Library\Core\Entity {
     protected $iCacheDuration = 120;
     protected $bIsSearchable = true;
     protected $aLinkedEntities;
-
 }

@@ -21,6 +21,10 @@ class Permission extends \Library\Core\Entity {
      */
     protected $iCacheDuration = 60;
 
+    /**
+     * Pas encore gérer à ce niveau uniquement au niveau des ACL pour le moment
+     * @var unknown
+     */
     protected $aLinkedEntities = array(
         'role' => array(
             'loadByDefault' => false,

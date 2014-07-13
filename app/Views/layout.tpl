@@ -32,6 +32,9 @@
 
         <!-- Custom styling -->
         <link href="/lib/css/style.css" rel="stylesheet">
+
+        <!-- Bundle style -->
+        <link href="/lib/bundles/{{sBundle}}/css/{{sBundle}}.css" rel="stylesheet">
                
         {% block css %}{% endblock %}
     </head>
@@ -136,8 +139,8 @@
         </nav>
 
         <div class="snap-drawers greyPatternBg gpu-render">
-            <div class="snap-drawer col-md-12 snap-drawer-left noOverflowX">
-                <div id="app-header" class="col-md-12 showOnHover">
+            <div class="snap-drawer snap-drawer-left noOverflowX">
+                <div id="app-header" class="showOnHover">
                     <img src="{{sAppIcon}}" class="app-logo pull-left" alt="{{sBundle}} bundle icon"/>
                     <h4 class="pull-right blackTextShadow">{{sAppName}}<small class="targetToShow blackTextShadow"></small></h4>
                 </div>
@@ -146,7 +149,7 @@
                     <div class="col-md-12 column">
                         <form id="app-global-search" data-url="/search/home/process" class="form-horizontal" role="search" method="post" action="/search/home/process/" data-sendform-reponse-selector="#app-search-results">
                             <div class="form-group">
-                              <div class="col-md-11 control-label" for="search">
+                              <div class="control-label" for="search">
                                         <input id="ux-global-search-input" type="text" name="search" class="form-control input-lg" placeholder="{{tr['search_helper']}}" />
                                         <input type="hidden" name="entities" value="" />
                               
@@ -205,8 +208,8 @@
                 {% block main %}{% endblock %}
         </div>
     
-        <div class="modal fade" id="modal" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
+        <div class="modal modal-md fade" id="modal" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content" id="modal-content">
                     <p>&nbsp;</p>
                 </div>
@@ -218,6 +221,8 @@
         <script type="text/javascript" src="/lib/plugins/jquery/js/jquery-1.11.min.js"></script>
         <script type="text/javascript" src="/lib/plugins/bootstrap3/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/lib/js/script.min.js"></script>
+
+        <script type="text/javascript" src="/lib/bundles/{{sBundle}}/js/{{sBundle}}.js"></script>
         {% block js %}{% endblock %}
         
         <!--  Google Analytics @todo passer en conf et dans le build js -->

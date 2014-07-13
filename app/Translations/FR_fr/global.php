@@ -38,6 +38,7 @@ $tr['update'] = 'Mettre à jour';
 $tr['delete'] = 'Supprimer';
 $tr['cancel'] = 'Annuler';
 $tr['close'] = 'Fermer';
+$tr['more'] = 'En savoir plus';
 
 /**
  *

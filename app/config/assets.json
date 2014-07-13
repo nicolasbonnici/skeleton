@@ -2,6 +2,7 @@
     "dependancies" : {
         "js": [
             "/lib/plugins/snapjs/js/snap.js",
+            "/lib/plugins/modernizr/js/modernizr.js",
             "/lib/plugins/serializejson/js/jquery.serializejson.js",
             "/lib/plugins/bootstrap-switch/js/bootstrap-switch.min.js",
             "/lib/plugins/bootstrap-editable/js/bootstrap-editable.js",

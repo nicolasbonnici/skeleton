@@ -117,6 +117,30 @@
         {
             "type": "package",
             "package": {
+                "name": "media",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/media.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "localpin",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/localpin.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "error",
                 "version": "master",
                 "source": {
@@ -143,6 +167,7 @@
         "nbonnici": "dev-master",
         "blog": "dev-master",
         "admin": "dev-master",
+        "media": "dev-master",
         "error": "dev-master"
     }    
 }
