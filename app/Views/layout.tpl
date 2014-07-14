@@ -138,23 +138,18 @@
           </div>
         </nav>
 
-        <div class="snap-drawers greyPatternBg gpu-render">
-            <div class="snap-drawer snap-drawer-left noOverflowX">
+        <div class="snap-drawers greyPatternBg">
+            <div id="app-stack-left" class="snap-drawer snap-drawer-left noOverflowX">
                 <div id="app-header" class="showOnHover">
                     <img src="{{sAppIcon}}" class="app-logo pull-left" alt="{{sBundle}} bundle icon"/>
-                    <h4 class="pull-right blackTextShadow">{{sAppName}}<small class="targetToShow blackTextShadow"></small></h4>
+                    <h3 class="blackTextShadow">{{sAppName}}<small class="targetToShow"></small></h3>
                 </div>
                 
                 <div id="app-search-content" class="">
                     <div class="padding">
                         <form id="app-global-search" data-url="/search/home/process" class="form-horizontal" role="search" method="post" action="/search/home/process/" data-sendform-reponse-selector="#app-search-results">
-                            <div class="form-group">
-                              <div class="control-label" for="search">
-                                        <input id="ux-global-search-input" type="text" name="search" class="form-control input-lg ui-shadow" placeholder="{{tr['search_helper']}}" />
-                                        <input type="hidden" name="entities" value="" />
-                              
-                              </div>  
-                            </div>
+                            <input id="ux-global-search-input" type="text" name="search" class="form-control input-lg ui-shadow" placeholder="{{tr['search_helper']}}" />
+                            <input type="hidden" name="entities" value="" />
                         </form>
                     </div>
                 </div>
