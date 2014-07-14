@@ -145,22 +145,20 @@
                     <h4 class="pull-right blackTextShadow">{{sAppName}}<small class="targetToShow blackTextShadow"></small></h4>
                 </div>
                 
-                <div id="app-search-content" class="row clearfix">
-                    <div class="col-md-12 column">
+                <div id="app-search-content" class="">
+                    <div class="padding">
                         <form id="app-global-search" data-url="/search/home/process" class="form-horizontal" role="search" method="post" action="/search/home/process/" data-sendform-reponse-selector="#app-search-results">
                             <div class="form-group">
                               <div class="control-label" for="search">
-                                        <input id="ux-global-search-input" type="text" name="search" class="form-control input-lg" placeholder="{{tr['search_helper']}}" />
+                                        <input id="ux-global-search-input" type="text" name="search" class="form-control input-lg ui-shadow" placeholder="{{tr['search_helper']}}" />
                                         <input type="hidden" name="entities" value="" />
                               
                               </div>  
-                              <div class="col-md-1">
-                                        <a href="#" class="btn btn-lg btn-info ui-sendform" data-form="#app-global-search"><span class="glyphicon glyphicon-search"></span></a>
-                              </div>
                             </div>
                         </form>
                     </div>
                 </div>
+                <a href="#" class="btn btn-lg btn-info ui-sendform" data-form="#app-global-search"><span class="glyphicon glyphicon-search"></span> {{tr['search']}}</a>
                 
                 <div id="app-search-results" class="row clearfix"> </div>
                 <ul class="nav nav-pills nav-stacked blackTextShadow">
