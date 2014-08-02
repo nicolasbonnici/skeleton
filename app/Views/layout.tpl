@@ -70,6 +70,12 @@
                                 <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<span class="targetToShow blackTextShadow">{{tr['portfolio']}}</span>
                             </a>
                         </li>
+                        <li{% if sAction|Exists && sAction == 'blogAction' %} class="active transparentBlackBg"{% endif %}>
+                        
+                            <a href="blog" class="ui-tip showOnHover" data-toggle="tooltip" data-placement="bottom" title="{{tr['blog_tip']}}">
+                                <span class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;<span class="targetToShow blackTextShadow">{{tr['blog']}}</span>
+                            </a>
+                        </li>
                         
                         <li{% if sAction|Exists && sAction == 'activitiesAction' %} class="active transparentBlackBg"{% endif %}>
                             <a href="/activities" class="ui-tip showOnHover" data-toggle="tooltip" data-placement="bottom" title="{{tr['lifestream_tip']}}">
@@ -85,8 +91,8 @@
                     </ul>
                     
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
                         {% if aSession|Exists %}
+                        <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" class="blackTextShadow ui-tip" title="Menu utilisateur">
                                 <img src="{{sGravatarSrc16}}" class="ui-nav-avatar" alt="Avatar" /> {{aSession['firstname']}} {{aSession['lastname']}} <strong class="caret"></strong>
                             </a>
@@ -97,40 +103,23 @@
                                 <li>
                                     <a href="/admin" class="btn btn-lg btn-link"><span class="glyphicon glyphicon-cog"></span> {{tr['administration']}}</a>
                                 </li>
-                                <li>
-                                    <a href="#" class="btn btn-lg btn-link ui-pane-toggle ui-tip" data-pane="east" title="Mes applications">
-                                        <span class="glyphicon glyphicon-cloud-download"></span> Apps
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="btn btn-lg btn-link ui-pane-toggle" data-pane="west" title="{{tr['toggle_menu_tip']}}">                                  
-                                        <span class="glyphicon glyphicon-arrow-right"></span> {{tr['toggle_menu']}}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="btn btn-lg btn-link ui-pane-show" data-pane="west" title="{{tr['toggle_menu_tip']}}">                                  
-                                        <span class="glyphicon glyphicon-arrow-right"></span> test
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="btn btn-lg btn-link ui-pane-toggle" data-pane="north" title="{{tr['toggle_menu_tip']}}">                                  
-                                        <span class="glyphicon glyphicon-arrow-up"></span> Toggle header
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="btn btn-lg btn-link ui-pane-toggle" data-pane="south" title="{{tr['toggle_menu_tip']}}">                                  
-                                        <span class="glyphicon glyphicon-arrow-down"></span> Debug
-                                    </a>
-                                </li>
                                 <li class="divider"></li>
                                 <li>
                                     <a href="/logout" class="btn btn-lg btn-link" title="Se déconnecter">{{tr['logout']}}</a>
                                 </li>
                             </ul>
+                        </li>
+                        <li>
+                            <a href="#" id="open-right" title="Mes applications">
+                                <span class="glyphicon glyphicon-cloud-download"></span> Apps
+                            </a>
+                        </li>
                         {% else %}
+                        <li>
                             <a href="/login" class="showOnHover">
                                 <span class="glyphicon glyphicon-log-in"></span> <span class="targetToShow blackTextShadow"><strong>{{tr['login']}}</strong></span>
                             </a>
+                        </li>
                         {% endif %}
                     </li>
                 </ul>
