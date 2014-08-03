@@ -70,13 +70,14 @@
                                 <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;<span class="targetToShow blackTextShadow">{{tr['portfolio']}}</span>
                             </a>
                         </li>
+                        {#
                         <li{% if sAction|Exists && sAction == 'blogAction' %} class="active transparentBlackBg"{% endif %}>
                         
                             <a href="blog" class="ui-tip showOnHover" data-toggle="tooltip" data-placement="bottom" title="{{tr['blog_tip']}}">
                                 <span class="glyphicon glyphicon-globe"></span>&nbsp;&nbsp;<span class="targetToShow blackTextShadow">{{tr['blog']}}</span>
                             </a>
                         </li>
-                        
+                        #}
                         <li{% if sAction|Exists && sAction == 'activitiesAction' %} class="active transparentBlackBg"{% endif %}>
                             <a href="/activities" class="ui-tip showOnHover" data-toggle="tooltip" data-placement="bottom" title="{{tr['lifestream_tip']}}">
                                 <span class="glyphicon glyphicon-link"></span>&nbsp;<span class="targetToShow blackTextShadow">{{tr['lifestream']}}</span>
@@ -91,6 +92,11 @@
                     </ul>
                     
                     <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" id="open-right" class="ui-tip showOnHover" title="{{tr['bundles_tip']}}">
+                                <span class="glyphicon glyphicon-cloud-download"></span> <span class="targetToShow blackTextShadow">{{tr['bundles']}}</span>
+                            </a>
+                        </li>
                         {% if aSession|Exists %}
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" class="blackTextShadow ui-tip" title="Menu utilisateur">
@@ -109,11 +115,6 @@
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="#" id="open-right" title="Mes applications">
-                                <span class="glyphicon glyphicon-cloud-download"></span> Apps
-                            </a>
-                        </li>
                         {% else %}
                         <li>
                             <a href="/login" class="showOnHover">
@@ -121,7 +122,6 @@
                             </a>
                         </li>
                         {% endif %}
-                    </li>
                 </ul>
             </div>
           </div>
