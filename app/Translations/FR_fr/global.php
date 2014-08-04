@@ -1,7 +1,9 @@
 <?php
-$tr['welcome'] = 'Bienvenue';
+/**
+ * Global layout translation
+ */
 $tr['hello'] = 'Bonjour';
-
+$tr['welcome'] = 'Bienvenue';
 $tr['homepage'] = 'Accueil';
 $tr['homepage_tip'] = 'Retourner sur la page d\'accueil de ce site';
 $tr['portfolio'] = 'Porfolio';
@@ -26,10 +28,14 @@ $tr['profile'] = "Profil";
 $tr['login'] = "Connection";
 $tr['logout'] = 'Déconnection';
 $tr['profile'] = "Profil";
+$tr['toggle_menu'] = 'Menu';
+$tr['toggle_menu_tip'] = 'Ouvrir le menu';
+$tr['input_search'] = 'Entrez votre recherche';
+$tr['last_edited'] = 'Dernière édition le ';
+$tr['empty'] = 'Vide';
 
 /**
- *
- * Actions
+ * User's actions
  */
 $tr['view'] = 'Voir';
 $tr['send'] = 'Envoyer';
@@ -45,31 +51,26 @@ $tr['close'] = 'Fermer';
 $tr['more'] = 'En savoir plus';
 
 /**
- *
  * Crud actions
  */
-
 $tr['update_success'] = 'Enregistrement correctement mis à jour';
 $tr['update_error'] = 'Une erreur est survenue lors de la mis à jour';
 $tr['update_error_access_denied'] = 'Vos droits ne vous permettent pas cette action';
 $tr['update_error_session_expired'] = 'Votre session est expiré, merci de vous connecter à nouveau';
 
 
-$tr['toggle_menu'] = 'Menu';
-$tr['toggle_menu_tip'] = 'Ouvrir le menu';
+/**
+ * Forms generic errors
+ */
 
-$tr['input_search'] = 'Entrez votre recherche';
-$tr['last_edited'] = 'Dernière édition le ';
-$tr['empty'] = 'Vide';
-
-
-$tr['access_denied'] = 'Veuillez verifier vos permissions';
-
-$tr['title'] = 'Titre';
+$tr['success'] = "Succès";
+$tr['error'] = "Erreur";
+$tr['check_fields'] = "Merci de vérifier le ou les champs";
 
 /**
  * Errors messages
  */
 $tr['no_rights'] = 'Erreur de permissions';
+$tr['access_denied'] = 'Veuillez verifier vos permissions';
 $tr['check_permissions_with_administrator'] = 'Vous n\'avez pas les permissions nécessaires, merci de contacter votre administrateur afin d\'obtenir les droits pour cette action';
 ?>
