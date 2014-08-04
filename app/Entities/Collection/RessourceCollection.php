@@ -9,4 +9,3 @@ namespace app\Entities\Collection;
  */
 class RessourceCollection extends \Library\Core\EntitiesCollection {}
 
-?>

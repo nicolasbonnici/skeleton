@@ -8,5 +8,3 @@ namespace app\Entities\Collection;
  * @author infradmin
  */
 class PostCollection extends \Library\Core\EntitiesCollection {}
-
-?>

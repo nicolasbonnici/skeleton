@@ -8,5 +8,3 @@ namespace app\Entities\Collection;
  * @author infradmin
  */
 class UserCollection extends \Library\Core\EntitiesCollection {}
-
-?>

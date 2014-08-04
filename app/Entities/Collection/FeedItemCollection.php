@@ -9,4 +9,3 @@ namespace app\Entities\Collection;
  */
 class FeedItemCollection extends \Library\Core\EntitiesCollection {}
 
-?>
