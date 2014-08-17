@@ -85,7 +85,7 @@
                         </li>
             
                         <li>
-                            <a href="#" data-toggle-selector="#app-search" title="Rechercher un contenu" class="ui-toggle ui-tip ui-toggle ui-focus showOnHover" data-focus-selector="#app-global-search input[type=text]:first">
+                            <a href="#" data-toggle-selector="#app-search" title="Rechercher un contenu" class="ui-toggle ui-tip ui-toggle ui-focus showOnHover" data-focus-selector="#ux-global-search-input">
                                 <span class="glyphicon glyphicon-search"></span>&nbsp;<span class="targetToShow blackTextShadow">{{tr['search']}}</span>
                             </a>
                         </li>
@@ -131,13 +131,13 @@
             <div id="app-stack-left" class="snap-drawer snap-drawer-left noOverflowX">
                 <div id="app-header" class="showOnHover">
                     <img src="{{sAppIcon}}" class="app-logo pull-left" alt="{{sBundle}} bundle icon"/>
-                    <h3 class="blackTextShadow">{{sAppName}}<small class="targetToShow"></small></h3>
+                    <h3 class="blackTextShadow">{{sBundle}} <small class="targetToShow">1.0</small></h3>
                 </div>
                 
                 <div id="app-search-content" class="">
                     <div class="padding">
                         <form id="app-global-search" data-url="/search/home/process" class="form-horizontal" role="search" method="post" action="/search/home/process/" data-sendform-reponse-selector="#app-search-results">
-                            <input id="ux-global-search-input" type="text" name="search" class="form-control input-lg ui-shadow" placeholder="{{tr['search_helper']}}" />
+                            <input id="ux-global-search-input" type="text" name="search" class="rounded ui-shadow" placeholder="{{tr['search_helper']}}" />
                             <input type="hidden" name="entities" value="" />
                         </form>
                     </div>

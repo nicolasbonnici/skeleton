@@ -4,6 +4,7 @@
             "/lib/plugins/snapjs/js/snap.js",
             "/lib/plugins/modernizr/js/modernizr.js",
             "/lib/plugins/serializejson/js/jquery.serializejson.js",
+            "/lib/plugins/select2/select2.min.js",
             "/lib/plugins/bootstrap-switch/js/bootstrap-switch.min.js",
             "/lib/plugins/bootstrap-editable/js/bootstrap-editable.js",
             "/lib/plugins/summernote/js/summernote.js",
@@ -12,6 +13,7 @@
         "css" : [
             "/lib/plugins/pnotify/css/jquery.pnotify.default.css",
             "/lib/plugins/pnotify/css/jquery.pnotify.default.icons.css",
+            "/lib/plugins/select2/select2.css",
             "/lib/plugins/bootstrap-switch/css/bootstrap-switch.min.css",
             "/lib/plugins/bootstrap-editable/css/bootstrap-editable.css",
             "/lib/plugins/summernote/css/summernote.css",
