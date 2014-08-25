@@ -131,7 +131,7 @@
             <div id="app-stack-left" class="snap-drawer snap-drawer-left noOverflowX">
                 <div id="app-header" class="showOnHover">
                     <img src="{{sAppIcon}}" class="app-logo pull-left" alt="{{sBundle}} bundle icon"/>
-                    <h3 class="blackTextShadow">{{sBundle}} <small class="targetToShow">1.0</small></h3>
+                    <h3 class="blackTextShadow text-right"> {{sBundle|cAPFIRST}} <small class="targetToShow">1.0</small>&nbsp;</h3>
                 </div>
                 
                 <div id="app-search-content" class="">
