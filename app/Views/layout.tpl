@@ -142,7 +142,9 @@
                         </form>
                     </div>
                 </div>
-                <a href="#" class="btn btn-lg btn-info ui-sendform" data-form="#app-global-search"><span class="glyphicon glyphicon-search"></span> {{tr['search']}}</a>
+                <div class="text-right">
+                    <a href="#" class="btn btn-lg btn-info ui-sendform" data-form="#app-global-search"><span class="glyphicon glyphicon-search"></span> {{tr['search']}}</a>
+                </div>
                 
                 <div id="app-search-results" class="row clearfix"> </div>
                 <ul class="nav nav-pills nav-stacked blackTextShadow">
