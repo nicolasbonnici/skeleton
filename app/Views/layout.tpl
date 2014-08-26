@@ -149,11 +149,6 @@
                 
                 <div id="app-search-results" class="row clearfix"> </div>
                 <ul class="nav nav-pills nav-stacked blackTextShadow">
-                {% if aSession|Exists %}
-                  <li><a href="#">Home</a></li>
-                  <li><a href="#">Profile</a></li>
-                  <li><a href="#">Messages</a></li>
-                 {% endif %}
                   <li><a href="#activityDebug" class="ui-toggle" data-toggle-selector=".app-menu">Debug</a></li>
                 </ul>
                 <!-- Tab panes -->
