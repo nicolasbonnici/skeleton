@@ -23,12 +23,13 @@
           <script src="/lib/js/html5shiv.js"></script>
         <![endif]-->
 
-        <!-- Plugins -->
+        <!-- Bootstrap -->
         <link href="/lib/plugins/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
         <link href="/lib/plugins/bootstrap3/css/bootstrap-theme.min.css" rel="stylesheet">
 
         <!-- sociableUx -->
-        <link href="/lib/css/style.min.css" rel="stylesheet">
+        <link href="/min/dependancies.min.css" rel="stylesheet">
+        <link href="/min/core.min.css" rel="stylesheet">
 
         <!-- Custom styling -->
         <link href="/lib/css/style.css" rel="stylesheet">
@@ -201,13 +202,16 @@
         </div>
         {% block modal %}{% endblock %}
         
-        <!--  sociableUX -->
+        <!--  Dependancies -->
         <script type="text/javascript" src="/lib/plugins/jquery/js/jquery-1.11.min.js"></script>
         <script type="text/javascript" src="/lib/plugins/bootstrap3/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/lib/js/script.min.js"></script>
+        <!--  sociableUX -->
+        <script type="text/javascript" src="/min/dependancies.min.js"></script>
+        <script type="text/javascript" src="/min/core.min.js"></script>
+
+        {% block js %}{% endblock %}
 
         <script type="text/javascript" src="/lib/bundles/{{sBundle}}/js/{{sBundle}}.js"></script>
-        {% block js %}{% endblock %}
         
         <!--  Google Analytics @todo passer en conf et dans le build js -->
         <script>

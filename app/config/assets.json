@@ -30,6 +30,19 @@
             "/lib/sociableUx/css/core.classes.css",
             "/lib/sociableUx/css/core.ui.css"
         ]
-
+    },
+    
+    "geolocation": {
+        "js": [
+            "/lib/sociableUx/js/geolocation.core.js"
+        ],
+        "css": []
+    },
+    
+    "carousel":  {
+        "js": [
+            "/lib/sociableUx/js/carousel.core.js"
+        ],
+        "css": []
     }
 }
