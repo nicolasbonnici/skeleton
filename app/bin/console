@@ -35,6 +35,7 @@ do
             echo "Setup the tmp directory, for View cache and server logs"
             cd "$sCurPath/" && mkdir ./tmp/ && chmod -R 777 ./tmp/
             echo "Setup the bundles directory"
+            cd "$sCurPath/" && mkdir -p ./public/lib/bundles/ && chmod -R 777 ./public/lib/bundles/
             cd "$sCurPath/" && mkdir ./$sBundlesPath/ && chmod -R 755 ./tmp/
             echo "Framework installation..."
             cd "$sCurPath/$sLibrariesPath" && git clone $sCoreRepository
