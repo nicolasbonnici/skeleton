@@ -15,7 +15,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-05-23 18:11:27"
+            "time": "2014-07-13 21:31:38"
         },
         {
             "name": "auth",
@@ -26,7 +26,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-05-15 19:03:34"
+            "time": "2014-08-25 22:28:41"
         },
         {
             "name": "blog",
@@ -37,7 +37,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-05-09 17:32:52"
+            "time": "2014-08-04 01:06:31"
         },
         {
             "name": "category",
@@ -48,7 +48,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-05-25 23:39:40"
+            "time": "2014-07-13 21:31:49"
         },
         {
             "name": "crud",
@@ -59,7 +59,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-07-08 00:22:51"
+            "time": "2014-07-13 21:31:53"
         },
         {
             "name": "error",
@@ -70,7 +70,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-05-15 19:03:47"
+            "time": "2014-07-13 21:31:57"
         },
         {
             "name": "lifestream",
@@ -81,7 +81,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-05-08 14:37:35"
+            "time": "2014-08-04 23:49:48"
         },
         {
             "name": "media",
@@ -92,7 +92,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-07-08 23:13:52"
+            "time": "2014-08-04 23:38:04"
         },
         {
             "name": "nbonnici",
@@ -103,7 +103,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-07-07 23:34:55"
+            "time": "2014-08-26 05:30:14"
         },
         {
             "name": "sample",
@@ -114,7 +114,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-04-27 06:17:27"
+            "time": "2014-08-04 23:38:09"
         },
         {
             "name": "search",
@@ -125,7 +125,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-05-23 18:11:49"
+            "time": "2014-08-25 22:28:59"
         },
         {
             "name": "setup",
@@ -136,7 +136,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-04-27 06:17:35"
+            "time": "2014-07-13 21:32:20"
         },
         {
             "name": "tag",
@@ -147,7 +147,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-05-22 22:20:47"
+            "time": "2014-07-13 21:32:23"
         },
         {
             "name": "todo",
@@ -158,7 +158,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-07-08 00:23:15"
+            "time": "2014-08-17 21:23:36"
         },
         {
             "name": "user",
@@ -169,7 +169,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-07-08 00:23:18"
+            "time": "2014-07-13 21:32:31"
         }
     ],
     "packages-dev": [
@@ -196,6 +196,7 @@
         "media": 20,
         "error": 20
     },
+    "prefer-stable": false,
     "platform": {
         "php": ">=5.3.0"
     },
