@@ -1,12 +1,14 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
       
-    RewriteEngine On
-    RewriteCond %{HTTP_HOST} ^www\.nbonnici.info(.*)$ [NC]
+    # Supprimer 
+    RewriteBase /
+    RewriteCond %{HTTP_HOST} !^nbonnici.info$ [NC]
+    RewriteRule ^(.*)$ http://nbonnici.info/$1 [L,R=301]
+    
+    # Servir les fichier et dossier existants
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
 
     RewriteRule ^(.*)$ index.php?_url=$1 [PT,L]
-    
-    RewriteRule (.*) http://nbonnici.info/$1 [R=301,L]
 </IfModule>
