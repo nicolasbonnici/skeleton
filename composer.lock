@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f8e6b2896b7707eb8bd965b81e44bfa6",
+    "hash": "eb6243d9e42ffd3d5ceae3fdd467db35",
     "packages": [
         {
             "name": "admin",
@@ -84,6 +84,17 @@
             "time": "2014-08-04 23:49:48"
         },
         {
+            "name": "localpin",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/localpin.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-06-10 04:53:30"
+        },
+        {
             "name": "media",
             "version": "master",
             "source": {
@@ -103,7 +114,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-08-26 05:30:14"
+            "time": "2014-09-04 23:12:28"
         },
         {
             "name": "sample",
@@ -194,6 +205,7 @@
         "blog": 20,
         "admin": 20,
         "media": 20,
+        "localpin": 20,
         "error": 20
     },
     "prefer-stable": false,

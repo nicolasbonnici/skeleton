@@ -6,4 +6,7 @@
     RewriteCond %{REQUEST_FILENAME} !-d
 
     RewriteRule ^(.*)$ index.php?_url=$1 [PT,L]
+    
+    RewriteCond %{HTTP_HOST} ^www\.nbonnici.info(.*)$ [NC]
+    RewriteRule (.*) http://nbonnici.info/$1 [R=301,L]
 </IfModule>

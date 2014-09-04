@@ -57,7 +57,7 @@ do
             cd "$sCurPath/$sUxPath" && git pull
             echo "Check for bundles updates..."
             cd $sCurPath/
-            composer install
+            composer install -o
             cd "$sCurPath/$sBundlesPath/"
             for path in ./*; 
             do
@@ -76,7 +76,7 @@ do
         "update bundles")
             echo "Check for bundles updates..."
             cd "$sCurPath/"
-            composer install
+            composer install -o
             cd "$sCurPath/$sBundlesPath/"
             for path in ./*; 
             do
