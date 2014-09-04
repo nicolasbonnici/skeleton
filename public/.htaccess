@@ -1,14 +1,15 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-      
-    # Supprimer 
+    
+    # Rediriger www.domain.com vers domain.com
     RewriteBase /
     RewriteCond %{HTTP_HOST} !^nbonnici.info$ [NC]
     RewriteRule ^(.*)$ http://nbonnici.info/$1 [L,R=301]
     
-    # Servir les fichier et dossier existants
+    # Servir les fichiers et dossier existant
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-
+    
+    # MVC Router component 
     RewriteRule ^(.*)$ index.php?_url=$1 [PT,L]
 </IfModule>
