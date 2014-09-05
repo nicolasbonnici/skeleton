@@ -13,7 +13,9 @@ To install memcache support for PHP5 on Linux you need to install those packages
 Then run 
 pecl install memcache && echo "extension=memcache.so" | sudo tee /etc/php5/conf.d/memcache.ini
 
-Note that the path for your php installation may be different on your distribution
+For internationalization purposes you also need php5-intl
+
+Note that the path for your php installation may vary on your Linux distribution, this is the correct path for a debian based GNU Linux distribution.
 
 Installation
 
