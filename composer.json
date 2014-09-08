@@ -141,6 +141,30 @@
         {
             "type": "package",
             "package": {
+                "name": "community",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/community.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "wall",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/wall.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "error",
                 "version": "master",
                 "source": {
