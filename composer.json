@@ -165,6 +165,18 @@
         {
             "type": "package",
             "package": {
+                "name": "bundlestore",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/bundlestore.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "error",
                 "version": "master",
                 "source": {
@@ -195,6 +207,7 @@
         "localpin": "dev-master",
         "community": "dev-master",
         "wall": "dev-master",
+        "bundlestore": "dev-master",
         "error": "dev-master"
     }    
 }
