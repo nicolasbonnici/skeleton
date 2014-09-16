@@ -33,3 +33,8 @@ twitter.oAuth.consumerSecret = ''
 [cache]
 host = '127.0.0.1'
 port = '11211'
+
+[support]
+name = 'Nicolas Bonnici'
+email = 'nicolasbonnici@gmail.com'
+website = 'http://nbonnici.info/'
