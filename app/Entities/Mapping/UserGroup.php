@@ -5,7 +5,7 @@ namespace app\Entities\Mapping;
 /**
  * \app\Entity\UserGroup Entity
  *
- * @see \app\Entities\User
+ * @see \bundles\user\Entities\User
  * @author infradmin
  */
 class UserGroup extends \Library\Core\Entity {

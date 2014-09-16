@@ -5,7 +5,7 @@ namespace app\Entities;
 /**
  * \app\Entity\User Group Entity
  *
- * @see \app\Entities\User
+ * @see \bundles\user\Entities\User
  * @author infradmin
  */
 class Config extends \Library\Core\Entity {
