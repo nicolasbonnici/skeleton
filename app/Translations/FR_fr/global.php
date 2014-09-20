@@ -68,6 +68,14 @@ $tr['error'] = "Erreur";
 $tr['check_fields'] = "Merci de vérifier le ou les champs";
 
 /**
+ * Bundle's generic translation
+ */
+$tr['bundle_settings'] = 'Paramètres du bundle';
+$tr['general_settings'] = 'Paramètres généraux';
+$tr['privacy_settings'] = 'Options de confidentialité';
+$tr['support_center'] = 'Centre de support';
+$tr['about_this_bundle'] = 'A propos de cette application';
+/**
  * Errors messages
  */
 $tr['no_rights'] = 'Erreur de permissions';

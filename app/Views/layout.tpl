@@ -185,7 +185,9 @@
         </div>
         
         <div id="ux-content" class="snap-content ui-loadscroll noOverflowX ui-shadow">
+                {% block head %}{% endblock %}
                 {% block main %}{% endblock %}
+                {% block foot %}{% endblock %}
         </div>
     
         <div class="modal modal-md fade" id="modal" role="dialog" aria-hidden="true">

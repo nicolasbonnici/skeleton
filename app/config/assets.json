@@ -7,7 +7,6 @@
             "/lib/plugins/select2/select2.min.js",
             "/lib/plugins/bootstrap-switch/js/bootstrap-switch.min.js",
             "/lib/plugins/bootstrap-editable/js/bootstrap-editable.js",
-            "/lib/plugins/summernote/js/summernote.js",
             "/lib/plugins/pnotify/js/jquery.pnotify.js"
         ],
         "css" : [
@@ -35,6 +34,14 @@
     "geolocation": {
         "js": [
             "/lib/sociableUx/js/geolocation.core.js"
+        ],
+        "css": []
+    },
+    
+    "uploader": {
+        "js": [
+            "/lib/plugins/bootstrap-fileinput/bootstrap-fileinput.js",
+            "/lib/sociableUx/js/upload.core.js"
         ],
         "css": []
     },
