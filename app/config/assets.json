@@ -40,10 +40,11 @@
     
     "uploader": {
         "js": [
-            "/lib/plugins/bootstrap-fileinput/bootstrap-fileinput.js",
             "/lib/sociableUx/js/upload.core.js"
         ],
-        "css": []
+        "css": [
+        
+        ]
     },
     
     "carousel":  {
