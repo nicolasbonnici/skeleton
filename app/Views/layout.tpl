@@ -27,14 +27,15 @@
         <link href="/lib/plugins/bootstrap3/css/bootstrap.min.css" rel="stylesheet">
         <link href="/lib/plugins/bootstrap3/css/bootstrap-theme.min.css" rel="stylesheet">
 
-        <!-- sociableUx -->
-        <link href="/min/dependancies.min.css" rel="stylesheet">
-        <link href="/min/core.min.css" rel="stylesheet">
+        <!-- sociableUx components stylesheet -->
+        {% for sComponentCss in sComponentsDependancies %}
+        <link href="/min/{{sComponentCss}}.min.css" rel="stylesheet">
+        {% endfor %}
 
         <!-- Custom styling -->
         <link href="/lib/css/style.css" rel="stylesheet">
 
-        <!-- Bundle style -->
+        <!--  bundle stylesheet -->
         <link href="/lib/bundles/{{sBundle}}/css/{{sBundle}}.css" rel="stylesheet">
                
         {% block css %}{% endblock %}
@@ -198,18 +199,17 @@
             </div>
         </div>
         {% block modal %}{% endblock %}
-        
         <!--  Dependancies -->
         <script type="text/javascript" src="/lib/plugins/jquery/js/jquery-1.11.min.js"></script>
         <script type="text/javascript" src="/lib/plugins/bootstrap3/js/bootstrap.min.js"></script>
-        <!--  sociableUX -->
-        <script type="text/javascript" src="/min/dependancies.min.js"></script>
-        <script type="text/javascript" src="/min/core.min.js"></script>
-
-        {% block js %}{% endblock %}
-
-        <script type="text/javascript" src="/lib/bundles/{{sBundle}}/js/{{sBundle}}.js"></script>
+        <!-- sociableUx components script -->
+        {% for sJs in sComponentsDependancies %}
+        <script type="text/javascript" src="/min/{{sJs}}.min.js"></script>
+        {% endfor %}
         
+        {% block js %}{% endblock %}
+        <!--  bundle script -->
+        <script type="text/javascript" src="/lib/bundles/{{sBundle}}/js/{{sBundle}}.js"></script>
         <!--  Google Analytics @todo passer en conf et dans le build js -->
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
