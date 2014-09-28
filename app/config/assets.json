@@ -47,6 +47,16 @@
         ]
     },
     
+    "dragndrop": {
+        "js": [
+            "/lib/plugins/jquery-ui/jquery-ui.js",
+            "/lib/plugins/jqueryui-touchpunch/jquery.ui-touch-punch.js"
+        ],
+        "css": [
+            "/lib/plugins/jquery-ui/jquery-ui.css"
+        ]
+    },
+    
     "carousel":  {
         "js": [
             "/lib/sociableUx/js/carousel.core.js"

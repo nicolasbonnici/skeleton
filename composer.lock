@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1c97c6c5d85562519ac4479ba2438968",
+    "hash": "5ce52572215b8014a9b4db4d35155dc8",
     "packages": [
         {
             "name": "admin",
@@ -38,6 +38,17 @@
             },
             "type": "library",
             "time": "2014-09-17 00:08:16"
+        },
+        {
+            "name": "builder",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/builder.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-09-24 23:35:03"
         },
         {
             "name": "bundlestore",
@@ -81,7 +92,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-07-13 21:31:53"
+            "time": "2014-09-24 20:16:59"
         },
         {
             "name": "error",
@@ -92,7 +103,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-09-16 21:02:21"
+            "time": "2014-09-21 23:10:04"
         },
         {
             "name": "lifestream",
@@ -103,7 +114,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-09-16 23:41:13"
+            "time": "2014-09-24 18:58:35"
         },
         {
             "name": "media",
@@ -114,7 +125,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-09-19 00:42:23"
+            "time": "2014-09-21 22:54:53"
         },
         {
             "name": "nbonnici",
@@ -125,7 +136,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-09-16 23:52:34"
+            "time": "2014-09-21 23:11:54"
         },
         {
             "name": "sample",
@@ -136,7 +147,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-09-20 16:26:57"
+            "time": "2014-09-24 20:17:12"
         },
         {
             "name": "search",
@@ -180,7 +191,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-09-16 23:41:32"
+            "time": "2014-09-24 20:17:22"
         },
         {
             "name": "user",
@@ -191,7 +202,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-09-16 23:41:36"
+            "time": "2014-09-21 22:54:21"
         },
         {
             "name": "wall",
@@ -229,6 +240,7 @@
         "media": 20,
         "community": 20,
         "wall": 20,
+        "builder": 20,
         "bundlestore": 20,
         "error": 20
     },

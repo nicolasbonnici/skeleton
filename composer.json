@@ -129,10 +129,10 @@
         {
             "type": "package",
             "package": {
-                "name": "localpin",
+                "name": "builder",
                 "version": "master",
                 "source": {
-                    "url": "git@github.com:nicolasbonnici/localpin.git",
+                    "url": "git@github.com:nicolasbonnici/builder.git",
                     "type": "git",
                     "reference": "master"
                 }
@@ -177,6 +177,18 @@
         {
             "type": "package",
             "package": {
+                "name": "localpin",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/localpin.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "error",
                 "version": "master",
                 "source": {
@@ -206,6 +218,7 @@
         "media": "dev-master",
         "community": "dev-master",
         "wall": "dev-master",
+        "builder": "dev-master",
         "bundlestore": "dev-master",
         "error": "dev-master"
     }    
