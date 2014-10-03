@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5ce52572215b8014a9b4db4d35155dc8",
+    "hash": "44254aa2058a89a827247ae3654812c7",
     "packages": [
         {
             "name": "admin",
@@ -40,6 +40,17 @@
             "time": "2014-09-17 00:08:16"
         },
         {
+            "name": "bricksbreaker",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:nicolasbonnici/bricksbreaker.git",
+                "reference": "master"
+            },
+            "type": "library",
+            "time": "2014-09-28 20:58:17"
+        },
+        {
             "name": "builder",
             "version": "master",
             "source": {
@@ -48,7 +59,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-09-24 23:35:03"
+            "time": "2014-09-24 23:49:51"
         },
         {
             "name": "bundlestore",
@@ -147,7 +158,7 @@
                 "reference": "master"
             },
             "type": "library",
-            "time": "2014-09-24 20:17:12"
+            "time": "2014-09-24 23:50:12"
         },
         {
             "name": "search",
@@ -242,6 +253,7 @@
         "wall": 20,
         "builder": 20,
         "bundlestore": 20,
+        "bricksbreaker": 20,
         "error": 20
     },
     "prefer-stable": false,

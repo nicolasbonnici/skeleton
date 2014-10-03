@@ -189,6 +189,18 @@
         {
             "type": "package",
             "package": {
+                "name": "bricksbreaker",
+                "version": "master",
+                "source": {
+                    "url": "git@github.com:nicolasbonnici/bricksbreaker.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "error",
                 "version": "master",
                 "source": {
@@ -220,6 +232,7 @@
         "wall": "dev-master",
         "builder": "dev-master",
         "bundlestore": "dev-master",
+        "bricksbreaker": "dev-master",
         "error": "dev-master"
     }    
 }
