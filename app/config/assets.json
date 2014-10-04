@@ -50,7 +50,8 @@
     "dragndrop": {
         "js": [
             "/lib/plugins/jquery-ui/jquery-ui.js",
-            "/lib/plugins/jqueryui-touchpunch/jquery.ui-touch-punch.js"
+            "/lib/plugins/jqueryui-touchpunch/jquery.ui-touch-punch.js",
+            "/lib/sociableUx/js/dragndrop.core.js"
         ],
         "css": [
             "/lib/plugins/jquery-ui/jquery-ui.css"
