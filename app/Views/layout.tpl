@@ -198,18 +198,22 @@
                 </div>
             </div>
         </div>
+        
         {% block modal %}{% endblock %}
-        <!--  Dependancies -->
+        
+        <!--  jQuery and TwitterBootstrap builds -->
         <script type="text/javascript" src="/lib/plugins/jquery/js/jquery-1.11.min.js"></script>
         <script type="text/javascript" src="/lib/plugins/bootstrap3/js/bootstrap.min.js"></script>
-        <!-- sociableUx components script -->
+        
+        <!-- sociableUx components builds -->
         {% for sJs in sComponentsDependancies %}
         <script type="text/javascript" src="/min/{{sJs}}.min.js"></script>
         {% endfor %}
-        
         {% block js %}{% endblock %}
+        
         <!--  bundle script -->
         <script type="text/javascript" src="/lib/bundles/{{sBundle}}/js/{{sBundle}}.js"></script>
+        
         <!--  Google Analytics @todo passer en conf et dans le build js -->
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
